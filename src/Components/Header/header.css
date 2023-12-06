@@ -1,0 +1,52 @@
+.header {
+  box-sizing: border-box;
+  box-shadow: 0 2px 24px rgba(0, 0, 0, 0.04);
+  height: 72px;
+  position: relative;
+  font-size: 12px;
+  width: 100%;
+}
+
+.container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 10px;
+  padding: 0px;
+  box-sizing: border-box;
+  max-width: auto !important;
+  height: 80px;
+  align-items: center;
+  position: relative;
+}
+
+.logo {
+  height: 90px;
+  width: auto;
+}
+
+.logo img {
+  height: 100%;
+  cursor: pointer;
+}
+
+.login button {
+  background-color: #3366cc;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 128px;
+  height: 40px;
+  font-weight: bold;
+}
+.logout {
+  background-color: #3366cc;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 128px;
+  height: 40px;
+  font-weight: bold;
+}
