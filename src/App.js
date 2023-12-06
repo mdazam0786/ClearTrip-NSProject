@@ -1,4 +1,3 @@
-import "./App.css";
 // for context 
 import { MyContext } from "./MyContext";
 import { useState, React } from "react";
