@@ -26,6 +26,7 @@ function App() {
         <Route path="/hotelDescription" element={<HotelDesription/>} />
         <Route exact path="/login" element={<Login/>} />
         <Route exact path="/signup" element={<SignupByEmail/>} />
+        {/* <Route exact path="/signupByEmail" element={<SignupByEmail/>} /> */}
         
       </Routes>
     </Router>
