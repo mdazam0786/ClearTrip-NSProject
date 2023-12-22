@@ -31,6 +31,8 @@ export default function HotelResult(props) {
   const [starRating, setStarRating] = useState(null);
   const [hotelData1, setHotelData1] = useState(location.state?.hotelData11);
 
+  
+
   const handleChange = (event) => {
     setDropdownValue(event.target.value);
     sortBasedOnPrice(event.target.value);

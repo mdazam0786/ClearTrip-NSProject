@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Modal from "react-modal";
 import Login from "../Login/Login";
-import SignupByEmail from "../Signup/SignupByEmail";
 import "./header.css";
 
 export default function Header() {

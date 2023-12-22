@@ -7,7 +7,6 @@ import DatePicker from "react-datepicker";
 import { MdOutlineCalendarMonth } from "react-icons/md";
 import "react-datepicker/dist/react-datepicker.css";
 import moment from "moment";
-// import HotelResult from "./HotelResult";
 import { useNavigate } from "react-router-dom";
 
 export default function Hotels(props) {
@@ -16,13 +15,25 @@ export default function Hotels(props) {
   const [selectedDay, setSelectedDay] = useState("");
   const navigate = useNavigate();
 
+  const [offerImage, setOfferImage] = useState([]);
+
+
+  const [currentOfferIndex, setCurrentOfferIndex] = useState(0);
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setCurrentOfferIndex((prevIndex) => (prevIndex + 1) % offerImage.length);
+    }, 5000);
+
+    return () => clearInterval(intervalId);
+  }, [offerImage.length]);
+
   const handleSearch = (e) => {
     console.log("Azam");
     console.log(e.target.value);
     setSearchParameter(e.target.value);
   };
 
-  
   async function Apicall() {
     console.log("getting hotels");
     console.log(selectedDay);
@@ -32,7 +43,7 @@ export default function Hotels(props) {
       : "";
     console.log(formattedDay);
 
-    const limit= 100;
+    const limit = 100;
 
     const Url = `https://academics.newtonschool.co/api/v1/bookingportals/hotel?search={"location":"${searchParameter}"}&day="${formattedDay}&limit=${limit}`;
 
@@ -52,9 +63,30 @@ export default function Hotels(props) {
     navigate("/hotelResult", { state: { hotelData11: data?.data?.hotels } });
   }
 
-  // useEffect(() => {
-  //   Apicall();
-  // }, [selectedDay]);
+  async function OfferApi() {
+    console.log("getting offers");
+
+    const limit = 100;
+
+    const Url = `https://academics.newtonschool.co/api/v1/bookingportals/offers?limit=10`;
+
+    console.log(Url);
+    const response = await fetch(Url, {
+      method: "GET",
+      headers: { projectID: "f104bi07c490" },
+    });
+    const data = await response.json();
+    // console.log(response);
+    // console.log(data);
+    console.log(data?.data?.offers);
+    setOfferImage(data?.data?.offers);
+
+    console.log(offerImage);
+  }
+
+  useEffect(() => {
+    OfferApi();
+  }, []);
 
   return (
     <div>
@@ -62,8 +94,8 @@ export default function Hotels(props) {
 
       {/* hotel-section  */}
       <div className="hotel-section">
-        <div className="hotel-left">
-          <div className="left-wrapper">
+        <div className="hotel-main-section">
+          <div className="hotel-left">
             <h1>Search hotels</h1>
             <div>
               <p>Enjoy hassle free bookings with Cleartrip</p>
@@ -111,8 +143,17 @@ export default function Hotels(props) {
               <img src="https://www.cleartrip.com/offermgmt/hotelsCommonImages/cfnr/cfnr-home-banner.jpeg" />
             </div>
           </div>
+          <div className="hotel-offer-carousel">
+            <div className="offer-carousel">
+              {offerImage.map((item, index) => (
+                <div key={index} style={{ display: index === currentOfferIndex ? 'block' : 'none' }}>
+                  <img src={item.heroUrl} alt={`Offer Image ${index + 1}`} />
+                  <div className="text-indide-image">{item.pTl}</div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
-        <div className="hotel-right"></div>
 
         {/* bank-offer  */}
         <div className="bank-offer">
@@ -127,8 +168,6 @@ export default function Hotels(props) {
           </div>
         </div>
       </div>
-    
-      
     </div>
   );
 }

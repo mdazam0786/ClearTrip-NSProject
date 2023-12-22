@@ -1,9 +1,10 @@
 
 .navbar-container{
   display: flex;
-  max-width: 1264px;
+  width: auto;
   margin: auto;
   padding: 0 8px;
+
   
 }
 .left-navbar{
