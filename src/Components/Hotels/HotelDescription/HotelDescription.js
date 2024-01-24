@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import "./hotelDescription.css";
-import RoomDetail from "./Rooms/RoomDetail";
+import RoomDetail from "../Rooms/RoomDetail";
 import { FaTripadvisor } from "react-icons/fa";
 
 export default function HotelDesription(props) {

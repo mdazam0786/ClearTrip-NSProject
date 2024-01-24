@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
-import "./flight.css";
+import "./flights.css";
 import { IoIosArrowRoundForward } from "react-icons/io";
 import { MdPersonOutline } from "react-icons/md";
 import { RiFlightTakeoffFill } from "react-icons/ri";
 import { RiFlightLandFill } from "react-icons/ri";
 import { BsArrowLeftRight } from "react-icons/bs";
-import Navbar from "../Navbar/Navbar";
+import Navbar from "../../Navbar/Navbar";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import moment from "moment";
 import { MdOutlineCalendarMonth } from "react-icons/md";
-import FlightResult from "./FlightResult";
+import FlightResult from "../FlightResult/FlightResult";
 import { useNavigate } from "react-router-dom";
 
 export default function Flights() {
@@ -19,6 +19,18 @@ export default function Flights() {
   const [searchDestination, setSearchDestination] = useState(null);
   const [selectedDay, setSelectedDay] = useState("");
   const navigate = useNavigate();
+
+  const [offerImage, setOfferImage] = useState([]);
+  const [currentOfferIndex, setCurrentOfferIndex] = useState(0);
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setCurrentOfferIndex((prevIndex) => (prevIndex + 1) % offerImage.length)
+    }, 5000);
+    return () => clearInterval(intervalId);
+  },[offerImage.length]); 
+
+
 
   const handleSearch = (e) => {
     console.log("Azam");
@@ -29,17 +41,20 @@ export default function Flights() {
   const handleSearchDestination = (e) => {
     console.log(e.target.value);
     setSearchDestination(e.target.value);
-  }
+  };
 
   async function Apicall() {
-    console.log("getting hotels");
+    console.log("getting flights");
     console.log(selectedDay);
+
     const formattedDay = selectedDay
       ? moment(selectedDay).format("dddd").substring(0, 3)
       : "";
     console.log(formattedDay);
 
-    const Url = `https://academics.newtonschool.co/api/v1/bookingportals/flight/?search={"source":"${searchSource}","destination":"${searchDestination}"}&day="${formattedDay}`;
+    const limit = 100;
+
+    const Url = `https://academics.newtonschool.co/api/v1/bookingportals/flight/?search={"source":"${searchSource}","destination":"${searchDestination}"}&day="${formattedDay}&limit=${limit}`;
 
     console.log(Url);
     const response = await fetch(Url, {
@@ -52,12 +67,39 @@ export default function Flights() {
     console.log(data?.data?.flights);
     setFlightData(data?.data?.flights);
 
-    navigate("/flightResult", {state: {flightData11: data?.data?.flights}})
+    navigate("/flightResult", { state: { flightDataSearch: data?.data?.flights, loc: searchSource, loc2: searchDestination} });
   }
 
   // useEffect(() => {
   //   Apicall();
   // }, []);
+
+
+  async function OfferApi() {
+    console.log("getting offers");
+
+    const limit = 100;
+
+    const Url = `https://academics.newtonschool.co/api/v1/bookingportals/offers?limit=10`;
+
+    console.log(Url);
+    const response = await fetch(Url, {
+      method: "GET",
+      headers: { projectID: "f104bi07c490" },
+    });
+    const data = await response.json();
+    // console.log(response);
+    // console.log(data);
+    console.log(data?.data?.offers);
+    setOfferImage(data?.data?.offers);
+
+    console.log(offerImage);
+  }
+
+  useEffect(() => {
+    OfferApi();
+  }, []);
+
 
   return (
     <div>
@@ -65,8 +107,8 @@ export default function Flights() {
 
       {/* flight-section  */}
       <div className="flight-section">
-        <div className="flight-left">
-          <div className="left-wrapper">
+        <div className="flight-main-section">
+          <div className="flight-left">
             <h1>Search flights</h1>
             <div>
               <p>Enjoy hassle free bookings with Cleartrip</p>
@@ -117,8 +159,11 @@ export default function Flights() {
                 </div>
                 <div className="select-where-to">
                   <RiFlightLandFill className="flight-icon" />
-                  <input type="text" placeholder="Where to?" 
-                  onChange={handleSearchDestination}/>
+                  <input
+                    type="text"
+                    placeholder="Where to?"
+                    onChange={handleSearchDestination}
+                  />
                 </div>
               </div>
 
@@ -130,6 +175,7 @@ export default function Flights() {
                     className="date-option"
                     selected={selectedDay}
                     onChange={(date) => setSelectedDay(date)}
+                    dateFormat="eee, MMM dd"
                   />
                 </div>
                 <div className="flight-search-button">
@@ -141,8 +187,35 @@ export default function Flights() {
               <img src="https://www.cleartrip.com/offermgmt/hotelsCommonImages/cfnr/cfnr-home-banner.jpeg" />
             </div>
           </div>
+          <div className="flight-offer-carousel">
+            <div className="offer-carousel">
+              {offerImage.map((item, index) => (
+                <div
+                  key={index}
+                  style={{
+                    display: index === currentOfferIndex ? "block" : "none",
+                  }}
+                >
+                  <img src={item.heroUrl} alt={`Offer Image ${index + 1}`} />
+                  <div className="text-indide-image">{item.pTl}</div>
+                </div>
+              ))}
+            </div>
+            <div className="More-offers">
+              <h3>More Offers</h3>
+              <div>View all</div>
+            </div>
+            <div className="offers-hardcoded">
+              <div className="offers-hardcoded-1st">
+                Extra saving with Flipkart Axis bank cards!
+              </div>
+              <div className="offers-hardcoded-2nd">
+                Get 4% additional cashback on all transections.
+              </div>
+              <div className="offers-hardcoded-3rd">Know more</div>
+            </div>
+          </div>
         </div>
-        <div className="flight-right"></div>
         <div className="bank-offer">
           <div>
             <img src="https://fastui.cltpstatic.com/image/upload/f_auto,q_auto,w_235,h_122,dpr_2/offermgmt/images/banner/BSB_SBI_F_1811.jpg" />
@@ -155,7 +228,6 @@ export default function Flights() {
           </div>
         </div>
       </div>
-      {/* {flightData && <FlightResult flResult={flightData} />} */}
     </div>
   );
 }

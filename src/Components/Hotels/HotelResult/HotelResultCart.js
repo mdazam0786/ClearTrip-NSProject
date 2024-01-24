@@ -3,7 +3,7 @@ import "./hotelResult.css";
 import "./hotelResultCart.css";
 import { FaTripadvisor } from "react-icons/fa";
 
-export default function HotelResultCard(props) {
+export default function HotelResultCart(props) {
   useEffect(() => {
     // console.log(props.name);
     // console.log(props.rating);

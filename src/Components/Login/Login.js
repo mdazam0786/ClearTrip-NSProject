@@ -4,13 +4,9 @@ import { RxCross1 } from "react-icons/rx";
 import { Link, useNavigate } from "react-router-dom";
 import SignupByEmail from "../Signup/SignupByEmail";
 
-// import { useContext } from "react";
-// import { MyContext } from "../../MyContext";
-
 export default function Login({ closeModal, setLoggedIn }) {
-  const navigate = useNavigate();
-  // const [token, setToken] = useContext(MyContext);
-  // for carousel of left side
+  // const navigate = useNavigate();
+
   const [slide1, setSlide1] = useState(false);
 
   const [email, setEmail] = useState("");
@@ -19,13 +15,8 @@ export default function Login({ closeModal, setLoggedIn }) {
   const [loading, setLoading] = useState(false);
   const [isSignupModalOpen, setIsSignupModalOpen] = useState(false);
 
-
   const openSignupModal = () => {
     setIsSignupModalOpen(true);
-  };
-
-  const closeSignupModal = () => {
-    setIsSignupModalOpen(false);
   };
 
   const changeEmail = (e) => {
@@ -139,9 +130,7 @@ export default function Login({ closeModal, setLoggedIn }) {
                 Login
               </button>
               <Link className="btn-below-text" to="#" onClick={openSignupModal}>
-                <div >
-                  New User Please Signup Here
-                </div>
+                <div>New User Please Signup Here</div>
               </Link>
             </div>
             <div className="signup-agreement">
@@ -168,9 +157,7 @@ export default function Login({ closeModal, setLoggedIn }) {
           </div>
         </div>
       </div>
-      {isSignupModalOpen && (
-        <SignupByEmail closeModal={closeSignupModal} />
-      )}
+      {isSignupModalOpen && <SignupByEmail closeModal={closeModal} setLoggedIn={setLoggedIn }/>}
     </div>
   );
 }

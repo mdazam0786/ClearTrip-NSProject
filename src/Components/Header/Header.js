@@ -3,10 +3,18 @@ import { Link } from "react-router-dom";
 import Modal from "react-modal";
 import Login from "../Login/Login";
 import "./header.css";
+import SignupByEmail from "../Signup/SignupByEmail";
 
 export default function Header() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
+  const [isSignupModalOpen, setIsSignupModalOpen] = useState(false);
+
+
+  const closeSignupModal = () => {
+    setIsSignupModalOpen(false);
+    openModal();
+  };
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -19,7 +27,11 @@ export default function Header() {
   const handleLogout = () => {
     localStorage.removeItem("token");
     setLoggedIn(false);
-    // You can optionally perform additional logout actions here
+  };
+
+  const handleSignupSuccess = () => {
+    closeSignupModal();
+    openModal();
   };
 
   return (
@@ -56,10 +68,19 @@ export default function Header() {
           </div>
         ) : (
           <div className="logout">
-            <button className="logout" onClick={handleLogout}>Logout</button>
+            <button className="logout" onClick={handleLogout}>
+              Logout
+            </button>
           </div>
         )}
       </div>
+      {isSignupModalOpen && (
+        <SignupByEmail
+          closeModal={closeSignupModal}
+          setLoggedIn={setLoggedIn}
+          onSignupSuccess={handleSignupSuccess}
+        />
+      )}
     </div>
   );
 }

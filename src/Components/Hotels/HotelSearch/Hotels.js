@@ -2,12 +2,12 @@ import React, { useEffect, useState } from "react";
 import "./hotels.css";
 import { CiLocationOn } from "react-icons/ci";
 import { IoPersonOutline } from "react-icons/io5";
-import Navbar from "../Navbar/Navbar";
 import DatePicker from "react-datepicker";
 import { MdOutlineCalendarMonth } from "react-icons/md";
 import "react-datepicker/dist/react-datepicker.css";
 import moment from "moment";
 import { useNavigate } from "react-router-dom";
+import Navbar from "../../Navbar/Navbar";
 
 export default function Hotels(props) {
   const [hotelData, setHotelData] = useState(null);
@@ -16,8 +16,6 @@ export default function Hotels(props) {
   const navigate = useNavigate();
 
   const [offerImage, setOfferImage] = useState([]);
-
-
   const [currentOfferIndex, setCurrentOfferIndex] = useState(0);
 
   useEffect(() => {
@@ -57,10 +55,8 @@ export default function Hotels(props) {
     // console.log(data);
     console.log(data?.data?.hotels);
     setHotelData(data?.data?.hotels);
-    // console.log(hotelData);
-
-    // Pass the hotelData to the HotelResult component
-    navigate("/hotelResult", { state: { hotelData11: data?.data?.hotels } });
+    
+    navigate("/hotelResult", { state: { hotelData11: data?.data?.hotels, loc: searchParameter} });
   }
 
   async function OfferApi() {
@@ -146,11 +142,26 @@ export default function Hotels(props) {
           <div className="hotel-offer-carousel">
             <div className="offer-carousel">
               {offerImage.map((item, index) => (
-                <div key={index} style={{ display: index === currentOfferIndex ? 'block' : 'none' }}>
+                <div
+                  key={index}
+                  style={{
+                    display: index === currentOfferIndex ? "block" : "none",
+                  }}
+                >
                   <img src={item.heroUrl} alt={`Offer Image ${index + 1}`} />
                   <div className="text-indide-image">{item.pTl}</div>
                 </div>
               ))}
+            </div>
+            <div className="More-offers">
+              <h3>More Offers</h3>
+              <div>View all</div>
+            </div>
+            <div className="offers-hardcoded">
+              <div className="offers-hardcoded-1st">Extra saving with Flipkart Axis bank cards!</div>
+              <div className="offers-hardcoded-2nd">Get 4% additional cashback on all transections.</div>
+              <div className="offers-hardcoded-3rd">Know more</div>
+            
             </div>
           </div>
         </div>

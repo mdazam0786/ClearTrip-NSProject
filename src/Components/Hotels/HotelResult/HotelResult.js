@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
-import HotelResultCard from "./HotelResultCard";
+import HotelResultCart from "./HotelResultCart";
 import { useLocation, useNavigate } from "react-router-dom";
 import { IoIosSearch } from "react-icons/io";
+import { CiLocationOn } from "react-icons/ci";
 import { LuBadgePercent } from "react-icons/lu";
 import { FaRegStar } from "react-icons/fa";
 import { GrLocation } from "react-icons/gr";
 import Modal from "react-modal";
 
-import { act } from "react-dom/test-utils";
 
 export default function HotelResult(props) {
   const [hotelId, setHotelId] = useState(null);
@@ -24,18 +24,30 @@ export default function HotelResult(props) {
   const navigate = useNavigate();
 
   const location = useLocation();
+  const [hotelData1, setHotelData1] = useState(location.state?.hotelData11);
+  const searchParameter = location.state?.loc;
+  console.log(searchParameter);
 
+  
   const [dropdownValue, setDropdownValue] = useState("");
   const [dropdownValueRating, setDropdownValueRating] = useState("");
   const [dropdownValuePrice, setDropdownValuePrice] = useState("");
   const [starRating, setStarRating] = useState(null);
-  const [hotelData1, setHotelData1] = useState(location.state?.hotelData11);
-
   
-
+  console.log(hotelData1);
+  
+  var readFromApi =0;
   const handleChange = (event) => {
     setDropdownValue(event.target.value);
-    sortBasedOnPrice(event.target.value);
+    console.log(event.target.value);
+    console.log(dropdownValue);
+    if(readFromApi===1) {
+      SortByPrice(event.target.value);
+    }
+    else{
+      sortBasedOnPrice(event.target.value);
+
+    }
   };
 
   const handleChangeRating = (event) => {
@@ -234,6 +246,42 @@ export default function HotelResult(props) {
 
     navigate(`/hotelDescription`, { state: { hotelDetailsData1: data?.data,starRating: starRating } });
   }
+
+
+
+
+  // const [sortedHotelData, setSortedHotelData] = useState(null);
+
+
+  async function SortByPrice(e) {
+    
+
+    console.log("getting hotels data low to high");
+    var Url = null;
+    console.log(e)
+    if(e === '4'){
+      Url = `https://academics.newtonschool.co/api/v1/bookingportals/hotel?search={"location":"${searchParameter}"}&sort={"price":1}`;
+
+    }
+    else {
+      Url = `https://academics.newtonschool.co/api/v1/bookingportals/hotel?search={"location":"${searchParameter}"}&sort={"price":-1}`;
+
+    }
+
+    console.log(Url);
+    const response = await fetch(Url, {
+      method: "GET",
+      headers: { projectID: "f104bi07c490" },
+    });
+    const data = await response.json();
+    console.log(response);
+    console.log(data);
+    console.log(data?.data?.hotels);
+    setHotelData1(data?.data?.hotels);
+    
+  }
+
+  
 
   useEffect(() => {
     console.log("Azam");
@@ -513,7 +561,7 @@ export default function HotelResult(props) {
               Apicall(item._id);
             }}
           >
-            <HotelResultCard
+            <HotelResultCart
               image={item.images[0]}
               amenities={item.amenities}
               name={item.name}

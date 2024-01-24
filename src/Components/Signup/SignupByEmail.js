@@ -4,13 +4,13 @@ import { RxCross1 } from "react-icons/rx";
 import Modal from "react-modal";
 import { Link } from "react-router-dom";
 
-
-export default function SignupByEmail({ closeModal }) {
+export default function SignupByEmail({ closeModal, setLoggedIn, onSignupSuccess }) {
   const [slide, setSlide] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(true);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   const changeName = (e) => {
     setName(e.target.value);
@@ -38,24 +38,35 @@ export default function SignupByEmail({ closeModal }) {
 
   async function Apicall() {
     const Url = `https://academics.newtonschool.co/api/v1/bookingportals/signup`;
-    const response = await fetch(Url, {
-      method: "POST",
-      headers: {
-        projectId: "f104bi07c490",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        name: name,
-        email: email,
-        password: password,
-        appType: "bookingportals",
-      }),
-    });
+    try {
+      const response = await fetch(Url, {
+        method: "POST",
+        headers: {
+          projectId: "f104bi07c490",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: name,
+          email: email,
+          password: password,
+          appType: "bookingportals",
+        }),
+      });
 
-    const data = await response.json();
-    console.log(response);
-    console.log(data);
-    closeModal();
+      if (response.ok) {
+        const data = await response.json();
+        console.log(data);
+        setLoggedIn(true);
+        closeSignupModal();
+        onSignupSuccess();
+      } else if (response.status === 400) {
+        const errorData = await response.json();
+        setError(errorData.message);
+      }
+    } catch (error) {
+      console.error("Error fetching data: ", error);
+      setError("Error fetching data: ", error.message);
+    }
   }
 
   return (
@@ -90,7 +101,7 @@ export default function SignupByEmail({ closeModal }) {
         </div>
         <div className="signup-right">
           <div className="signup-container">
-            <div className="close-button" onClick={closeModal}>
+            <div className="close-button" onClick={closeSignupModal}>
               <RxCross1 />
             </div>
             <div className="signup-form">
@@ -119,6 +130,7 @@ export default function SignupByEmail({ closeModal }) {
                     onChange={changePassword}
                   />
                 </div>
+                {error && <div className="error-message">{error}</div>}
                 <button
                   type="submit"
                   className="signup-btn"
@@ -126,13 +138,6 @@ export default function SignupByEmail({ closeModal }) {
                 >
                   Signup
                 </button>
-
-                {/* for more efficient code  in future */}
-                {/* <a href="/Login">
-                <h3 className="btn-below-text">
-                  Already SignedUp Please Login.
-                </h3>
-                </a> */}
               </div>
               <div className="signup-agreement">
                 <div className="bor-color"></div>
