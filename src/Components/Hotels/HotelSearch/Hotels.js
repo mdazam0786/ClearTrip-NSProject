@@ -62,7 +62,6 @@ export default function Hotels(props) {
   async function OfferApi() {
     console.log("getting offers");
 
-    const limit = 100;
 
     const Url = `https://academics.newtonschool.co/api/v1/bookingportals/offers?limit=10`;
 

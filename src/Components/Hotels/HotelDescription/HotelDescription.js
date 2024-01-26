@@ -3,11 +3,25 @@ import { Link, useLocation } from "react-router-dom";
 import "./hotelDescription.css";
 import RoomDetail from "../Rooms/RoomDetail";
 import { FaTripadvisor } from "react-icons/fa";
+import PoolIcon from "@mui/icons-material/Pool";
+import { MdOutlineRestaurant } from "react-icons/md";
+import FitnessCenterSharpIcon from "@mui/icons-material/FitnessCenterSharp";
+import { MdLocalBar } from "react-icons/md";
+import { FaSpa, FaWifi } from "react-icons/fa";
 
 export default function HotelDesription(props) {
   const location = useLocation();
   const detailsData = location.state?.hotelDetailsData1 || [];
   var starRating = location.state?.starRating || undefined;
+
+  const amenityIcons = {
+    Gym: <FitnessCenterSharpIcon />,
+    "Swimming Pool": <PoolIcon />,
+    Spa: <FaSpa />,
+    Bar: <MdLocalBar />,
+    Restaurant: <MdOutlineRestaurant />,
+    "Free WiFi": <FaWifi />,
+  };
 
   const getRandom = (min, max) => {
     min = Math.min(min);
@@ -46,7 +60,7 @@ export default function HotelDesription(props) {
           <div className="description-heading-content">Rooms</div>
         </Link>
       </div>
-
+      <div className="hotel-desc-border"></div>
       <div className="hotel-desc">
         <div className="hotel-desc-left">
           <h1>{detailsData.name}</h1>
@@ -139,21 +153,17 @@ export default function HotelDesription(props) {
               ) : null}
             </div>
           </div>
-          {/* <div>
-            <h2>Amenities</h2>
-            <div className="amenities-data">
-              <div>{detailsData.amenities}</div>
-            </div>
-          </div> */}
           <div>
             <h2>Amenities</h2>
             <div className="amenities-data">
               {detailsData.amenities.map((item, index) => (
-                <div key={index}>{item}</div>
+                <div key={index} className="amenity-item">
+                  {amenityIcons[item]}{" "}
+                  <span className="amenity-text">{item}</span>
+                </div>
               ))}
             </div>
           </div>
-          {/* <h2>{detailsData.houseRules[1]}</h2> */}
         </div>
         <div className="hotel-desc-right">
           <div className="hotel-desc-img">
@@ -162,6 +172,26 @@ export default function HotelDesription(props) {
               alt={detailsData.name}
               className="description-image"
             />
+          </div>
+          <div className="hotel-desc-price">
+            <div className="hotel-desc-detailsPrice">
+              <strong>
+                {detailsData?.rooms[0].costPerNight <
+                detailsData?.rooms[0].costDetails.baseCost
+                  ? detailsData?.rooms[0].costPerNight
+                  : detailsData?.rooms[0].costDetails.baseCost}
+              </strong>
+              <span>{detailsData.rooms[0].costDetails.taxesAndFees}</span>
+              <strong>
+                {detailsData.rooms[0].costDetails.baseCost >
+                detailsData.rooms[0].costPerNight
+                  ? detailsData.rooms[0].costDetails.baseCost
+                  : detailsData.rooms[0].costPerNight}
+              </strong>
+            </div>
+            <div>
+              <button className="select-room">Select room</button>
+            </div>
           </div>
         </div>
       </div>

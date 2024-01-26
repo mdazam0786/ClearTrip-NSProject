@@ -8,7 +8,6 @@ import { FaRegStar } from "react-icons/fa";
 import { GrLocation } from "react-icons/gr";
 import Modal from "react-modal";
 
-
 export default function HotelResult(props) {
   const [hotelId, setHotelId] = useState(null);
   const [hotelDetails, setHotelDetails] = useState(null);
@@ -28,25 +27,22 @@ export default function HotelResult(props) {
   const searchParameter = location.state?.loc;
   console.log(searchParameter);
 
-  
   const [dropdownValue, setDropdownValue] = useState("");
   const [dropdownValueRating, setDropdownValueRating] = useState("");
   const [dropdownValuePrice, setDropdownValuePrice] = useState("");
   const [starRating, setStarRating] = useState(null);
-  
+
   console.log(hotelData1);
-  
-  var readFromApi =0;
+
+  var readFromApi = 0;
   const handleChange = (event) => {
     setDropdownValue(event.target.value);
     console.log(event.target.value);
     console.log(dropdownValue);
-    if(readFromApi===1) {
+    if (readFromApi === 1) {
       SortByPrice(event.target.value);
-    }
-    else{
+    } else {
       sortBasedOnPrice(event.target.value);
-
     }
   };
 
@@ -62,43 +58,38 @@ export default function HotelResult(props) {
 
   function getMultipleRandom(arr, num) {
     const shuffled = [...arr].sort(() => 0.5 - Math.random());
-  
+
     return shuffled.slice(0, num);
   }
-  
 
-  const handleFiveStarRating = () => { 
+  const handleFiveStarRating = () => {
     setStarRating("5");
-    var res=getMultipleRandom(hotelData1, 8);
-    const res1=[...new Set(res)];
+    var res = getMultipleRandom(hotelData1, 8);
+    const res1 = [...new Set(res)];
     setHotelData1(res1);
-  }
-  const handleFourStarRating = () => { 
+  };
+  const handleFourStarRating = () => {
     setStarRating("4");
-    var res=getMultipleRandom(hotelData1, 10);
-    const res1=[...new Set(res)];
+    var res = getMultipleRandom(hotelData1, 10);
+    const res1 = [...new Set(res)];
     setHotelData1(res1);
-  }
-  const handleThreeStarRating = () => { 
+  };
+  const handleThreeStarRating = () => {
     setStarRating("3");
-    var res=getMultipleRandom(hotelData1, 15);
-    const res1=[...new Set(res)];
+    var res = getMultipleRandom(hotelData1, 15);
+    const res1 = [...new Set(res)];
     setHotelData1(res1);
-
-  }
-
+  };
 
   function handleRatingFourPointFiveandAbove() {
-    console.log("Azam")
+    console.log("Azam");
     setHotelData1(sortBasedOnRating("2"));
   }
   function handleRatingFourandAbove() {
     setHotelData1(sortBasedOnRating("3"));
-
   }
   function handleRatingThreePointFiveandAbove() {
     setHotelData1(sortBasedOnRating("4"));
-
   }
   function handleRatingThreeandAbove() {
     setHotelData1(sortBasedOnRating("5"));
@@ -244,28 +235,21 @@ export default function HotelResult(props) {
     setHotelDetails(data?.data);
     // console.log(hotelData);
 
-    navigate(`/hotelDescription`, { state: { hotelDetailsData1: data?.data,starRating: starRating } });
+    navigate(`/hotelDescription`, {
+      state: { hotelDetailsData1: data?.data, starRating: starRating },
+    });
   }
-
-
-
 
   // const [sortedHotelData, setSortedHotelData] = useState(null);
 
-
   async function SortByPrice(e) {
-    
-
     console.log("getting hotels data low to high");
     var Url = null;
-    console.log(e)
-    if(e === '4'){
+    console.log(e);
+    if (e === "4") {
       Url = `https://academics.newtonschool.co/api/v1/bookingportals/hotel?search={"location":"${searchParameter}"}&sort={"price":1}`;
-
-    }
-    else {
+    } else {
       Url = `https://academics.newtonschool.co/api/v1/bookingportals/hotel?search={"location":"${searchParameter}"}&sort={"price":-1}`;
-
     }
 
     console.log(Url);
@@ -278,10 +262,7 @@ export default function HotelResult(props) {
     console.log(data);
     console.log(data?.data?.hotels);
     setHotelData1(data?.data?.hotels);
-    
   }
-
-  
 
   useEffect(() => {
     console.log("Azam");
@@ -382,13 +363,25 @@ export default function HotelResult(props) {
                     <div className="modal-rating">
                       <h3>Guest rating</h3>
                       <div className="modal-deal-check">
-                        <input type="checkbox" onChange={handleRatingFourPointFiveandAbove}/>
+                        <input
+                          type="checkbox"
+                          onChange={handleRatingFourPointFiveandAbove}
+                        />
                         <div>4.5 & above</div>
-                        <input type="checkbox" onChange={handleRatingFourandAbove}/>
+                        <input
+                          type="checkbox"
+                          onChange={handleRatingFourandAbove}
+                        />
                         <div>4 & above</div>
-                        <input type="checkbox" onChange={handleRatingThreePointFiveandAbove}/>
+                        <input
+                          type="checkbox"
+                          onChange={handleRatingThreePointFiveandAbove}
+                        />
                         <div>3.5 & above</div>
-                        <input type="checkbox" onChange={handleRatingThreeandAbove}/>
+                        <input
+                          type="checkbox"
+                          onChange={handleRatingThreeandAbove}
+                        />
                         <div>3 & above</div>
                       </div>
                     </div>
@@ -553,6 +546,7 @@ export default function HotelResult(props) {
           <input type="text" />
         </div>
       </div>
+      <div className="Number-countOfResult">{hotelData1?.length}<span className="Number-countOfResultOfSpan"> of {hotelData1?.length} hotels in {searchParameter}</span></div>
       <div className="result-section-container2">
         {hotelData1.map((item) => (
           <div
