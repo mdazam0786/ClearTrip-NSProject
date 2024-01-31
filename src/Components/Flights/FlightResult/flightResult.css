@@ -1,0 +1,86 @@
+.resultPage-main-div {
+  display: flex;
+  justify-content: center;
+  border-top: 1px solid rgb(206, 199, 199);
+  margin-top: 15px;
+}
+.resultPage-main-div .row {
+  width: 100vw;
+  display: flex;
+  gap: 10px;
+  margin: 0 30px;
+}
+.column1 {
+  width: 20%;
+  height: 400px;
+  margin: auto;
+  border: 1px solid rgb(206, 199, 199);
+  padding: 0 8px;
+  z-index: 20;
+  position: relative;
+  top: 20px;
+}
+.aside-left {
+  height: 100%;
+  width: 100%;
+  margin-bottom: 70px;
+}
+
+
+
+.column2 {
+  width: calc(80% - 1px);
+  margin: auto;
+  height: 400px;
+  border: 1px solid rgb(206, 199, 199);
+}
+
+.custom-dropdown {
+  width: 100%;  
+  position: relative;
+  cursor: pointer;
+}
+
+.dropdown-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  padding: 5px;
+}
+.dropdown-content {
+  width: 100%;
+  margin-top: -5px;
+  display: none;
+  position: relative;
+  top: calc(100% + 5px);
+  left: 0;
+  z-index: 1;
+}
+.dropdown-content-box {
+  padding: 5px;
+  padding-left: 0;
+  display: flex;
+  align-items: center;
+  
+}
+.label-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 40px;
+}
+.dropdown-value{
+  color: #494949 ;
+  margin-left: 10px;
+}
+.right-align {
+  margin-left: auto;
+}
+
+.input-checkbox{
+  width: 20px;
+  height: 20px;
+}
+.custom-dropdown.active .dropdown-content {
+  display: block;
+}

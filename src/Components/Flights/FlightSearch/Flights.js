@@ -25,12 +25,10 @@ export default function Flights() {
 
   useEffect(() => {
     const intervalId = setInterval(() => {
-      setCurrentOfferIndex((prevIndex) => (prevIndex + 1) % offerImage.length)
+      setCurrentOfferIndex((prevIndex) => (prevIndex + 1) % offerImage.length);
     }, 5000);
     return () => clearInterval(intervalId);
-  },[offerImage.length]); 
-
-
+  }, [offerImage.length]);
 
   const handleSearch = (e) => {
     console.log("Azam");
@@ -43,6 +41,27 @@ export default function Flights() {
     setSearchDestination(e.target.value);
   };
 
+  async function airport() {
+    console.log("getting offers");
+
+    const limit = 100;
+
+    const Url = `https://academics.newtonschool.co/api/v1/bookingportals/offers?limit=10`;
+
+    console.log(Url);
+    const response = await fetch(Url, {
+      method: "GET",
+      headers: { projectID: "f104bi07c490" },
+    });
+    const data = await response.json();
+    // console.log(response);
+    // console.log(data);
+    console.log(data?.data?.offers);
+    setOfferImage(data?.data?.offers);
+
+    console.log(offerImage);
+  }
+
   async function Apicall() {
     console.log("getting flights");
     console.log(selectedDay);
@@ -54,12 +73,12 @@ export default function Flights() {
 
     const limit = 100;
 
-    const Url = `https://academics.newtonschool.co/api/v1/bookingportals/flight/?search={"source":"${searchSource}","destination":"${searchDestination}"}&day="${formattedDay}&limit=${limit}`;
+    const Url = `https://academics.newtonschool.co/api/v1/bookingportals/flight/?search={"source":"${searchSource[0]}","destination":"${searchDestination[0]}"}&day="${formattedDay}&limit=${limit}`;
 
     console.log(Url);
     const response = await fetch(Url, {
       method: "GET",
-      headers: { projectID: "f104bi07c490" },
+      headers: { projectID: "wan6hnsnhwfn" },
     });
     const data = await response.json();
     // console.log(response);
@@ -67,13 +86,18 @@ export default function Flights() {
     console.log(data?.data?.flights);
     setFlightData(data?.data?.flights);
 
-    navigate("/flightResult", { state: { flightDataSearch: data?.data?.flights, loc: searchSource, loc2: searchDestination} });
+    navigate("/flightResult", {
+      state: {
+        flightDataSearch: data?.data?.flights,
+        loc: searchSource,
+        loc2: searchDestination,
+      },
+    });
   }
 
   // useEffect(() => {
   //   Apicall();
   // }, []);
-
 
   async function OfferApi() {
     console.log("getting offers");
@@ -99,7 +123,6 @@ export default function Flights() {
   useEffect(() => {
     OfferApi();
   }, []);
-
 
   return (
     <div>

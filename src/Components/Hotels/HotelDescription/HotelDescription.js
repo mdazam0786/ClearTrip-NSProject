@@ -12,8 +12,12 @@ import { FaSpa, FaWifi } from "react-icons/fa";
 export default function HotelDesription(props) {
   const location = useLocation();
   const detailsData = location.state?.hotelDetailsData1 || [];
-  var starRating = location.state?.starRating || undefined;
+  const starRating = location.state?.starRating || undefined;
+  const calDiscount = location.state?.calDiscount || undefined;
 
+  console.log(calDiscount);
+
+  
   const amenityIcons = {
     Gym: <FitnessCenterSharpIcon />,
     "Swimming Pool": <PoolIcon />,
@@ -175,19 +179,24 @@ export default function HotelDesription(props) {
           </div>
           <div className="hotel-desc-price">
             <div className="hotel-desc-detailsPrice">
-              <strong>
+              <strong>&#8377;
                 {detailsData?.rooms[0].costPerNight <
                 detailsData?.rooms[0].costDetails.baseCost
                   ? detailsData?.rooms[0].costPerNight
                   : detailsData?.rooms[0].costDetails.baseCost}
               </strong>
-              <span>{detailsData.rooms[0].costDetails.taxesAndFees}</span>
-              <strong>
-                {detailsData.rooms[0].costDetails.baseCost >
-                detailsData.rooms[0].costPerNight
-                  ? detailsData.rooms[0].costDetails.baseCost
-                  : detailsData.rooms[0].costPerNight}
-              </strong>
+              <span> + &#8377;{detailsData.rooms[0].costDetails.taxesAndFees} per/night</span>
+              
+              <div className="hotel-desc-ActualPrice">
+                
+                <strong>&#8377;
+                  {detailsData.rooms[0].costDetails.baseCost >
+                  detailsData.rooms[0].costPerNight
+                    ? detailsData.rooms[0].costDetails.baseCost
+                    : detailsData.rooms[0].costPerNight}
+                </strong>
+                <div>{calDiscount}</div>
+              </div>
             </div>
             <div>
               <button className="select-room">Select room</button>
