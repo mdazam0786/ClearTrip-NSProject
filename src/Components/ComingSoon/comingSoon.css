@@ -1,0 +1,30 @@
+.coming-soon {
+    margin-left: 250px !important;
+    position: relative;
+    bottom: 26em;
+    width: 80%;
+    margin: auto;
+    margin-top: 50px;
+    text-align: center;
+}
+
+.show-message h1 {
+    font-size: 40px;
+    animation: fadeIn 1s ease-out infinite;
+    background: linear-gradient( #c5bd47, #cc2ecc, #ee220c); 
+    -webkit-background-clip: text; 
+    color: transparent; 
+  }
+  
+  @keyframes fadeIn {
+    
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}

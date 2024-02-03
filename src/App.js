@@ -9,6 +9,7 @@ import HotelResult from "./Components/Hotels/HotelResult/HotelResult";
 import HotelDesription from "./Components/Hotels/HotelDescription/HotelDescription";
 import FlightResult from "./Components/Flights/FlightResult/FlightResult";
 import Flights from "./Components/Flights/FlightSearch/Flights";
+import ComingSoon from "./Components/ComingSoon/ComingSoon";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Routes>
           <Route exact path="/" element={<Flights />} />
           <Route exact path="/flights" element={<Flights />} />
+          <Route exact path="/comingSoon" element={<ComingSoon />} />
           <Route exact path="/flightResult" element={<FlightResult />} />
           <Route exact path="/hotels" element={<Hotels />} />
           <Route exact path="/hotelResult" element={<HotelResult />} />

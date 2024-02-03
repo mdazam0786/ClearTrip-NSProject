@@ -37,7 +37,7 @@ export default function Navbar() {
             </Link>
           </li>
           <li>
-            <Link to="/hotels" className="nav-link">
+            <Link to="/comingSoon" className="nav-link">
               <MdOutlineDirectionsBus
                 style={{
                   marginRight: "10px",
@@ -52,7 +52,7 @@ export default function Navbar() {
             </Link>
           </li>
           <li>
-            <Link to="/hotels" className="nav-link">
+            <Link to="/comingSoon" className="nav-link">
               <BiSolidOffer
                 style={{
                   marginRight: "10px",
@@ -62,7 +62,7 @@ export default function Navbar() {
             </Link>
           </li>
           <li>
-            <Link to="/hotels" className="nav-link">
+            <Link to="/comingSoon" className="nav-link">
               <TfiBag
                 style={{
                   marginRight: "10px",
@@ -72,7 +72,7 @@ export default function Navbar() {
             </Link>
           </li>
           <li>
-            <Link to="/hotels" className="nav-link">
+            <Link to="/comingSoon" className="nav-link">
               <IoMdStar
                 style={{
                   marginRight: "10px",
@@ -82,7 +82,7 @@ export default function Navbar() {
             </Link>
           </li>
           <li>
-            <Link to="/hotels" className="nav-link">
+            <Link to="/comingSoon" className="nav-link">
               <BiSupport
                 style={{
                   marginRight: "10px",
