@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import FlightResultCart from "./FlightResultCart";
 import { useLocation } from "react-router-dom";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
@@ -8,7 +8,10 @@ export default function FlightResult(props) {
   const location = useLocation();
   const flightDataResult = location.state?.flightDataSearch || [];
 
-  const [price, setPrice] = useState(50); // Initial price value
+  const minPrice = 5202;
+  const maxPrice = 63536;
+
+  const [price, setPrice] = useState(maxPrice);
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
   const [isDropdownVisible2, setIsDropdownVisible2] = useState(false);
 
@@ -21,13 +24,8 @@ export default function FlightResult(props) {
   };
 
   const handlePriceChange = (event) => {
-    setPrice(event.target.value);
+    setPrice(parseInt(event.target.value)); 
   };
-
-  useEffect(() => {
-    console.log("Gazala");
-    console.log(flightDataResult);
-  }, [FlightResultCart]);
 
   return (
     <main className="resultPage-main-div">
@@ -167,19 +165,27 @@ export default function FlightResult(props) {
                 </div>
               </div>
             </div>
-
-            <div>
-              <label htmlFor="priceRange">Price Range:</label>
-              <input
-                type="range"
-                id="priceRange"
-                name="priceRange"
-                min="0"
-                max="100"
-                value={price}
-                onChange={handlePriceChange}
-              />
-              <p>Selected Price: ${price}</p>
+            <div
+              className={`custom-dropdown ${isDropdownVisible ? "active" : ""}`}
+            >
+              <div className="dropdown-header" onClick={toggleDropdown}>
+                <h4>One-wap price</h4>
+                <KeyboardArrowUpIcon />
+              </div>
+              <div className="dropdown-content">
+                <div className="dropdown-content-box">
+                  <p>Up to &#8377;{price}</p>
+                  <input
+                    type="range"
+                    id="priceRange"
+                    name="priceRange"
+                    min={minPrice}
+                    max={maxPrice}
+                    value={price}
+                    onChange={handlePriceChange}
+                  />
+                </div>
+              </div>
             </div>
           </aside>
         </div>

@@ -12,7 +12,6 @@
 }
 .column1 {
   width: 20%;
-  height: 400px;
   margin: auto;
   border: 1px solid rgb(206, 199, 199);
   padding: 0 8px;
@@ -67,7 +66,8 @@
 .label-container {
   display: flex;
   justify-content: space-between;
-  gap: 40px;
+  align-items: center;
+  gap: 30px;
 }
 .dropdown-value{
   color: #494949 ;
