@@ -15,9 +15,12 @@ import { useNavigate } from "react-router-dom";
 
 export default function Flights() {
   const [flightData, setFlightData] = useState(null);
-  const [searchSource, setSearchSource] = useState(null);
-  const [searchDestination, setSearchDestination] = useState(null);
+  const [Airports, setAirports] = useState([]);
+  const [searchSource, setSearchSource] = useState("");
+  const [searchDestination, setSearchDestination] = useState("");
   const [selectedDay, setSelectedDay] = useState("");
+  const [showDropdown, setShowDropdown] = useState(false);
+  const [showDropdown2, setShowDropdown2] = useState(false);
   const navigate = useNavigate();
 
   const [offerImage, setOfferImage] = useState([]);
@@ -31,93 +34,112 @@ export default function Flights() {
   }, [offerImage.length]);
 
   const handleSearch = (e) => {
-    console.log("Azam");
-    console.log(e.target.value);
     setSearchSource(e.target.value);
+    setShowDropdown(true);
   };
 
   const handleSearchDestination = (e) => {
-    console.log(e.target.value);
     setSearchDestination(e.target.value);
+    setShowDropdown2(true);
   };
 
-  async function airport() {
-    console.log("getting offers");
+  const handleAirportSelection = (airport) => {
+    setSearchSource(`${airport.iata_code} - ${airport.name}`);
+    setShowDropdown(false);
+  };
 
-    const limit = 100;
+  const handleAirportSelection2 = (airport) => {
+    setSearchDestination(`${airport.iata_code} - ${airport.name}`);
+    setShowDropdown2(false);
+  };
 
-    const Url = `https://academics.newtonschool.co/api/v1/bookingportals/offers?limit=10`;
-
-    console.log(Url);
-    const response = await fetch(Url, {
-      method: "GET",
-      headers: { projectID: "f104bi07c490" },
-    });
-    const data = await response.json();
-    // console.log(response);
-    // console.log(data);
-    console.log(data?.data?.offers);
-    setOfferImage(data?.data?.offers);
-
-    console.log(offerImage);
-  }
+  useEffect(() => {
+    async function fetchAirports() {
+      try {
+        const url = `https://academics.newtonschool.co/api/v1/bookingportals/airport`;
+        const response = await fetch(url, {
+          method: "GET",
+          headers: { projectID: "f104bi07c490" },
+        });
+        if (!response.ok) {
+          throw new Error("Failed to fetch airports");
+        }
+        const data = await response.json();
+        console.log(data?.data?.airports);
+        if (data && data.data && Array.isArray(data.data.airports)) {
+          setAirports(data.data.airports);
+        }
+      } catch (error) {
+        console.error("Error fetching airports:", error);
+      }
+    }
+    fetchAirports();
+  }, []);
 
   async function Apicall() {
-    console.log("getting flights");
-    console.log(selectedDay);
+    try {
+      console.log("Getting flights");
 
-    const formattedDay = selectedDay
-      ? moment(selectedDay).format("dddd").substring(0, 3)
-      : "";
-    console.log(formattedDay);
+      const formattedDay = selectedDay
+        ? moment(selectedDay).format("dddd").substring(0, 3)
+        : "";
+      console.log(formattedDay);
 
-    const limit = 100;
+      const limit = 100;
 
-    const Url = `https://academics.newtonschool.co/api/v1/bookingportals/flight/?search={"source":"${searchSource[0]}","destination":"${searchDestination[0]}"}&day="${formattedDay}&limit=${limit}`;
+      const url = `https://academics.newtonschool.co/api/v1/bookingportals/flight/?search={"source":"${searchSource}","destination":"${searchDestination}"}&day=${formattedDay}&limit=${limit}`;
 
-    console.log(Url);
-    const response = await fetch(Url, {
-      method: "GET",
-      headers: { projectID: "wan6hnsnhwfn" },
-    });
-    const data = await response.json();
-    // console.log(response);
-    // console.log(data);
-    console.log(data?.data?.flights);
-    setFlightData(data?.data?.flights);
+      console.log(url);
 
-    navigate("/flightResult", {
-      state: {
-        flightDataSearch: data?.data?.flights,
-        loc: searchSource,
-        loc2: searchDestination,
-      },
-    });
+      const response = await fetch(url, {
+        method: "GET",
+        headers: { projectID: "wan6hnsnhwfn" },
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch flights");
+      }
+
+      const data = await response.json();
+      console.log(data?.data?.flights);
+
+      setFlightData(data?.data?.flights);
+
+      // Redirect to flight result page with search parameters
+      navigate("/flightResult", {
+        state: {
+          flightDataSearch: data?.data?.flights,
+          loc: searchSource,
+          loc2: searchDestination,
+        },
+      });
+    } catch (error) {
+      console.error("Error fetching flights:", error);
+    }
   }
 
-  // useEffect(() => {
-  //   Apicall();
-  // }, []);
-
   async function OfferApi() {
-    console.log("getting offers");
+    try {
+      console.log("getting offers");
 
-    const limit = 100;
+      const limit = 100;
 
-    const Url = `https://academics.newtonschool.co/api/v1/bookingportals/offers?limit=10`;
+      const Url = `https://academics.newtonschool.co/api/v1/bookingportals/offers?limit=10`;
 
-    console.log(Url);
-    const response = await fetch(Url, {
-      method: "GET",
-      headers: { projectID: "f104bi07c490" },
-    });
-    const data = await response.json();
-    // console.log(response);
-    // console.log(data);
-    console.log(data?.data?.offers);
-    setOfferImage(data?.data?.offers);
-
-    console.log(offerImage);
+      console.log(Url);
+      const response = await fetch(Url, {
+        method: "GET",
+        headers: { projectID: "f104bi07c490" },
+      });
+      if (!response.ok) {
+        throw new Error("Failed to fetch offers");
+      }
+      const data = await response.json();
+      console.log(data?.data?.offers);
+      setOfferImage(data?.data?.offers);
+    } catch (error) {
+      console.error("Error fetching offers:", error);
+    }
   }
 
   useEffect(() => {
@@ -128,7 +150,6 @@ export default function Flights() {
     <div>
       <Navbar />
 
-      {/* flight-section  */}
       <div className="flight-section">
         <div className="flight-main-section">
           <div className="flight-left">
@@ -137,9 +158,7 @@ export default function Flights() {
               <p>Enjoy hassle free bookings with Cleartrip</p>
             </div>
 
-            {/* flight-search  */}
             <div className="flight-search">
-              {/* 1-> select-way  */}
               <div className="select-way">
                 <div className="icon-select-wrapper">
                   <IoIosArrowRoundForward className="icon" />
@@ -159,7 +178,6 @@ export default function Flights() {
                 </div>
               </div>
 
-              {/* 2-> select-catogories  */}
               <div className="select-catogories">
                 <div>Regular fare</div>
                 <div>Student fare</div>
@@ -167,15 +185,30 @@ export default function Flights() {
                 <div>Armed forces fare</div>
               </div>
 
-              {/* 3-> select-search-fields  */}
               <div className="select-search-fiels">
                 <div className="select-where-to">
                   <RiFlightTakeoffFill className="flight-icon" />
                   <input
                     type="text"
                     placeholder="Where to?"
+                    list="airportsList"
+                    value={searchSource}
                     onChange={handleSearch}
+                    onClick={() => setShowDropdown(true)}
                   />
+                  {showDropdown && (
+                  <datalist id="airportsList">
+                    {Airports.map((airport, index) => (
+                      <option
+                        key={index}
+                        value={`${airport.iata_code} - ${airport.name}`}
+                        onClick={() => handleAirportSelection(airport)}
+                      >
+                        {`${airport.iata_code} - ${airport.name}`}
+                      </option>
+                    ))}
+                  </datalist>
+                  )}
                 </div>
                 <div className="select-control">
                   <BsArrowLeftRight className="flight-icon2" />
@@ -185,12 +218,26 @@ export default function Flights() {
                   <input
                     type="text"
                     placeholder="Where to?"
+                    value={searchDestination}
                     onChange={handleSearchDestination}
+                    onClick={() => setShowDropdown2(true)}
                   />
+                  {showDropdown2 && (
+                    <div className="airport-dropdown">
+                      {Airports.map((airport, index) => (
+                        <option
+                          key={index}
+                          className="airport-option"
+                          onClick={() => handleAirportSelection2(airport)}
+                        >
+                          {airport.city}
+                        </option>
+                      ))}
+                    </div>
+                  )}
                 </div>
               </div>
 
-              {/* 4->select-option  */}
               <div className="select-option1">
                 <div className="calender1">
                   <MdOutlineCalendarMonth className="hotel-icon" />
@@ -207,7 +254,10 @@ export default function Flights() {
               </div>
             </div>
             <div className="cancel-information">
-              <img src="https://www.cleartrip.com/offermgmt/hotelsCommonImages/cfnr/cfnr-home-banner.jpeg" />
+              <img
+                src="https://www.cleartrip.com/offermgmt/hotelsCommonImages/cfnr/cfnr-home-banner.jpeg"
+                alt="Offer Banner"
+              />
             </div>
           </div>
           <div className="flight-offer-carousel">
@@ -233,7 +283,7 @@ export default function Flights() {
                 Extra saving with Flipkart Axis bank cards!
               </div>
               <div className="offers-hardcoded-2nd">
-                Get 4% additional cashback on all transections.
+                Get 4% additional cashback on all transactions.
               </div>
               <div className="offers-hardcoded-3rd">Know more</div>
             </div>
@@ -241,13 +291,22 @@ export default function Flights() {
         </div>
         <div className="bank-offer">
           <div>
-            <img src="https://fastui.cltpstatic.com/image/upload/f_auto,q_auto,w_235,h_122,dpr_2/offermgmt/images/banner/BSB_SBI_F_1811.jpg" />
+            <img
+              src="https://fastui.cltpstatic.com/image/upload/f_auto,q_auto,w_235,h_122,dpr_2/offermgmt/images/banner/BSB_SBI_F_1811.jpg"
+              alt="Bank Offer 1"
+            />
           </div>
           <div>
-            <img src="https://fastui.cltpstatic.com/image/upload/f_auto,q_auto,w_235,h_122,dpr_2/offermgmt/images/banner/BSB_SBI2_F_1811.jpg" />
+            <img
+              src="https://fastui.cltpstatic.com/image/upload/f_auto,q_auto,w_235,h_122,dpr_2/offermgmt/images/banner/BSB_SBI2_F_1811.jpg"
+              alt="Bank Offer 2"
+            />
           </div>
           <div>
-            <img src="https://fastui.cltpstatic.com/image/upload/f_auto,q_auto,w_235,h_122,dpr_2/offermgmt/images/banner/BSB_ONECARD_F_1811.jpg" />
+            <img
+              src="https://fastui.cltpstatic.com/image/upload/f_auto,q_auto,w_235,h_122,dpr_2/offermgmt/images/banner/BSB_ONECARD_F_1811.jpg"
+              alt="Bank Offer 3"
+            />
           </div>
         </div>
       </div>
