@@ -13,11 +13,9 @@ export default function HotelDesription(props) {
   const location = useLocation();
   const detailsData = location.state?.hotelDetailsData1 || [];
   const starRating = location.state?.starRating || undefined;
-  const calDiscount = location.state?.calDiscount || undefined;
 
   console.log(calDiscount);
 
-  
   const amenityIcons = {
     Gym: <FitnessCenterSharpIcon />,
     "Swimming Pool": <PoolIcon />,
@@ -33,6 +31,16 @@ export default function HotelDesription(props) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   };
   const random = getRandom(3, 5);
+
+  function calDiscount(actualPrice, appliedPrice) {
+    let per;
+    if (actualPrice > appliedPrice) {
+      per = (appliedPrice / actualPrice) * 100;
+    } else {
+      per = (actualPrice / appliedPrice) * 100;
+    }
+    return Math.ceil(100 - per);
+  }
 
   useEffect(() => {
     console.log(detailsData);
@@ -179,23 +187,34 @@ export default function HotelDesription(props) {
           </div>
           <div className="hotel-desc-price">
             <div className="hotel-desc-detailsPrice">
-              <strong>&#8377;
+              <strong>
+                &#8377;
                 {detailsData?.rooms[0].costPerNight <
                 detailsData?.rooms[0].costDetails.baseCost
                   ? detailsData?.rooms[0].costPerNight
                   : detailsData?.rooms[0].costDetails.baseCost}
               </strong>
-              <span> + &#8377;{detailsData.rooms[0].costDetails.taxesAndFees} per/night</span>
-              
-              <div className="hotel-desc-ActualPrice">
-                
-                <strong>&#8377;
+              <span>
+                {" "}
+                + &#8377;{detailsData.rooms[0].costDetails.taxesAndFees} tax /
+                night
+              </span>
+
+              <div className="hotel-cart-content3">
+                <p>
+                  &#8377;
                   {detailsData.rooms[0].costDetails.baseCost >
                   detailsData.rooms[0].costPerNight
                     ? detailsData.rooms[0].costDetails.baseCost
                     : detailsData.rooms[0].costPerNight}
-                </strong>
-                <div>{calDiscount}</div>
+                </p>
+                <p className="percent">
+                  {calDiscount(
+                    detailsData.rooms[0].costPerNight,
+                    detailsData.rooms[0].costDetails.baseCost
+                  )}
+                </p>
+                <p>% off </p>
               </div>
             </div>
             <div>

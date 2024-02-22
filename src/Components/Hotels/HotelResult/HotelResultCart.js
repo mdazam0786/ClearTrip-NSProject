@@ -29,7 +29,7 @@ export default function HotelResultCart(props) {
       </div>
       <div className="hotel-cart-content2">
         <h4>&#8377; {props.baseCost}</h4>
-        <p>+ &#8377;{props.tax} per/night</p>
+        <p>+ &#8377;{props.tax} tax / night</p>
       </div>
       <div className="hotel-cart-content3">
         <p>&#8377;{props.costPerNight} </p>

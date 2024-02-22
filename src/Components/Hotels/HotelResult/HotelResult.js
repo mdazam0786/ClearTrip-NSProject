@@ -236,7 +236,7 @@ export default function HotelResult(props) {
     // console.log(hotelData);
 
     navigate(`/hotelDescription`, {
-      state: { hotelDetailsData1: data?.data, starRating: starRating,  },
+      state: { hotelDetailsData1: data?.data, starRating: starRating },
     });
   }
 
