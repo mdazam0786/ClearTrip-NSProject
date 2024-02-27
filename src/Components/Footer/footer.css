@@ -1,0 +1,9 @@
+.footer-container {
+    width: 100%;
+    background-color: #f7f7f7 ;
+    padding: 20px;
+    margin-top: 0;
+    position: relative; 
+    bottom: 26em; 
+    border-top: 0.1px solid #c4bfbf ;
+}

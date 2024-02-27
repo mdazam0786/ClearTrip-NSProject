@@ -12,6 +12,8 @@ import moment from "moment";
 import { MdOutlineCalendarMonth } from "react-icons/md";
 import FlightResult from "../FlightResult/FlightResult";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+
 
 export default function Flights() {
   const [flightData, setFlightData] = useState(null);
@@ -197,17 +199,17 @@ export default function Flights() {
                     onClick={() => setShowDropdown(true)}
                   />
                   {showDropdown && (
-                  <datalist id="airportsList">
-                    {Airports.map((airport, index) => (
-                      <option
-                        key={index}
-                        value={`${airport.iata_code} - ${airport.name}`}
-                        onClick={() => handleAirportSelection(airport)}
-                      >
-                        {`${airport.iata_code} - ${airport.name}`}
-                      </option>
-                    ))}
-                  </datalist>
+                    <datalist id="airportsList">
+                      {Airports.map((airport, index) => (
+                        <option
+                          key={index}
+                          value={`${airport.iata_code} - ${airport.name}`}
+                          onClick={() => handleAirportSelection(airport)}
+                        >
+                          {`${airport.iata_code} - ${airport.name}`}
+                        </option>
+                      ))}
+                    </datalist>
                   )}
                 </div>
                 <div className="select-control">
@@ -308,6 +310,100 @@ export default function Flights() {
               alt="Bank Offer 3"
             />
           </div>
+        </div>
+        <div className="playstore-link">
+          <img
+            src="https://fastui.cltpstatic.com/image/upload/f_auto,q_auto,w_983,h_247,dpr_2/offermgmt/images/qrCode_7.png"
+            alt="playStore"
+            useMap="#playStoreMap"
+            style={{ width: "100%" }}
+          />
+          <map name="playStoreMap">
+            {/* <area
+              shape="rect"
+              coords="45,195,230,255"
+              href="https://play.google.com/store/apps/details?id=com.cleartrip.android&hl=en_IN&gl=US&_branch_match_id=1260972785907223363&utm_source=Web%20QR&utm_campaign=Web%20QR&utm_medium=inapp&_branch_referrer=H4sIAAAAAAAAA8soKSkottLXT85JTSwqKcos0EssKNDLyczL1jeJSvNzy8pMtyxLAgAL8QsvJgAAAA%3D%3D"
+              alt="Area 1"
+            /> */}
+            <area
+              shape="rect"
+              coords="245,195,435,255"
+              href="https://apps.apple.com/in/app/cleartrip-flights-hotels-bus/id531324961?_branch_match_id=1260972785907223363&utm_source=Web%20QR&utm_campaign=Web%20QR&utm_medium=inapp&_branch_referrer=H4sIAAAAAAAAA8soKSkottLXT85JTSwqKcos0EssKNDLyczL1i%2BtNE8xcEwszShPAgCrFe7NJgAAAA%3D%3D"
+              alt="Right Bottom"
+            />
+          </map>
+        </div>
+
+        <div className="why-cleartrip">
+          <h3>Why Cleartrip?</h3>
+          <p>
+            It is no longer an uphill battle to get the lowest airfare and book
+            tickets online. Cleartrip is all about making travel{" "}
+            <span>easy, affordable </span> and <span>simple.</span> From{" "}
+            <span>international</span> flights to <span>domestic</span>
+            flights; from early morning flights to late night flights, from
+            cheap flights to luxurious ones. Cleartrip helps you complete your
+            flight booking in just a few clicks. Your online flight booking
+            experience is seamless with our features like:
+          </p>
+          <p>
+            <span>ClearChoice Max: </span> Free cancellation or rescheduling for
+            domestic (up to 24 hrs before departure) & international flights (up
+            to 72 hrs before departure).
+          </p>
+          <p>
+            <span>ClearChoice Plus:</span> Free date change or airline change up
+            to 12 hrs (up to 24 hours for Air India*& Vistara*) before
+            departure.
+          </p>
+          <p>
+            <span>Medi-cancel refund:</span> Cancel your domestic flight booking
+            easily on valid medical grounds and get up to ₹3500 against airline
+            cancellation charges per passenger per segment.
+          </p>
+          <p>
+            <span>International travel insurance:</span> Get stress-free
+            coverage against a vast range of uncertainties for all international
+            destinations at only ₹89 per user per day.
+          </p>
+          <p>
+            And with our <span>round-the-clock customer service,</span> we
+            ensure no queries or concerns regarding your flight tickets are left
+            unresolved.
+          </p>
+          <h3>How to make flexible flight bookings with changeable dates?</h3>
+          <p>
+            While making your flight booking, make sure to select the
+            ‘ClearChoice Plus’ or ‘ClearChoice Max’ option before you confirm
+            the air ticket. At a minimal cost, this allows you to modify your
+            flight booking dates and airlines. So in case of any change in
+            plans, Cleartrip has got you covered!
+          </p>
+          <h3>
+            What are the benefits of booking flights online with Cleartrip?
+          </h3>
+          <p>
+            Get the best flight fares with exciting flight offers on your air
+            ticket when you book with Cleartrip. Unmissable sales and deals like
+            Travel Max Sale, Big Travel Sale, Cleartrip Tatkaal, etc. offer
+            never-seen-before discounts that help you book flights at affordable
+            rates. Best flight discounts await you when you book with bank cards
+            like ICICI, Bank of Baroda, HDFC, Axis, Kotak etc.
+          </p>
+          <h3>What’s more?</h3>
+          <p>
+            Flight ticket booking or planning your travel is made simpler with
+            our round trip and multicity options. When you hit enter, your
+            search list page shows the results for both onward and return in a
+            split screen format letting you choose flights in one go for a round
+            trip. The multicity search page shows a list of complete itineraries
+            that removes the hassle of you calculating time, transfers and
+            layovers letting you finish your online flight booking. To ensure
+            you get the best price we highlight offers, sales and other
+            promotions on the checkout page. Post booking, our portal allows for
+            easy cancellations or amendments without having to make calls to the
+            airlines.
+          </p>
         </div>
       </div>
     </div>

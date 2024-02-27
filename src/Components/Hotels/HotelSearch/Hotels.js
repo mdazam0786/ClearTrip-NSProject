@@ -55,13 +55,14 @@ export default function Hotels(props) {
     // console.log(data);
     console.log(data?.data?.hotels);
     setHotelData(data?.data?.hotels);
-    
-    navigate("/hotelResult", { state: { hotelData11: data?.data?.hotels, loc: searchParameter} });
+
+    navigate("/hotelResult", {
+      state: { hotelData11: data?.data?.hotels, loc: searchParameter },
+    });
   }
 
   async function OfferApi() {
     console.log("getting offers");
-
 
     const Url = `https://academics.newtonschool.co/api/v1/bookingportals/offers?limit=10`;
 
@@ -157,10 +158,13 @@ export default function Hotels(props) {
               <div>View all</div>
             </div>
             <div className="offers-hardcoded">
-              <div className="offers-hardcoded-1st">Extra saving with Flipkart Axis bank cards!</div>
-              <div className="offers-hardcoded-2nd">Get 4% additional cashback on all transections.</div>
+              <div className="offers-hardcoded-1st">
+                Extra saving with Flipkart Axis bank cards!
+              </div>
+              <div className="offers-hardcoded-2nd">
+                Get 4% additional cashback on all transections.
+              </div>
               <div className="offers-hardcoded-3rd">Know more</div>
-            
             </div>
           </div>
         </div>
@@ -176,6 +180,28 @@ export default function Hotels(props) {
           <div>
             <img src="https://fastui.cltpstatic.com/image/upload/f_auto,q_auto,w_235,h_122,dpr_2/offermgmt/images/banner/BSB_PNBCC_H_1711.jpg" />
           </div>
+        </div>
+        <div className="why-cleartrip">
+          <h3>Why book hotels online on Cleartrip?</h3>
+          <p>
+            Looking for online hotel booking sites? Your search ends here. From
+            guest houses to resorts, from budget-friendly to luxury, whether for
+            business or for leisure, Cleartrip is your go-to hotel booking app.
+            Our curated, verified list of 400000+ hotels across 28000+ cities
+            from around the globe ensures you have enough options to choose from
+            and complete your online hotel booking at ease. Find a list of hotel
+            chains such as oyo rooms, fabhotels, treebo hotels, etc. Seamlessly
+            book hotels in Delhi, hotels in Mumbai, hotels in Bangalore, hotels
+            in Goa and many more.
+          </p>
+          <p>
+            With an array of filters and sorting options, you can simplify the
+            search for your hotel room booking. It shows all the details of your
+            preferred hotel, like description, highlights, photos, amenities,
+            room types, rates all in one place. Additional features like
+            pay-at-hotel, express checkout and free cancellations make the
+            process of booking a hotel effortless.
+          </p>
         </div>
       </div>
     </div>

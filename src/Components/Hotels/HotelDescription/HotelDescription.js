@@ -14,7 +14,7 @@ export default function HotelDesription(props) {
   const detailsData = location.state?.hotelDetailsData1 || [];
   const starRating = location.state?.starRating || undefined;
 
-  console.log(calDiscount);
+  // console.log(calDiscount);
 
   const amenityIcons = {
     Gym: <FitnessCenterSharpIcon />,
@@ -223,9 +223,21 @@ export default function HotelDesription(props) {
           </div>
         </div>
       </div>
-      {detailsData.rooms.map((room, index) => (
+      {/* {detailsData.rooms.map((room, index) => (
         <RoomDetail roomDetail={room} />
-      ))}
+        
+      ))} */}
+      <div >
+        {detailsData.rooms.map((room, index) => (
+          <div key={index}>
+            <h2>Room {room.roomNumber}</h2>
+            <p>Room Type: {room.roomType}</p>
+            <p>Bed Detail: {room.bedDetail}</p>
+            <p>Cost Per Night: {room.costPerNight}</p>
+            {/* Add more details as needed */}
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

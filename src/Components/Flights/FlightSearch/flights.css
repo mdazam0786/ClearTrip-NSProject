@@ -241,7 +241,7 @@
   }
   
   .bank-offer {
-    width: 975px;
+    width: 100%;
     height: 166px;
     margin-top: 30px;
     display: flex;
@@ -309,3 +309,26 @@
     color: blue;
   }
   
+  .playstore-link {    
+    margin-top: 50px;
+    padding: 10px;
+  }
+  .playstore-link img {
+    width: 100%;
+  }
+  .why-cleartrip {
+    margin-top: 30px;
+    padding: 10px;
+    color: #644d4d;
+
+  }
+  .why-cleartrip h3 {
+    color: black;
+  }
+  .why-cleartrip p span {
+    font-weight: bold;
+    color: black;
+  }
+  .why-cleartrip p {
+    line-height: 20px;
+  }
