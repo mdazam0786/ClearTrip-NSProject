@@ -15,7 +15,7 @@ export default function Navbar() {
     <div className="navbar-container">
       <div className="left-navbar">
         <ul className="left-ul">
-          <li>
+          <li className="custom-element">
             <Link to="/flights" className="nav-link">
               <MdOutlineFlight
                 style={{
@@ -26,7 +26,7 @@ export default function Navbar() {
               <div>Flights</div>
             </Link>
           </li>
-          <li>
+          <li className="custom-element">
             <Link to="/hotels" className="nav-link">
               <RiHotelLine
                 style={{
@@ -36,7 +36,7 @@ export default function Navbar() {
               <div>Hotels</div>
             </Link>
           </li>
-          <li>
+          <li className="custom-element">
             <Link to="/comingSoon" className="nav-link">
               <MdOutlineDirectionsBus
                 style={{
@@ -51,7 +51,7 @@ export default function Navbar() {
               />
             </Link>
           </li>
-          <li>
+          <li className="custom-element">
             <Link to="/comingSoon" className="nav-link">
               <BiSolidOffer
                 style={{
@@ -61,7 +61,7 @@ export default function Navbar() {
               <div>Offers</div>
             </Link>
           </li>
-          <li>
+          <li className="custom-element">
             <Link to="/comingSoon" className="nav-link">
               <TfiBag
                 style={{
@@ -71,7 +71,7 @@ export default function Navbar() {
               <div>My trips</div>
             </Link>
           </li>
-          <li>
+          <li className="custom-element">
             <Link to="/comingSoon" className="nav-link">
               <IoMdStar
                 style={{
@@ -81,7 +81,7 @@ export default function Navbar() {
               <div>Cleartrip for Business</div>
             </Link>
           </li>
-          <li>
+          <li className="custom-element">
             <Link to="/comingSoon" className="nav-link">
               <BiSupport
                 style={{

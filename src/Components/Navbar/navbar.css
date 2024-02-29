@@ -25,7 +25,7 @@
   height: 376px;
   
 }
-li {
+.custom-element {
   display: list-item;
   text-align: -webkit-match-parent;
   width: auto;
