@@ -1,0 +1,19 @@
+.flight-result-card {
+    display: flex;
+    flex-direction: row;
+    height: 100px;
+    width: auto;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.flight-details {
+  color: #2661d8;
+}
+.flight-result-Arival-time {
+  font-size: 22px;
+  font-weight: 500;
+}
+.arrow-line {
+  border-top: 1px solid grey;
+}

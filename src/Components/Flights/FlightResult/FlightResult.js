@@ -3,17 +3,24 @@ import FlightResultCart from "./FlightResultCart";
 import { useLocation } from "react-router-dom";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import "./flightResult.css";
+// import "./flightResultCart.css";
 
 export default function FlightResult(props) {
   const location = useLocation();
-  const flightDataResult = location.state?.flightDataSearch || [];
+  const searchSource = location.state?.loc;
+  const searchDestination = location.state?.loc2;
+
+  const [flightDataResult, setFlightDataResult] = useState(
+    location.state?.flightDataSearch
+  );
 
   const minPrice = 5202;
   const maxPrice = 63536;
 
   const [price, setPrice] = useState(maxPrice);
-  const [isDropdownVisible, setIsDropdownVisible] = useState(false);
-  const [isDropdownVisible2, setIsDropdownVisible2] = useState(false);
+  const [isDropdownVisible, setIsDropdownVisible] = useState(true);
+  const [isDropdownVisible2, setIsDropdownVisible2] = useState(true);
+  const [isDropdownVisible3, setIsDropdownVisible3] = useState(true);
 
   const toggleDropdown = () => {
     setIsDropdownVisible(!isDropdownVisible);
@@ -23,8 +30,12 @@ export default function FlightResult(props) {
     setIsDropdownVisible2(!isDropdownVisible2);
   };
 
+  const toggleDropdown3 = () => {
+    setIsDropdownVisible3(!isDropdownVisible3);
+  };
+
   const handlePriceChange = (event) => {
-    setPrice(parseInt(event.target.value)); 
+    setPrice(parseInt(event.target.value));
   };
 
   return (
@@ -32,6 +43,9 @@ export default function FlightResult(props) {
       <div className="row">
         <div className="column1">
           <aside className="aside-left">
+            <div>
+              {flightDataResult.length} of {flightDataResult.length} flights
+            </div>
             <div
               className={`custom-dropdown ${isDropdownVisible ? "active" : ""}`}
             >
@@ -166,9 +180,11 @@ export default function FlightResult(props) {
               </div>
             </div>
             <div
-              className={`custom-dropdown ${isDropdownVisible ? "active" : ""}`}
+              className={`custom-dropdown ${
+                isDropdownVisible3 ? "active" : ""
+              }`}
             >
-              <div className="dropdown-header" onClick={toggleDropdown}>
+              <div className="dropdown-header" onClick={toggleDropdown3}>
                 <h4>One-wap price</h4>
                 <KeyboardArrowUpIcon />
               </div>
@@ -189,7 +205,21 @@ export default function FlightResult(props) {
             </div>
           </aside>
         </div>
-        <div className="column2"></div>
+        <div className="column2">
+          {flightDataResult.map((item) => (
+            <div className="flight-result-page">
+              <FlightResultCart
+                FlightId={item.flightID}
+                ArivalTime={item.arrivalTime}
+                Duration={item.duration}
+                Stops={item.stops}
+                DepartureTime={item.departureTime}
+                Price={item.ticketPrice}
+                AvailableSeats={item.availableSeats}
+              />
+            </div>
+          ))}
+        </div>
       </div>
     </main>
   );

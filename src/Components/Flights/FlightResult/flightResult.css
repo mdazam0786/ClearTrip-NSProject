@@ -12,7 +12,6 @@
 }
 .column1 {
   width: 20%;
-  margin: auto;
   border: 1px solid rgb(206, 199, 199);
   padding: 0 8px;
   z-index: 20;
@@ -25,14 +24,6 @@
   margin-bottom: 70px;
 }
 
-
-
-.column2 {
-  width: calc(80% - 1px);
-  margin: auto;
-  height: 400px;
-  border: 1px solid rgb(206, 199, 199);
-}
 
 .custom-dropdown {
   width: 100%;  
@@ -84,3 +75,23 @@
 .custom-dropdown.active .dropdown-content {
   display: block;
 }
+
+
+.column2 {
+  display: flex;
+  position: relative;
+  top: 20px;
+  width: calc(80% - 1px);
+  flex-direction: column;
+  gap: 20px;
+  height: auto;
+  /* border: 1px solid rgb(206, 199, 199); */
+}
+
+.flight-result-page {
+  width: 100%;
+  margin: auto;
+  border: 1px solid rgb(206, 199, 199);
+  border-radius: 5px;
+}
+

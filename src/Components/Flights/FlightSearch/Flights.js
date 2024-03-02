@@ -45,13 +45,14 @@ export default function Flights() {
     setShowDropdown2(true);
   };
 
+ 
   const handleAirportSelection = (airport) => {
-    setSearchSource(`${airport.iata_code} - ${airport.name}`);
+    setSearchSource(`${airport.iata_code}`);
     setShowDropdown(false);
   };
 
   const handleAirportSelection2 = (airport) => {
-    setSearchDestination(`${airport.iata_code} - ${airport.name}`);
+    setSearchDestination(`${airport.iata_code}`);
     setShowDropdown2(false);
   };
 
@@ -95,7 +96,7 @@ export default function Flights() {
 
       const response = await fetch(url, {
         method: "GET",
-        headers: { projectID: "wan6hnsnhwfn" },
+        headers: { projectID: "f104bi07c490" },
       });
 
       if (!response.ok) {
@@ -203,7 +204,7 @@ export default function Flights() {
                       {Airports.map((airport, index) => (
                         <option
                           key={index}
-                          value={`${airport.iata_code} - ${airport.name}`}
+                          value={`${airport.iata_code}`}
                           onClick={() => handleAirportSelection(airport)}
                         >
                           {`${airport.iata_code} - ${airport.name}`}
@@ -212,32 +213,31 @@ export default function Flights() {
                     </datalist>
                   )}
                 </div>
-                <div className="select-control">
-                  <BsArrowLeftRight className="flight-icon2" />
-                </div>
                 <div className="select-where-to">
-                  <RiFlightLandFill className="flight-icon" />
+                  <RiFlightTakeoffFill className="flight-icon" />
                   <input
                     type="text"
                     placeholder="Where to?"
+                    list="airportsList"
                     value={searchDestination}
                     onChange={handleSearchDestination}
                     onClick={() => setShowDropdown2(true)}
                   />
                   {showDropdown2 && (
-                    <div className="airport-dropdown">
+                    <datalist id="airportsList">
                       {Airports.map((airport, index) => (
                         <option
                           key={index}
-                          className="airport-option"
+                          value={`${airport.iata_code}`}
                           onClick={() => handleAirportSelection2(airport)}
                         >
-                          {airport.city}
+                          {`${airport.iata_code} - ${airport.name}`}
                         </option>
                       ))}
-                    </div>
+                    </datalist>
                   )}
                 </div>
+               
               </div>
 
               <div className="select-option1">
