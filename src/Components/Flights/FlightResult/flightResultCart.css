@@ -5,7 +5,8 @@
     width: auto;
     align-items: center;
     justify-content: space-around;
-}
+    cursor: pointer;
+  }
 
 .flight-details {
   color: #2661d8;
@@ -16,4 +17,22 @@
 }
 .arrow-line {
   border-top: 1px solid grey;
+}
+
+.book-flight-btn1 button{
+  height: 40px;
+  width: 8em;
+  border: none;
+  background-color: orangered;
+  border-radius: 5px;
+  color: white;
+  font-weight: 600;
+  font-size: 16px;
+  
+}
+
+.book-flight-btn1 button:hover{
+  cursor: pointer;
+  background-color: rgb(197, 76, 32);
+  
 }

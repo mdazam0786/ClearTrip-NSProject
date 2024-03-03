@@ -3,38 +3,39 @@ import "./flightResultCart.css";
 
 export default function FlightResultCart(props) {
   useEffect(() => {
-    console.log(props.FlightId);
-    console.log(props.ArivalTime);
-    console.log(props.Duration);
-    console.log(props.Stops);
-    console.log(props.DepartureTime);
-    console.log(props.Price);
-    console.log(props.AvailableSeats);
+    // console.log(props.FlightId);
+    // console.log(props.ArivalTime);
+    // console.log(props.Duration);
+    // console.log(props.Stops);
+    // console.log(props.DepartureTime);
+    // console.log(props.Price);
+    // console.log(props.AvailableSeats);
   }, [props]);
 
   return (
     <div className="main-box">
       <div className="flight-result-card">
         <div>
-          <p>
-            {props.FlightId}
-          </p>
-          <p className="flight-details">
-            Flight details
-          </p>
+          <p>{props.FlightId}</p>
+          <p className="flight-details">Flight details</p>
         </div>
 
         <p className="flight-result-Arival-time">{props.ArivalTime}</p>
         <div>
-          <p style={{ marginBottom: "0" }}>{props.Duration}h</p>
+          <p style={{ marginBottom: "0" , color: "grey" }}>{props.Duration}h 10min</p>
           <div className="arrow-line"></div>
-          <p style={{ marginTop: "0" }}>{props.Stops} stop</p>
+          <div>
+            {props.Stops === 0 ? (
+              <p style={{ marginTop: "0", textAlign: "center", color: "grey"}}>Non-stop</p>
+            ) : (
+              <p style={{ marginTop: "0" , textAlign: "center" , color: "grey"}}>{props.Stops} stop</p>
+            )}
+          </div>
         </div>
 
         <p className="flight-result-Arival-time">{props.DepartureTime}</p>
         <div>
-          <h3 style={{ marginBottom: "0" }}>₹{props.Price}</h3>
-          <p style={{ marginTop: "0" }}>{props.AvailableSeats} Seats left</p>
+          <h3 style={{fontSize: "26px", fontWeight: "500" }}>₹{props.Price}</h3>
         </div>
         <div className="book-flight-btn1">
           <button>Book</button>
