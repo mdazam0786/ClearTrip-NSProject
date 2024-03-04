@@ -114,6 +114,7 @@ export default function Flights() {
           flightDataSearch: data?.data?.flights,
           loc: searchSource,
           loc2: searchDestination,
+          day: formattedDay,
         },
       });
     } catch (error) {

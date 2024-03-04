@@ -22,7 +22,7 @@ export default function FlightResultCart(props) {
 
         <p className="flight-result-Arival-time">{props.DepartureTime}</p>
         <div>
-          <p style={{ marginBottom: "0" , color: "grey" }}>{props.Duration}h 10min</p>
+          <p style={{ marginBottom: "0" , color: "grey" }}>{props.Duration}h 0min</p>
           <div className="arrow-line"></div>
           <div>
             {props.Stops === 0 ? (

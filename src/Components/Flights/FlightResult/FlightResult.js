@@ -9,16 +9,17 @@ export default function FlightResult(props) {
   const location = useLocation();
   const searchSource = location.state?.loc;
   const searchDestination = location.state?.loc2;
+  const formattedDay = location.state?.day;
 
   const [flightDataResult, setFlightDataResult] = useState(
     location.state?.flightDataSearch
   );
 
-  const minPrice = 5202;
-  const maxPrice = 63536;
+  const minPrice = 2000;
+  const maxPrice = 2500;
 
   const minTime = 1;
-  const maxTime = 27;
+  const maxTime = 9;
 
   const [price, setPrice] = useState(maxPrice);
   const [hour, setHour] = useState(maxTime);
@@ -26,24 +27,43 @@ export default function FlightResult(props) {
   const [isDropdownVisible2, setIsDropdownVisible2] = useState(true);
   const [isDropdownVisible3, setIsDropdownVisible3] = useState(true);
   const [isDropdownVisible4, setIsDropdownVisible4] = useState(true);
-  
+
   const [sortOrder, setSortOrder] = useState("asc");
 
-  const [selectedStop, setSelectedStop] = useState(null); 
+  const [selectedStop, setSelectedStop] = useState(null);
 
   const [isNonStopChecked, setIsNonStopChecked] = useState(false);
   const [isOneStopChecked, setIsOneStopChecked] = useState(false);
   const [isTwoStopChecked, setIsTwoStopChecked] = useState(false);
-  
-
 
   useEffect(() => {
     if (!isNonStopChecked && !isOneStopChecked && !isTwoStopChecked) {
       setFlightDataResult(location.state?.flightDataSearch);
     }
-  }, [isNonStopChecked, isOneStopChecked, isTwoStopChecked, location.state?.flightDataSearch]);
-  
+  }, [
+    isNonStopChecked,
+    isOneStopChecked,
+    isTwoStopChecked,
+    location.state?.flightDataSearch,
+  ]);
 
+  const [selectedTime, setSelectedTime] = useState(null);
+  const [isMorningChecked, setIsMorningChecked] = useState(false);
+  const [isAfternoonChecked, setIsAfternoonChecked] = useState(false);
+  const [isEveningChecked, setIsEveningChecked] = useState(false);
+  const [isNightChecked, setIsNightChecked] = useState(false);
+
+  useEffect(() => {
+    if (!isMorningChecked && !isAfternoonChecked && !isEveningChecked && !isNightChecked) {
+      setFlightDataResult(location.state?.flightDataSearch);
+    }
+  }, [
+    isMorningChecked, 
+    isAfternoonChecked, 
+    isEveningChecked, 
+    isNightChecked,
+    location.state?.flightDataSearch,
+  ]);
 
   const toggleDropdown = () => {
     setIsDropdownVisible(!isDropdownVisible);
@@ -63,12 +83,18 @@ export default function FlightResult(props) {
 
   const handlePriceChange = (event) => {
     setPrice(parseInt(event.target.value));
+    console.log("azam");
+    filterByPrice();
   };
 
   const handleTimeChange = (event) => {
     setHour(parseInt(event.target.value));
+    console.log("time");
+    filterByDuration();
   };
 
+  
+  
 
   const sortFlightByPrice = () => {
     console.log("price");
@@ -109,13 +135,13 @@ export default function FlightResult(props) {
     SmartSort(newSortOrder);
   };
 
-
   async function SortPrice(sortOrder) {
     try {
       console.log("getting sorted Price");
+      console.log(formattedDay);
 
       const sort = sortOrder === "asc" ? 1 : -1;
-      const Url = `https://academics.newtonschool.co/api/v1/bookingportals/flight?search={"source":"${searchSource}","destination":"${searchDestination}"}&day=Fri&sort={"ticketPrice":${sort}}`;
+      const Url = `https://academics.newtonschool.co/api/v1/bookingportals/flight?search={"source":"${searchSource}","destination":"${searchDestination}"}&day=${formattedDay}&sort={"ticketPrice":${sort}}`;
 
       console.log(Url);
       const response = await fetch(Url, {
@@ -136,9 +162,10 @@ export default function FlightResult(props) {
   async function SortByDuration(sortDuration) {
     try {
       console.log("getting sorted time");
+      console.log(formattedDay);
 
       const sort = sortDuration === "asc" ? 1 : -1;
-      const Url = `https://academics.newtonschool.co/api/v1/bookingportals/flight?search={"source":"${searchSource}","destination":"${searchDestination}"}&day=Fri&sort={"duration":${sort}}`;
+      const Url = `https://academics.newtonschool.co/api/v1/bookingportals/flight?search={"source":"${searchSource}","destination":"${searchDestination}"}&day=${formattedDay}&sort={"duration":${sort}}`;
 
       console.log(Url);
       const response = await fetch(Url, {
@@ -159,9 +186,10 @@ export default function FlightResult(props) {
   async function SortByDepartureTime(DepartureTime) {
     try {
       console.log("getting sorted Departure");
+      console.log(formattedDay);
 
       const sort = DepartureTime === "asc" ? 1 : -1;
-      const Url = `https://academics.newtonschool.co/api/v1/bookingportals/flight?search={"source":"${searchSource}","destination":"${searchDestination}"}&day=Fri&sort={"departureTime":${sort}}`;
+      const Url = `https://academics.newtonschool.co/api/v1/bookingportals/flight?search={"source":"${searchSource}","destination":"${searchDestination}"}&day=${formattedDay}&sort={"departureTime":${sort}}`;
 
       console.log(Url);
       const response = await fetch(Url, {
@@ -182,9 +210,10 @@ export default function FlightResult(props) {
   async function SortByArivalTime(ArivalTime) {
     try {
       console.log("getting sorted ArivalTime");
+      console.log(formattedDay);
 
       const sort = ArivalTime === "asc" ? 1 : -1;
-      const Url = `https://academics.newtonschool.co/api/v1/bookingportals/flight?search={"source":"${searchSource}","destination":"${searchDestination}"}&day=Fri&sort={"arrivalTime":${sort}}`;
+      const Url = `https://academics.newtonschool.co/api/v1/bookingportals/flight?search={"source":"${searchSource}","destination":"${searchDestination}"}&day=${formattedDay}&sort={"arrivalTime":${sort}}`;
 
       console.log(Url);
       const response = await fetch(Url, {
@@ -205,9 +234,10 @@ export default function FlightResult(props) {
   async function SmartSort(sortSmart) {
     try {
       console.log("smartsort");
+      console.log(formattedDay);
 
       const sort = sortSmart === "asc" ? 1 : -1;
-      const Url = `https://academics.newtonschool.co/api/v1/bookingportals/flight?search={"source":"${searchSource}","destination":"${searchDestination}"}&day=Fri&sort={"duration":${sort},"ticketPrice":${sort}}`;
+      const Url = `https://academics.newtonschool.co/api/v1/bookingportals/flight?search={"source":"${searchSource}","destination":"${searchDestination}"}&day=${formattedDay}&sort={"duration":${sort},"ticketPrice":${sort}}`;
       console.log(Url);
       const response = await fetch(Url, {
         method: "GET",
@@ -224,7 +254,6 @@ export default function FlightResult(props) {
     }
   }
 
-  
   const toggleNonStop = () => {
     setIsNonStopChecked(!isNonStopChecked);
     if (!isNonStopChecked) {
@@ -258,8 +287,9 @@ export default function FlightResult(props) {
   async function filterByStop(stop) {
     try {
       console.log("stops");
+      console.log(formattedDay);
 
-      const Url = `https://academics.newtonschool.co/api/v1/bookingportals/flight?search={"source":"${searchSource}","destination":"${searchDestination}"}&day=Fri&&filter={"stops":"${stop}"}`;
+      const Url = `https://academics.newtonschool.co/api/v1/bookingportals/flight?search={"source":"${searchSource}","destination":"${searchDestination}"}&day=${formattedDay}&filter={"stops":"${stop}"}`;
       console.log(Url);
       const response = await fetch(Url, {
         method: "GET",
@@ -275,6 +305,123 @@ export default function FlightResult(props) {
       console.error("Error fetching offers:", error);
     }
   }
+
+  async function filterByPrice() {
+    try {
+      console.log("filterByPrice");
+      console.log(formattedDay);
+
+      const Url = `https://academics.newtonschool.co/api/v1/bookingportals/flight?search={"source":"${searchSource}","destination":"${searchDestination}"}&day=${formattedDay}&filter={"ticketPrice":{"$lte":${price},"$gte":${minPrice}}}`;
+
+      console.log(Url);
+      const response = await fetch(Url, {
+        method: "GET",
+        headers: { projectID: "f104bi07c490" },
+      });
+      if (!response.ok) {
+        throw new Error("Failed to fetch offers");
+      }
+      const data = await response.json();
+      console.log(data?.data?.flights);
+      setFlightDataResult(data?.data?.flights);
+    } catch (error) {
+      console.error("Error fetching offers:", error);
+    }
+  }
+
+  async function filterByDuration() {
+    try {
+      console.log("filterByDuration");
+      console.log(formattedDay);
+
+      const Url = `https://academics.newtonschool.co/api/v1/bookingportals/flight?search={"source":"${searchSource}","destination":"${searchDestination}"}&day=${formattedDay}&filter={"duration":{"$lte":${hour},"$gte":${minTime}}}`;
+
+      console.log(Url);
+      const response = await fetch(Url, {
+        method: "GET",
+        headers: { projectID: "f104bi07c490" },
+      });
+      if (!response.ok) {
+        throw new Error("Failed to fetch offers");
+      }
+      const data = await response.json();
+      console.log(data?.data?.flights);
+      setFlightDataResult(data?.data?.flights);
+    } catch (error) {
+      console.error("Error fetching offers:", error);
+    }
+  }
+
+
+  
+  const handleMorningChange = (t) => {
+    setIsMorningChecked(!isMorningChecked);
+    if (!isMorningChecked) {
+      setSelectedTime(8, 12);
+      setIsAfternoonChecked(false); 
+      setIsEveningChecked(false); 
+      setIsNightChecked(false);
+      filterByDepartureTime(8, 12);
+    }
+  };
+
+  
+  const handleAfternoonChange = () => {
+    setIsAfternoonChecked(!isAfternoonChecked);
+    if (!isAfternoonChecked) {
+      setSelectedTime(12, 16);
+      setIsMorningChecked(false); 
+      setIsEveningChecked(false); 
+      setIsNightChecked(false);
+      filterByDepartureTime(12, 16);
+    }
+  };
+
+  
+  const handleEveningChange = () => {
+    setIsEveningChecked(!isEveningChecked);
+    if (!isEveningChecked) {
+      setSelectedTime(16, 20);
+      setIsMorningChecked(false); 
+      setIsAfternoonChecked(false); 
+      setIsNightChecked(false);
+      filterByDepartureTime(16, 20);
+    }
+  };
+
+  
+  const handleNightChange = () => {
+    setIsNightChecked(!isNightChecked);
+    if(!isNightChecked) {
+      setSelectedTime(20, 24);
+      setIsMorningChecked(false); 
+      setIsAfternoonChecked(false); 
+      setIsEveningChecked(false); 
+      filterByDepartureTime(20,24);
+    }
+  };
+
+  async function filterByDepartureTime(maxHour, minHour) {
+    try {
+      console.log("Filter by Departure Time");
+      const Url = `https://academics.newtonschool.co/api/v1/bookingportals/flight?search={"source":"${searchSource}","destination":"${searchDestination}"}&day=${formattedDay}&filter={"departureTime":{"$gte":${maxHour},"$lt":${minHour}}}`;
+  
+      console.log(Url);
+      const response = await fetch(Url, {
+        method: "GET",
+        headers: { projectID: "f104bi07c490" },
+      });
+      if (!response.ok) {
+        throw new Error("Failed to fetch offers");
+      }
+      const data = await response.json();
+      console.log(data?.data?.flights);
+      setFlightDataResult(data?.data?.flights);
+    } catch (error) {
+      console.error("Error fetching offers:", error);
+    }
+  }
+  
 
   return (
     <main className="resultPage-main-div">
@@ -344,13 +491,15 @@ export default function FlightResult(props) {
                   <input
                     type="checkbox"
                     className="input-checkbox"
-                    name="one-stop"
+                    name="morning"
+                    checked={isMorningChecked}
+                    onChange={handleMorningChange}
                   />
                   <div className="label-container">
-                    <label htmlFor="one-stop" className="dropdown-value">
+                    <label htmlFor="morning" className="dropdown-value">
                       Morning
                     </label>
-                    <label htmlFor="non-stop" className="dropdown-value">
+                    <label htmlFor="morning" className="dropdown-value">
                       8 am-Noon
                     </label>
                   </div>
@@ -359,13 +508,15 @@ export default function FlightResult(props) {
                   <input
                     type="checkbox"
                     className="input-checkbox"
-                    name="one-stop"
+                    name="afternoon"
+                    checked={isAfternoonChecked}
+                    onChange={handleAfternoonChange}
                   />
                   <div className="label-container">
-                    <label htmlFor="one-stop" className="dropdown-value">
+                    <label htmlFor="afternoon" className="dropdown-value">
                       Afternoon
                     </label>
-                    <label htmlFor="non-stop" className="dropdown-value">
+                    <label htmlFor="afternoon" className="dropdown-value">
                       Noon-4 pm
                     </label>
                   </div>
@@ -374,14 +525,16 @@ export default function FlightResult(props) {
                   <input
                     type="checkbox"
                     className="input-checkbox"
-                    name="one-stop"
+                    name="evening"
+                    checked={isEveningChecked}
+                    onChange={handleEveningChange}
                   />
                   <div className="label-container">
-                    <label htmlFor="one-stop" className="dropdown-value">
+                    <label htmlFor="evening" className="dropdown-value">
                       Evening
                     </label>
-                    <label htmlFor="non-stop" className="dropdown-value">
-                      Noon-4 pm-8pm
+                    <label htmlFor="evening" className="dropdown-value">
+                      4 pm-8 pm
                     </label>
                   </div>
                 </div>
@@ -389,22 +542,24 @@ export default function FlightResult(props) {
                   <input
                     type="checkbox"
                     className="input-checkbox"
-                    name="one-stop"
+                    checked={isNightChecked}
+                    onChange={handleNightChange}
                   />
                   <div className="label-container">
-                    <label htmlFor="one-stop" className="dropdown-value">
+                    <label htmlFor="night" className="dropdown-value">
                       Night
                     </label>
                     <label
-                      htmlFor="non-stop"
+                      htmlFor="night"
                       className="dropdown-value right-align"
                     >
-                      8-pm Midnight
+                      8 pm-Midnight
                     </label>
                   </div>
                 </div>
               </div>
             </div>
+
             <div
               className={`custom-dropdown ${
                 isDropdownVisible3 ? "active" : ""
@@ -441,8 +596,8 @@ export default function FlightResult(props) {
               <div className="dropdown-content">
                 <div className="dropdown-content-box2">
                   <div className="min-max-labels">
-                    <p>{minTime}hour</p>
-                    <p>{hour} hour</p>
+                    <p>{minTime} hours</p>
+                    <p>{hour} hours</p>
                   </div>
                   <input
                     type="range"
