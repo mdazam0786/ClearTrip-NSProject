@@ -20,7 +20,7 @@ export default function FlightResultCart(props) {
           <p className="flight-details">Flight details</p>
         </div>
 
-        <p className="flight-result-Arival-time">{props.ArivalTime}</p>
+        <p className="flight-result-Arival-time">{props.DepartureTime}</p>
         <div>
           <p style={{ marginBottom: "0" , color: "grey" }}>{props.Duration}h 10min</p>
           <div className="arrow-line"></div>
@@ -33,7 +33,7 @@ export default function FlightResultCart(props) {
           </div>
         </div>
 
-        <p className="flight-result-Arival-time">{props.DepartureTime}</p>
+        <p className="flight-result-Arival-time">{props.ArivalTime}</p>
         <div>
           <h3 style={{fontSize: "26px", fontWeight: "500" }}>₹{props.Price}</h3>
         </div>
