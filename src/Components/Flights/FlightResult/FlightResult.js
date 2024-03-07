@@ -10,6 +10,9 @@ export default function FlightResult(props) {
   const searchSource = location.state?.loc;
   const searchDestination = location.state?.loc2;
   const formattedDay = location.state?.day;
+  const selectedDay = location.state?.selectedDate;
+
+  // console.log(selectedDay);
 
   const [flightDataResult, setFlightDataResult] = useState(
     location.state?.flightDataSearch
@@ -423,6 +426,8 @@ export default function FlightResult(props) {
   }
   
 
+  
+
   return (
     <main className="resultPage-main-div">
       <div className="row">
@@ -626,12 +631,17 @@ export default function FlightResult(props) {
             <div className="flight-result-page">
               <FlightResultCart
                 FlightId={item.flightID}
+                Id={item._id}
                 DepartureTime={item.departureTime}
                 Duration={item.duration}
                 Stops={item.stops}
                 ArivalTime={item.arrivalTime}
                 Price={item.ticketPrice}
                 AvailableSeats={item.availableSeats}
+                formattedDay={formattedDay}
+                selectedDate={selectedDay}
+                source={item.source}
+                destination={item.destination}
               />
             </div>
           ))}

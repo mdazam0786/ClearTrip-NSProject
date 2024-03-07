@@ -36,3 +36,30 @@
   background-color: rgb(197, 76, 32);
   
 }
+
+.flight-details-box {
+  display: flex;
+  flex-direction: row;
+  width: 90%;
+  margin: auto;
+  margin-bottom: 20px;
+  align-items: center;
+  justify-content: space-around;
+  cursor: pointer;
+  border: 1px solid rgb(206, 199, 199);
+  border-radius: 5px;
+
+}
+.departure-box {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 0;
+}
+.departure-box p{
+  font-size: 22px;
+}
+.departure-box+p {
+  margin-top: -10px;
+  
+}

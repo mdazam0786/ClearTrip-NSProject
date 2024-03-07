@@ -11,6 +11,7 @@ import FlightResult from "./Components/Flights/FlightResult/FlightResult";
 import Flights from "./Components/Flights/FlightSearch/Flights";
 import ComingSoon from "./Components/ComingSoon/ComingSoon";
 import Footer from "./Components/Footer/Footer";
+import FlightBooking from "./Components/Flights/FlightBooking/FlightBooking";
 
 function App() {
   return (
@@ -29,6 +30,8 @@ function App() {
           <Route path="/hotelDescription" element={<HotelDesription />} />
           <Route exact path="/login" element={<Login />} />
           <Route exact path="/signup" element={<SignupByEmail />} />
+          <Route exact path="/flightBooking" element={<FlightBooking />} />
+
         </Routes>
         {/* <Footer /> */}
       </Router>

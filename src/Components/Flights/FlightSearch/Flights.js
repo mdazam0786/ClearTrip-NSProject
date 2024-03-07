@@ -3,8 +3,8 @@ import "./flights.css";
 import { IoIosArrowRoundForward } from "react-icons/io";
 import { MdPersonOutline } from "react-icons/md";
 import { RiFlightTakeoffFill } from "react-icons/ri";
-import { RiFlightLandFill } from "react-icons/ri";
-import { BsArrowLeftRight } from "react-icons/bs";
+// import { RiFlightLandFill } from "react-icons/ri";
+// import { BsArrowLeftRight } from "react-icons/bs";
 import Navbar from "../../Navbar/Navbar";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -104,9 +104,10 @@ export default function Flights() {
       }
 
       const data = await response.json();
-      console.log(data?.data?.flights);
 
       setFlightData(data?.data?.flights);
+      console.log(data?.data?.flights);
+
 
       // Redirect to flight result page with search parameters
       navigate("/flightResult", {
@@ -115,6 +116,7 @@ export default function Flights() {
           loc: searchSource,
           loc2: searchDestination,
           day: formattedDay,
+          selectedDate: selectedDay,
         },
       });
     } catch (error) {
