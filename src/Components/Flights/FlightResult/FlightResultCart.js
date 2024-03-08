@@ -24,8 +24,11 @@ export default function FlightResultCart(props) {
     console.log(props);
   };
 
+  // const handleBookFlight = () => {
+  //   navigate("/FlightBooking", { state: { flightDetails: props } });
+  // };
   const handleBookFlight = () => {
-    navigate("/FlightBooking", { state: { flightDetails: props } });
+    navigate("/FlightBooking", { state: { flightDetails: { ...props, selectedDate: props.selectedDate } } });
   };
   
 

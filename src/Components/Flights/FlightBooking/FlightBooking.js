@@ -1,45 +1,107 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import "./flightBooking.css";
-import { useLocation } from "react-router-dom";
+import moment from "moment";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export default function FlightBooking() {
   const location = useLocation();
   const flightDetails = location.state && location.state.flightDetails;
+  const selectedDate = flightDetails && flightDetails.selectedDate.toString();
+  const [showError, setShowError] = useState(false);
 
-console.log(flightDetails);
+  const taxes = useMemo(() => Math.floor(Math.random() * 1000) + 1, []);
+
+  const [mobileNo, setMobileNo] = useState("");
+  const [email, setEmail] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [age, setAge] = useState("");
+  const [gender, setGender] = useState("");
+  const navigate= useNavigate();
+
+
+  const handleContinue = async () => {
+    try {
+      // Call the FlightBook function
+      await FlightBook();
+    } catch (error) {
+      // Handle booking failure
+      console.error("Booking failed:", error);
+      setShowError(true);
+    }
+  };
+
+
+  async function FlightBook() {
+    console.log("FlightBook");
+    // console.log(localStorage.getItem("token"));
+
+    const Url = `https://academics.newtonschool.co/api/v1/bookingportals/booking`;
+
+    console.log(Url);
+    // console.log(pid);
+    const response = await fetch(Url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        projectId: "f104bi07c490",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+
+      body: JSON.stringify({
+        bookingType: "flight",
+        bookingDetails: {
+          flightId: flightDetails?.Id.toString(),
+          startDate: "2023-10-09T10:03:53.554+00:00",
+          endDate: "2023-10-09T10:03:53.554+00:00",
+        },
+      }),
+    });
+    const data = await response.json();
+    console.log(response);
+    console.log(data);
+
+    navigate("/");
+
+    
+  }
+
+  const isContinueButtonDisabled = () => {
+    // Check if any of the required input fields are empty
+    return (
+      mobileNo === "" ||
+      email === "" ||
+      firstName === "" ||
+      lastName === "" ||
+      age === ""
+    );
+  };
+
+  // console.log(flightDetails);
 
   return (
     <div className="BookingPageFlight_parent">
-      <div className="BookingPageFlight_Child_data">
-        <div className="BookingPageFlight_Child_data_left">
-          <div className="BookingPageFlight_Child_data_left_data1">
+      <div className="BookingPageFlight_Childdata">
+        <div className="BookingPageFlight_Childleft">
+          <div className="BookingPageFlight_Childleftdata1">
             <h3 style={{ fontSize: "24px" }}>Complete Your Booking </h3>
             <div className="BookingPageFlight_Child_data_left_data_from_to_div">
               <div className="BookingPageFlight_Child_data_left_data_from_to">
-                <h3>{flightDetails?.FlightId}</h3>
+                <h3>{flightDetails?.source}</h3>
                 <h3>→</h3>
+                <h3>{flightDetails?.destination}</h3>
               </div>
-              <div
-                style={{
-                  color: "white",
-                  backgroundImage: "linear-gradient(93deg, #53b2fe, #065af3)",
-                  height: "20px",
-                  display: "flex",
-                  alignItems: "center",
-                  padding: "5px",
-                }}
-              >
-                <p style={{ fontSize: "11px", fontWeight: "bold" }}>
-                  CANCELLATION FEES APPLY
-                </p>
-              </div>
+              <p>{moment(selectedDate).format("ddd, DD MMM YYYY")}</p>
             </div>
-            <h4 style={{ fontSize: "14px" }}>{/* Aircraft model */}</h4>
+            <p style={{ marginTop: "0px", marginBottom: "0px" }}>
+              {flightDetails?.Stops}
+            </p>
+            <h4 style={{ fontSize: "14px", marginTop: "0px" }}>
+              {flightDetails?.FlightId}
+            </h4>
             <div
               style={{
                 backgroundColor: "#f4f4f4",
-                width: "100%",
-                height: "150px",
                 marginTop: "10px",
                 padding: "20px",
               }}
@@ -52,7 +114,18 @@ console.log(flightDetails);
                   fontSize: "14px",
                 }}
               >
-                {/* Departure time */}
+                {flightDetails?.DepartureTime}
+                <div
+                  style={{
+                    border: "1px solid gray",
+                    width: "10px",
+                    height: "10px",
+                    borderRadius: "50%",
+                    marginLeft: "10px",
+                    marginRight: "10px",
+                  }}
+                ></div>
+                {flightDetails?.source}
               </h3>
               <p
                 style={{
@@ -64,7 +137,7 @@ console.log(flightDetails);
                   paddingLeft: "20px",
                 }}
               >
-                {/* Duration */}
+                {flightDetails?.Duration}h m
               </p>
               <h3
                 style={{
@@ -74,7 +147,18 @@ console.log(flightDetails);
                   fontSize: "14px",
                 }}
               >
-                {/* Arrival time */}
+                {flightDetails?.ArivalTime}
+                <div
+                  style={{
+                    border: "1px solid gray",
+                    width: "10px",
+                    height: "10px",
+                    borderRadius: "50%",
+                    marginLeft: "10px",
+                    marginRight: "10px",
+                  }}
+                ></div>
+                {flightDetails?.destination}
               </h3>
             </div>
           </div>
@@ -83,11 +167,19 @@ console.log(flightDetails);
             <div className="BookingPageFlight_Child_data_left_data2_contactDetail">
               <div style={{ display: "flex", flexDirection: "column" }}>
                 <label>Mobile No</label>
-                <input type="number" />
+                <input
+                  type="number"
+                  value={mobileNo}
+                  onChange={(e) => setMobileNo(e.target.value)}
+                />
               </div>
               <div style={{ display: "flex", flexDirection: "column" }}>
                 <label>Email Address</label>
-                <input type="text" />
+                <input
+                  type="text"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
               </div>
             </div>
           </div>
@@ -103,21 +195,39 @@ console.log(flightDetails);
               >
                 <div style={{ display: "flex", flexDirection: "column" }}>
                   <label>First Name</label>
-                  <input type="text" />
+                  <input
+                    type="text"
+                    value={firstName}
+                    onChange={(e) => setFirstName(e.target.value)}
+                  />
                 </div>
                 <div style={{ display: "flex", flexDirection: "column" }}>
                   <label>Last Name</label>
-                  <input type="text" />
+                  <input
+                    type="text"
+                    value={lastName}
+                    onChange={(e) => setLastName(e.target.value)}
+                  />
                 </div>
               </div>
               <div style={{ display: "flex", gap: "30px", marginTop: "20px" }}>
                 <div style={{ display: "flex", flexDirection: "column" }}>
                   <label style={{ marginTop: "10px" }}>Age</label>
-                  <input style={{ width: "80px" }} type="number" />
+                  <input
+                    style={{ width: "80px" }}
+                    type="number"
+                    value={age}
+                    onChange={(e) => setAge(e.target.value)}
+                  />
                 </div>
                 <div style={{ display: "flex", flexDirection: "column" }}>
                   <label style={{ marginTop: "10px" }}>Gender</label>
-                  <select id="gender" name="gender">
+                  <select
+                    id="gender"
+                    name="gender"
+                    value={gender}
+                    onChange={(e) => setGender(e.target.value)}
+                  >
                     <option value="male">Male</option>
                     <option value="female">Female</option>
                     <option value="other">Other</option>
@@ -129,7 +239,7 @@ console.log(flightDetails);
         </div>
         <div className="BookingPageFlight_Child_data_right">
           <div>
-            <h3>Fare Summery</h3>
+            <h3>Fare Summary</h3>
             <div
               style={{
                 display: "flex",
@@ -139,6 +249,7 @@ console.log(flightDetails);
               }}
             >
               <h4>Base Fare</h4>
+              <p>Rs {flightDetails?.Price}</p>
             </div>
             <div
               style={{
@@ -150,6 +261,7 @@ console.log(flightDetails);
               }}
             >
               <h4>Taxes and Surcharges</h4>
+              <p>Rs {taxes}</p>
             </div>
             <div
               style={{
@@ -161,9 +273,16 @@ console.log(flightDetails);
               }}
             >
               <h2>Total Amount</h2>
+              <h3>Rs {flightDetails?.Price + taxes}</h3>
             </div>
           </div>
-          <button className="FlightBooingpageBtn">Continue</button>
+          <button
+            className="FlightBooingpageBtn"
+            onClick={handleContinue}
+            disabled={isContinueButtonDisabled()}
+          >
+            Book Flight
+          </button>
         </div>
       </div>
     </div>

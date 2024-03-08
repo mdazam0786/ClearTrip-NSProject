@@ -6,14 +6,14 @@
   height: 250px;
   flex-direction: column;
 }
-.BookingPageFlight_Child_data {
+.BookingPageFlight_Childdata {
   width: 100%;
   height: auto;
   display: flex;
   justify-content: space-between;
   margin: 0 10px;
 }
-.BookingPageFlight_Child_data_left {
+.BookingPageFlight_Childleft {
   width: 750px;
   height: 800px;
   margin-top: 10px;
@@ -27,18 +27,26 @@
   height: 250px;
   border-radius: 5px;
 }
-.BookingPageFlight_Child_data_left_data1 {
+.BookingPageFlight_Childleftdata1 {
   width: 100%;
-  height: 250px;
   box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.21);
   padding: 10px;
 }
 .BookingPageFlight_Child_data_right {
   padding: 20px;
+  margin-right: 35px;
 }
 .BookingPageFlight_Child_data_left_data_from_to_div {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 0px;
+  height: 30px;
+}
+.BookingPageFlight_Child_data_left_data_from_to_div p{
+  font-size: 18px;
+  color: #868686 ;
 }
 .BookingPageFlight_Child_data_left_data_from_to {
   display: flex;
@@ -49,7 +57,7 @@
   box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.21);
   width: 100%;
   height: 150px;
-  padding: 20px;
+  padding: 10px;
 }
 .BookingPageFlight_Child_data_left_data2_contactDetail {
   display: flex;
@@ -81,7 +89,7 @@
   box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.21);
   width: 100%;
   height: 280px;
-  padding: 20px;
+  padding: 10px;
 }
 .FlightBooingpageBtn {
   background-image: linear-gradient(97deg, #53b2fe, #065af3 130%);
