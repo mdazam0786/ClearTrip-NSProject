@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect ,useRef  } from "react";
 import { Link, useLocation } from "react-router-dom";
 import "./hotelDescription.css";
 import RoomDetail from "../Rooms/RoomDetail";
@@ -13,7 +13,7 @@ export default function HotelDesription(props) {
   const location = useLocation();
   const detailsData = location.state?.hotelDetailsData1 || [];
   const starRating = location.state?.starRating || undefined;
-
+  const descriptionRef = useRef(null);
   // console.log(calDiscount);
 
   const amenityIcons = {
@@ -46,6 +46,11 @@ export default function HotelDesription(props) {
     console.log(detailsData);
     console.log("Naiyer Azam");
   }, [detailsData]);
+
+  const handleSelectRoom = () => {
+    // Scroll to the description section
+    descriptionRef.current.scrollIntoView({ behavior: "smooth" });
+  };
 
   return (
     <div className="main-desc">
@@ -218,23 +223,27 @@ export default function HotelDesription(props) {
               </div>
             </div>
             <div>
-              <button className="select-room">Select room</button>
+              <button className="select-room" onClick={handleSelectRoom}>Select room</button>
             </div>
           </div>
         </div>
       </div>
-      {/* {detailsData.rooms.map((room, index) => (
-        <RoomDetail roomDetail={room} />
-        
-      ))} */}
-      <div >
+      <div className="hotel-rooms" ref={descriptionRef}>
         {detailsData.rooms.map((room, index) => (
-          <div key={index}>
-            <h2>Room {room.roomNumber}</h2>
-            <p>Room Type: {room.roomType}</p>
-            <p>Bed Detail: {room.bedDetail}</p>
-            <p>Cost Per Night: {room.costPerNight}</p>
-            {/* Add more details as needed */}
+          <div className="hotel-rooms-list" key={index}>
+        
+            <div className="hotel-room-title">
+              <h1>Room {room.roomType}</h1>
+            </div>
+            <div className="hotel-room-details">
+              <div className="room-bed">Bed: {room.bedDetail}</div>
+              <div className="room-area">{room.roomSize} sqft</div>
+              <div className="room-cancellation">{room.cancellationPolicy}</div>
+            </div>
+            <div className="hotel-room-price">
+            &#8377; {room.costDetails.baseCost} <span>+ &#8377; {room.costDetails.taxesAndFees} tax/night</span>
+            </div>
+            <div className="hotel-room-book-btn">Book</div>
           </div>
         ))}
       </div>

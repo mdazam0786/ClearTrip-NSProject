@@ -12,6 +12,7 @@ import Flights from "./Components/Flights/FlightSearch/Flights";
 import ComingSoon from "./Components/ComingSoon/ComingSoon";
 import Footer from "./Components/Footer/Footer";
 import FlightBooking from "./Components/Flights/FlightBooking/FlightBooking";
+import Pyment from "./Components/Flights/FlightBooking/Pyment";
 
 function App() {
   return (
@@ -31,6 +32,8 @@ function App() {
           <Route exact path="/login" element={<Login />} />
           <Route exact path="/signup" element={<SignupByEmail />} />
           <Route exact path="/flightBooking" element={<FlightBooking />} />
+          <Route exact path="/pyment" element={<Pyment />} />
+
 
         </Routes>
         {/* <Footer /> */}

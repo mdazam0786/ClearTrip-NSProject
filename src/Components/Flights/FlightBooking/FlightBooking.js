@@ -61,7 +61,13 @@ export default function FlightBooking() {
     console.log(response);
     console.log(data);
 
-    navigate("/");
+    navigate("/Pyment", {
+      state: {
+        totalPrice: flightDetails?.Price + taxes,
+        
+        // Add other necessary details here
+      },
+    });
 
     
   }
@@ -281,7 +287,7 @@ export default function FlightBooking() {
             onClick={handleContinue}
             disabled={isContinueButtonDisabled()}
           >
-            Book Flight
+            Continue
           </button>
         </div>
       </div>

@@ -111,3 +111,53 @@
     color: white;
     font-size: 16px;
 }
+
+.hotel-rooms {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+}
+.hotel-rooms-list {
+    border: 1px solid #e6e6e6;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+    padding: 20px;
+    text-align: left;
+}
+.hotel-room-title>h1 {
+    font-weight: 500;
+    padding-bottom: 10px;
+    padding-top: 10px;
+}
+.hotel-room-details {
+    display: flex;
+    flex-direction: column;
+    font-size: 15px;
+    margin-top: 20px;
+    font-weight: 500;
+    padding-bottom: 10px;
+    padding-top: 10px;
+}
+.hotel-room-details div{
+    color: #575656;
+}
+.hotel-room-price {
+    font-size: 18px;
+    font-weight: 500;
+    padding-bottom: 10px;
+    padding-top: 10px;
+}
+.hotel-room-book-btn {
+    background-color: #ff4f17;
+    border-radius: 7px;
+    color: #fff;
+    cursor: pointer;
+    font-size: 19px;
+    font-weight: 500;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    padding: 10px;
+    text-align: center;
+    
+}
