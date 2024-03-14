@@ -1,20 +1,23 @@
-import React, { useEffect ,useRef  } from "react";
-import { Link, useLocation } from "react-router-dom";
+import React, { useEffect, useRef } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import "./hotelDescription.css";
-import RoomDetail from "../Rooms/RoomDetail";
 import { FaTripadvisor } from "react-icons/fa";
 import PoolIcon from "@mui/icons-material/Pool";
 import { MdOutlineRestaurant } from "react-icons/md";
 import FitnessCenterSharpIcon from "@mui/icons-material/FitnessCenterSharp";
 import { MdLocalBar } from "react-icons/md";
 import { FaSpa, FaWifi } from "react-icons/fa";
+import { useAuth } from "../../../MyContext";
 
 export default function HotelDesription(props) {
   const location = useLocation();
   const detailsData = location.state?.hotelDetailsData1 || [];
   const starRating = location.state?.starRating || undefined;
+  const selectedDate = location.state?.selectedDay;
   const descriptionRef = useRef(null);
-  // console.log(calDiscount);
+  const navigate = useNavigate();
+  const { user } = useAuth();
+  console.log(selectedDate);
 
   const amenityIcons = {
     Gym: <FitnessCenterSharpIcon />,
@@ -50,6 +53,20 @@ export default function HotelDesription(props) {
   const handleSelectRoom = () => {
     // Scroll to the description section
     descriptionRef.current.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const handleBookHotel = () => {
+    if (user) {
+      navigate("/HotelBooking", {
+        state: {
+          detailsData: detailsData,
+          starRating: starRating,
+          selectedDate: selectedDate,
+        },
+      });
+    } else {
+      navigate("/login");
+    }
   };
 
   return (
@@ -223,7 +240,9 @@ export default function HotelDesription(props) {
               </div>
             </div>
             <div>
-              <button className="select-room" onClick={handleSelectRoom}>Select room</button>
+              <button className="select-room" onClick={handleSelectRoom}>
+                Select room
+              </button>
             </div>
           </div>
         </div>
@@ -231,7 +250,6 @@ export default function HotelDesription(props) {
       <div className="hotel-rooms" ref={descriptionRef}>
         {detailsData.rooms.map((room, index) => (
           <div className="hotel-rooms-list" key={index}>
-        
             <div className="hotel-room-title">
               <h1>Room {room.roomType}</h1>
             </div>
@@ -241,9 +259,12 @@ export default function HotelDesription(props) {
               <div className="room-cancellation">{room.cancellationPolicy}</div>
             </div>
             <div className="hotel-room-price">
-            &#8377; {room.costDetails.baseCost} <span>+ &#8377; {room.costDetails.taxesAndFees} tax/night</span>
+              &#8377; {room.costDetails.baseCost}{" "}
+              <span>+ &#8377; {room.costDetails.taxesAndFees} tax/night</span>
             </div>
-            <div className="hotel-room-book-btn">Book</div>
+            <div onClick={handleBookHotel} className="hotel-room-book-btn">
+              Book
+            </div>
           </div>
         ))}
       </div>

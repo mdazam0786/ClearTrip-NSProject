@@ -13,6 +13,8 @@ export default function HotelResultCart(props) {
     // console.log(props.tax);
     // console.log(props.caseCost);
     // console.log(props.discount);
+    // console.log(props.selectedDate);
+
   }, []);
 
   return (
@@ -21,7 +23,7 @@ export default function HotelResultCart(props) {
         <img src={props.image} alt="hotel-cart-image" />
       </div>
       <div className="hotel-cart-content">
-        {/* <h3 className="hotel-cart-amenities">{props.amenities}</h3> */}
+        {/* <h3 className="hotel-cart-amenities">{props.selectedDate.toLocaleDateString()}</h3> */}
         <h4 className="hotel-cart-name">{props.name}</h4>
         <h4 className="hotel-cart-rating">
           <FaTripadvisor style={{cursor: 'pointer', paddingRight:'5px', width:'20px', height:'20px'}}/> 

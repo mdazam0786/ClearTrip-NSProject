@@ -41,12 +41,25 @@
   font-weight: bold;
 }
 .logout {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
   background-color: #3366cc;
   color: #fff;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  width: 128px;
+  width: auto;
   height: 40px;
+  padding: 0 10px;
   font-weight: bold;
+}
+
+.logout1 {
+  border: none;
+  background-color: #3366cc;
+  color: #fff;
+  cursor: pointer;
+  font-weight: bold;
+
 }

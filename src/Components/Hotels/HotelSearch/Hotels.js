@@ -57,7 +57,7 @@ export default function Hotels(props) {
     setHotelData(data?.data?.hotels);
 
     navigate("/hotelResult", {
-      state: { hotelData11: data?.data?.hotels, loc: searchParameter },
+      state: { hotelData11: data?.data?.hotels, loc: searchParameter, selectedDate: selectedDay },
     });
   }
 

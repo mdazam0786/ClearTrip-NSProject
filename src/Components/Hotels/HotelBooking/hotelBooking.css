@@ -1,0 +1,106 @@
+.BookingPageFlight_Child {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 250px;
+    flex-direction: column;
+  }
+  .BookingPageFlight_Childdata {
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: space-between;
+    margin: 0 10px;
+  }
+  .BookingPageFlight_Childleft {
+    width: 750px;
+    height: 800px;
+    margin-top: 10px;
+    padding: 20px;
+  }
+  .BookingPageFlight_Child_data_right {
+    background-color: white;
+    margin-top: 10px;
+    box-shadow: 0 3px 30px 0 rgba(0, 0, 0, 0.1);
+    width: 400px;
+    height: 250px;
+    border-radius: 5px;
+  }
+  .BookingPageFlight_Childleftdata1 {
+    width: 100%;
+    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.21);
+    padding: 10px;
+  }
+  .BookingPageFlight_Child_data_right {
+    padding: 20px;
+    margin-right: 35px;
+  }
+  .BookingPageFlight_Child_data_left_data_from_to_div {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 0px;
+    height: 30px;
+  }
+  .BookingPageFlight_Child_data_left_data_from_to_div p{
+    font-size: 18px;
+    color: #868686 ;
+  }
+  .BookingPageFlight_Child_data_left_data_from_to {
+    display: flex;
+    gap: 10px;
+  }
+  .BookingPageFlight_Child_data_left_data2 {
+    margin-top: 40px;
+    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.21);
+    width: 100%;
+    height: 150px;
+    padding: 10px;
+  }
+  .BookingPageFlight_Child_data_left_data2_contactDetail {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+  }
+  .BookingPageFlight_Child_data_left_data2_contactDetail input {
+    width: 300px;
+    height: 30px;
+    margin-top: 10px;
+  }
+  .BookingPageFlight_Child_data_left_data2_traveller_Detail {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+  }
+  .BookingPageFlight_Child_data_left_data2_traveller_Detail input {
+    width: 300px;
+    height: 30px;
+    margin-top: 10px;
+  }
+  .BookingPageFlight_Child_data_left_data2_traveller_Detail select {
+    width: 100px;
+    height: 30px;
+    margin-top: 10px;
+  }
+  .BookingPageFlight_Child_data_left_data3 {
+    margin-top: 40px;
+    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.21);
+    width: 100%;
+    height: 280px;
+    padding: 10px;
+  }
+  .FlightBooingpageBtn {
+    background-image: linear-gradient(97deg, #53b2fe, #065af3 130%);
+    width: 300px;
+    height: 50px;
+    margin-top: 40px;
+    margin-left: 25px;
+    border: none;
+    color: white;
+    font-size: 20px;
+    border-radius: 20px;
+    cursor: pointer;
+  }
+  

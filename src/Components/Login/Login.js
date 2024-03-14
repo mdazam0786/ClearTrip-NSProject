@@ -3,9 +3,11 @@ import "./login.css";
 import { RxCross1 } from "react-icons/rx";
 import { Link, useNavigate } from "react-router-dom";
 import SignupByEmail from "../Signup/SignupByEmail";
+import {useAuth} from "../../MyContext";
 
 export default function Login({ closeModal, setLoggedIn }) {
-  // const navigate = useNavigate();
+  const {user, setUser} = useAuth();
+
 
   const [slide1, setSlide1] = useState(false);
 
@@ -59,13 +61,15 @@ export default function Login({ closeModal, setLoggedIn }) {
       if (response.ok) {
         const data = await response.json();
         localStorage.setItem("token", data.token);
+        localStorage.setItem("name", data.data.name);
+        setUser(data.user);
         console.log(response);
         console.log(data);
         setLoggedIn(true);
         closeModal();
         // navigate("/flights");
         console.log("success");
-      } else if (response.status === 400) {
+      } else if (response.status === 403) {
         console.log(response.status);
         const errorData = await response.json();
         setError(errorData.message);

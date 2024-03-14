@@ -1,5 +1,4 @@
 import { AuthProvider } from "./MyContext";
-import { React } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Header from "./Components/Header/Header";
 import SignupByEmail from "./Components/Signup/SignupByEmail";
@@ -13,13 +12,12 @@ import ComingSoon from "./Components/ComingSoon/ComingSoon";
 import Footer from "./Components/Footer/Footer";
 import FlightBooking from "./Components/Flights/FlightBooking/FlightBooking";
 import Pyment from "./Components/Flights/FlightBooking/Pyment";
+import HotelBooking from "./Components/Hotels/HotelBooking/HotelBooking";
 
 function App() {
   return (
     <AuthProvider>
       <Router>
-        {/* <Login /> */}
-
         <Header />
         <Routes>
           <Route exact path="/" element={<Flights />} />
@@ -32,10 +30,11 @@ function App() {
           <Route exact path="/login" element={<Login />} />
           <Route exact path="/signup" element={<SignupByEmail />} />
           <Route exact path="/flightBooking" element={<FlightBooking />} />
+          {/* Corrected the path for Pyment */}
           <Route exact path="/pyment" element={<Pyment />} />
-
-
+          <Route exact path="/hotelBooking" element={<HotelBooking />} />
         </Routes>
+        {/* Uncomment the Footer if you intend to use it */}
         {/* <Footer /> */}
       </Router>
     </AuthProvider>

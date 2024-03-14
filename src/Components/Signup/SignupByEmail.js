@@ -63,6 +63,7 @@ export default function SignupByEmail({ closeModal, setLoggedIn, onSignupSuccess
         const errorData = await response.json();
         setError(errorData.message);
       }
+      
     } catch (error) {
       console.error("Error fetching data: ", error);
       setError("Error fetching data: ", error.message);

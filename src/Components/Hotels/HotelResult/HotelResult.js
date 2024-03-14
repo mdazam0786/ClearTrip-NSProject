@@ -25,6 +25,8 @@ export default function HotelResult(props) {
   const location = useLocation();
   const [hotelData1, setHotelData1] = useState(location.state?.hotelData11);
   const searchParameter = location.state?.loc;
+  const selectedDay = location.state?.selectedDate;
+  console.log(selectedDay);
   console.log(searchParameter);
 
   const [dropdownValue, setDropdownValue] = useState("");
@@ -236,7 +238,11 @@ export default function HotelResult(props) {
     // console.log(hotelData);
 
     navigate(`/hotelDescription`, {
-      state: { hotelDetailsData1: data?.data, starRating: starRating },
+      state: {
+        hotelDetailsData1: data?.data,
+        starRating: starRating,
+        selectedDay: selectedDay,
+      },
     });
   }
 
@@ -546,7 +552,13 @@ export default function HotelResult(props) {
           <input type="text" />
         </div>
       </div>
-      <div className="Number-countOfResult">{hotelData1?.length}<span className="Number-countOfResultOfSpan"> of {hotelData1?.length} hotels in {searchParameter}</span></div>
+      <div className="Number-countOfResult">
+        {hotelData1?.length}
+        <span className="Number-countOfResultOfSpan">
+          {" "}
+          of {hotelData1?.length} hotels in {searchParameter}
+        </span>
+      </div>
       <div className="result-section-container2">
         {hotelData1.map((item) => (
           <div
@@ -575,6 +587,7 @@ export default function HotelResult(props) {
                 item.rooms[0].costPerNight,
                 item.rooms[0].costDetails.baseCost
               )}
+              selectedDate={selectedDay}
             />
           </div>
         ))}
