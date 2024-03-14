@@ -32,9 +32,24 @@
 .logo-right-side ul {
     display: flex;
     list-style: none;
-    /* column-gap: 30px; */
+    
 }
 .logo-right-side ul li {
-    margin-left: 30px;
+    margin-right: 30px;
 }
-
+.logo-right-side ul li:hover{
+    background: none;
+    color: black;
+    text-decoration: underline;
+}
+.footer-container h4{
+    margin-left: 70px;
+    font-weight: 500;
+}
+.footer-container p {
+    margin-left: 70px;
+    color: gray;
+    font-weight: 500;
+    cursor: pointer;
+    
+}

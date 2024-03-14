@@ -30,12 +30,11 @@ function App() {
           <Route exact path="/login" element={<Login />} />
           <Route exact path="/signup" element={<SignupByEmail />} />
           <Route exact path="/flightBooking" element={<FlightBooking />} />
-          {/* Corrected the path for Pyment */}
+          
           <Route exact path="/pyment" element={<Pyment />} />
           <Route exact path="/hotelBooking" element={<HotelBooking />} />
         </Routes>
-        {/* Uncomment the Footer if you intend to use it */}
-        {/* <Footer /> */}
+        
       </Router>
     </AuthProvider>
   );

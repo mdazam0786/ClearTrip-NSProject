@@ -3,16 +3,14 @@ import "./flights.css";
 import { IoIosArrowRoundForward } from "react-icons/io";
 import { MdPersonOutline } from "react-icons/md";
 import { RiFlightTakeoffFill } from "react-icons/ri";
-// import { RiFlightLandFill } from "react-icons/ri";
-// import { BsArrowLeftRight } from "react-icons/bs";
 import Navbar from "../../Navbar/Navbar";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import moment from "moment";
 import { MdOutlineCalendarMonth } from "react-icons/md";
-import FlightResult from "../FlightResult/FlightResult";
 import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
+import Footer from "../../Footer/Footer";
+
 
 
 export default function Flights() {
@@ -153,7 +151,7 @@ export default function Flights() {
   }, []);
 
   return (
-    <div>
+    <div >
       <Navbar />
 
       <div className="flight-section">
@@ -409,6 +407,7 @@ export default function Flights() {
           </p>
         </div>
       </div>
+      {/* <Footer /> */}
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Modal from "react-modal";
 import Login from "../Login/Login";
@@ -7,9 +7,25 @@ import SignupByEmail from "../Signup/SignupByEmail";
 
 export default function Header() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(false);
   const [isSignupModalOpen, setIsSignupModalOpen] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem("token"));
-  const userName = localStorage.getItem("name");
+  const [userName, setUserName] = useState("");
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      setLoggedIn(true);
+      const storedUserName = localStorage.getItem("name");
+      if (storedUserName) {
+        setUserName(storedUserName);
+      }
+    }
+  }, []);
+
+  const closeSignupModal = () => {
+    setIsSignupModalOpen(false);
+    openModal();
+  };
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -19,14 +35,11 @@ export default function Header() {
     setIsModalOpen(false);
   };
 
-  const closeSignupModal = () => {
-    setIsSignupModalOpen(false);
-    openModal();
-  };
-
   const handleLogout = () => {
     localStorage.removeItem("token");
-    setIsLoggedIn(false);
+    localStorage.removeItem("name");
+    setLoggedIn(false);
+    setUserName("");
   };
 
   const handleSignupSuccess = () => {
@@ -39,10 +52,13 @@ export default function Header() {
       <div className="container">
         <div className="logo">
           <Link to="/flights">
-            <img src="https://etimg.etb2bimg.com/photo/94049186.cms" alt="pic" />
+            <img
+              src="https://etimg.etb2bimg.com/photo/94049186.cms"
+              alt="pic"
+            />
           </Link>
         </div>
-        {!isLoggedIn ? (
+        {!loggedIn ? (
           <div className="login">
             <button onClick={openModal}>Login / Sign up</button>
             <Modal
@@ -60,14 +76,14 @@ export default function Header() {
                 },
               }}
             >
-              <Login closeModal={closeModal} setIsLoggedIn={setIsLoggedIn} />
+              <Login closeModal={closeModal} setLoggedIn={setLoggedIn} />
             </Modal>
           </div>
         ) : (
           <div className="logout">
-            <div style={{marginRight: "10px"}}>{userName && userName.toUpperCase()}</div>
-            <div > |</div>
-            <button className="logout1" onClick={handleLogout}>
+            <div className="logout1">{userName.charAt(0).toUpperCase() + userName.slice(1)}</div>
+            <span style={{marginLeft: "10px"}}>|</span>
+            <button className="logout" onClick={handleLogout}>
               Logout
             </button>
           </div>
@@ -76,7 +92,7 @@ export default function Header() {
       {isSignupModalOpen && (
         <SignupByEmail
           closeModal={closeSignupModal}
-          setIsLoggedIn={setIsLoggedIn}
+          setLoggedIn={setLoggedIn}
           onSignupSuccess={handleSignupSuccess}
         />
       )}

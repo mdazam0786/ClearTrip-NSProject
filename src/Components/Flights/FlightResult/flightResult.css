@@ -52,6 +52,7 @@
   display: flex;
   align-items: center;
   
+  
 }
 .dropdown-content-box2 {
   padding: 5px;
@@ -72,6 +73,7 @@
 .dropdown-value{
   color: #494949 ;
   margin-left: 10px;
+  cursor: pointer;
 }
 .right-align {
   margin-left: auto;
@@ -80,6 +82,7 @@
 .input-checkbox{
   width: 20px;
   height: 20px;
+  cursor: pointer;
 }
 .custom-dropdown.active .dropdown-content {
   display: block;
@@ -141,5 +144,9 @@ input[type="range"]::-webkit-slider-thumb {
   flex-direction: row;
   align-items: center;
   justify-content: space-around;
+  
 }
 
+.flight-result-top p {
+  cursor: pointer;
+}

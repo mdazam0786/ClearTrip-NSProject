@@ -620,7 +620,7 @@ export default function FlightResult(props) {
         </div>
         <div className="column2">
           <div className="flight-result-top">
-            <p>Airlines</p>
+            <p style={{cursor:"default"}}>Airlines</p>
             <p onClick={sortFlightByDeparture}>Departure</p>
             <p onClick={sortFlightByDuration}>Duration</p>
             <p onClick={sortFlightByArival}>Arrival</p>
