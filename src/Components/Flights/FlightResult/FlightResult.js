@@ -17,6 +17,15 @@ export default function FlightResult(props) {
   const [flightDataResult, setFlightDataResult] = useState(
     location.state?.flightDataSearch
   );
+  const totalFlights = flightDataResult.length;
+
+  const [filteredFlightsCount, setFilteredFlightsCount] = useState(totalFlights);
+
+  
+  useEffect(() => {
+    setFilteredFlightsCount(flightDataResult.length);
+  }, [flightDataResult]);
+
 
   const minPrice = 2000;
   const maxPrice = 2500;
@@ -433,9 +442,9 @@ export default function FlightResult(props) {
       <div className="row">
         <div className="column1">
           <aside className="aside-left">
-            <div>
-              {flightDataResult.length} of {flightDataResult.length} flights
-            </div>
+            {/* <div>
+              {filteredFlightsCount} of {totalFlights} flights
+            </div> */}
             <div
               className={`custom-dropdown ${isDropdownVisible ? "active" : ""}`}
             >
