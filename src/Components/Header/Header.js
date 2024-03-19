@@ -1,26 +1,24 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Modal from "react-modal";
-import Login from "../Login/Login";
 import "./header.css";
+import Login from "../Login/Login";
 import SignupByEmail from "../Signup/SignupByEmail";
+import { useAuth } from "../../MyContext";
 
 export default function Header() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [loggedIn, setLoggedIn] = useState(false);
   const [isSignupModalOpen, setIsSignupModalOpen] = useState(false);
-  const [userName, setUserName] = useState("");
+  const { user, setUser } = useAuth();
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    if (token) {
-      setLoggedIn(true);
-      const storedUserName = localStorage.getItem("name");
-      if (storedUserName) {
-        setUserName(storedUserName);
-      }
+    const name = localStorage.getItem("name");
+
+    if (token && name) {
+      setUser({ token, name });
     }
-  }, []);
+  }, [setUser]);
 
   const closeSignupModal = () => {
     setIsSignupModalOpen(false);
@@ -38,8 +36,7 @@ export default function Header() {
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("name");
-    setLoggedIn(false);
-    setUserName("");
+    setUser(null);
   };
 
   const handleSignupSuccess = () => {
@@ -58,7 +55,7 @@ export default function Header() {
             />
           </Link>
         </div>
-        {!loggedIn ? (
+        {!user ? (
           <div className="login">
             <button onClick={openModal}>Login / Sign up</button>
             <Modal
@@ -76,13 +73,12 @@ export default function Header() {
                 },
               }}
             >
-              <Login closeModal={closeModal} setLoggedIn={setLoggedIn} />
+              <Login closeModal={closeModal} />
             </Modal>
           </div>
         ) : (
           <div className="logout">
-            <div className="logout1">{userName.charAt(0).toUpperCase() + userName.slice(1)}</div>
-            <span style={{marginLeft: "10px"}}>|</span>
+            <Link className="logout1">{user.name} |</Link>
             <button className="logout" onClick={handleLogout}>
               Logout
             </button>
@@ -92,7 +88,6 @@ export default function Header() {
       {isSignupModalOpen && (
         <SignupByEmail
           closeModal={closeSignupModal}
-          setLoggedIn={setLoggedIn}
           onSignupSuccess={handleSignupSuccess}
         />
       )}

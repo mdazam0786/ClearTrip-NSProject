@@ -3,7 +3,7 @@ import FlightResultCart from "./FlightResultCart";
 import { useLocation } from "react-router-dom";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import "./flightResult.css";
-// import "./flightResultCart.css";
+
 
 export default function FlightResult(props) {
   const location = useLocation();

@@ -10,6 +10,8 @@ import { FaSpa, FaWifi } from "react-icons/fa";
 import Modal from "react-modal";
 import Login from "../../Login/Login";
 
+
+
 export default function HotelDesription(props) {
   const location = useLocation();
   const detailsData = location.state?.hotelDetailsData1 || [];
@@ -18,8 +20,10 @@ export default function HotelDesription(props) {
   const descriptionRef = useRef(null);
   const navigate = useNavigate();
   const storedToken = localStorage.getItem("token");
-  const [showLoginModal, setShowLoginModal] = useState(false);
-
+  
+  
+  
+  
   console.log(selectedDate);
 
   const amenityIcons = {
@@ -60,9 +64,9 @@ export default function HotelDesription(props) {
 
   const handleBookHotel = () => {
     if(storedToken === undefined || storedToken === null)
-    {
-      setShowLoginModal(true);
-      return;
+    {  
+        navigate("/Login");
+        return;
     }
     navigate("/HotelBooking", {
       state: {
@@ -71,15 +75,13 @@ export default function HotelDesription(props) {
         selectedDate: selectedDate,
       },
     });
+    
   };
 
-  const closeModal = () => {
-    setShowLoginModal(false);
-  };
+  
 
-  const handleLoginSuccess = () => {
-    closeModal(); 
-  };
+  
+  
 
   return (
     <div className="main-desc">
@@ -280,25 +282,7 @@ export default function HotelDesription(props) {
           </div>
         ))}
       </div>
-      <Modal
-        isOpen={showLoginModal}
-        onRequestClose={closeModal}
-        contentLabel="Login Modal"
-        style={{
-          overlay: { background: "rgba(0, 0, 0, 0.5)" },
-          content: {
-            width: "800px",
-            height: "430px",
-            margin: "auto",
-            overflow: "hidden",
-            borderRadius: "10px",
-          },
-        }}
-      >
-        
-        <Login closeModal={handleLoginSuccess} />
-
-      </Modal>
+    
     </div>
   );
 }

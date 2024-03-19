@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react";
+// Login.js
+import React, { useState, useEffect } from "react";
 import "./login.css";
 import { RxCross1 } from "react-icons/rx";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import SignupByEmail from "../Signup/SignupByEmail";
 import { useAuth } from "../../MyContext";
 
-export default function Login({ closeModal, setLoggedIn }) {
-  const {user, setUser} = useAuth();
+export default function Login({ closeModal}) {
+  const {setUser } = useAuth();
   const [slide1, setSlide1] = useState(false);
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -34,22 +34,24 @@ export default function Login({ closeModal, setLoggedIn }) {
     return () => clearInterval(intervalId);
   }, []);
 
+  const handleLoginSuccess = (token) => {
+    closeModal();
+    setUser({token}); 
+  };
+
   async function Apicall() {
-    console.log("Signup called");
     setEmail("");
     setLoading(true);
 
     try {
       const Url = `https://academics.newtonschool.co/api/v1/bookingportals/login`;
 
-      console.log(Url);
       const response = await fetch(Url, {
         method: "POST",
         headers: {
           projectId: "f104bi07c490",
           "Content-Type": "application/json",
         },
-
         body: JSON.stringify({
           email: email,
           password: password,
@@ -60,30 +62,17 @@ export default function Login({ closeModal, setLoggedIn }) {
         const data = await response.json();
         localStorage.setItem("token", data.token);
         localStorage.setItem("name", data.data.name);
-        setUser(data.user);
-        console.log(user);
-        console.log(response);
-        console.log(data);
-        setLoggedIn(true);
-        closeModal();
-        // navigate("/flights");
-        console.log("success");
-      } else if (response.status === 400) {
-        console.log(response.status);
+        handleLoginSuccess(data.token); // Call handleLoginSuccess upon successful login
+      } else if (response.status === 401) {
         const errorData = await response.json();
         setError(errorData.message);
       }
     } catch (error) {
-      console.log("Error fetching data: ", error);
       setError("Error fetching data: ", error.message);
     } finally {
       setLoading(false);
     }
   }
-
-  // useEffect(() => {
-  //   Apicall();
-  // }, []);
 
   return (
     <div className="signup-main">
@@ -117,7 +106,7 @@ export default function Login({ closeModal, setLoggedIn }) {
               </div>
               <div className="signup-input-field">
                 <input
-                  type="text"
+                  type="password"
                   placeholder="Enter password"
                   value={password}
                   onChange={changePassword}
@@ -130,7 +119,7 @@ export default function Login({ closeModal, setLoggedIn }) {
                 onClick={Apicall}
                 disabled={loading}
               >
-                Login
+                {loading ? "Logging in..." : "Login"}
               </button>
               <Link className="btn-below-text" to="#" onClick={openSignupModal}>
                 <div>New User Please Signup Here</div>
@@ -160,7 +149,7 @@ export default function Login({ closeModal, setLoggedIn }) {
           </div>
         </div>
       </div>
-      {isSignupModalOpen && <SignupByEmail closeModal={closeModal} setLoggedIn={setLoggedIn }/>}
+      {isSignupModalOpen && <SignupByEmail closeModal={closeModal} />}
     </div>
   );
 }

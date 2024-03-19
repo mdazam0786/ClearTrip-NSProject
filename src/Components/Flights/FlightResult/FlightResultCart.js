@@ -4,19 +4,20 @@ import "./flightResultCart.css";
 import { useNavigate } from "react-router-dom";
 import Modal from "react-modal";
 import Login from "../../Login/Login";
+import { useAuth } from "../../../MyContext";
 
 export default function FlightResultCart(props) {
-  const storedToken = localStorage.getItem("token");
   const navigate = useNavigate();
   const [showFlightDetails, setShowFlightDetails] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);
+  const {user} = useAuth();
 
   const toggleFlightDetails = () => {
     setShowFlightDetails(!showFlightDetails);
   };
 
   const handleBookFlight = () => {
-    if (storedToken === undefined || storedToken === null) {
+    if (!user) {
       setShowLoginModal(true);
       return;
     }
@@ -27,9 +28,7 @@ export default function FlightResultCart(props) {
     setShowLoginModal(false);
   };
 
-  const handleLoginSuccess = () => {
-    closeModal(); 
-  };
+  
 
 
   return (
@@ -133,7 +132,7 @@ export default function FlightResultCart(props) {
         }}
       >
         
-        <Login closeModal={handleLoginSuccess}  />
+        <Login closeModal={closeModal}  />
 
       </Modal>
     </div>

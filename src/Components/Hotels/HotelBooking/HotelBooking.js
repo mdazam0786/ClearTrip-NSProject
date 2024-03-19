@@ -9,7 +9,17 @@ export default function HotelBooking() {
   const detailsData = location.state?.detailsData || [];
   const starRating = location.state?.starRating || undefined;
   const selectedDay = location.state?.selectedDay;
+  console.log(detailsData);
+
+  const [mobileNo, setMobileNo] = useState("");
+  const [email, setEmail] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [age, setAge] = useState("");
+  const [gender, setGender] = useState("");
   const [showError, setShowError] = useState(false);
+
+  const navigate = useNavigate();
 
   const getRandom = (min, max) => {
     min = Math.min(min);
@@ -18,16 +28,20 @@ export default function HotelBooking() {
   };
   const random = getRandom(3, 5);
 
-  const [mobileNo, setMobileNo] = useState("");
-  const [email, setEmail] = useState("");
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [age, setAge] = useState("");
-  const [gender, setGender] = useState("");
-  const navigate = useNavigate();
-
   const handleContinue = async () => {
     try {
+      
+      if (
+        mobileNo === "" ||
+        email === "" ||
+        firstName === "" ||
+        lastName === "" ||
+        age === ""
+      ) {
+        setShowError(true);
+        return;
+      }
+
       await HotelBook();
     } catch (error) {
       console.error("Booking failed:", error);
@@ -37,6 +51,7 @@ export default function HotelBooking() {
 
   async function HotelBook() {
     const Url = `https://academics.newtonschool.co/api/v1/bookingportals/booking`;
+    console.log(Url);
 
     const response = await fetch(Url, {
       method: "POST",
@@ -48,9 +63,11 @@ export default function HotelBooking() {
       body: JSON.stringify({
         bookingType: "hotel",
         bookingDetails: {
-          hotelId: detailsData?.Id,
-          startDate: "2023-10-09T10:03:53.554+00:00",
-          endDate: "2023-10-09T10:03:53.554+00:00",
+          hotelId: detailsData?.id.toString(),
+          startDate: moment(selectedDay).toISOString(),
+          endDate: moment(selectedDay).add(1, 'days').toISOString(),
+          // startDate : "2023-10-09T10:03:53.554+00:00", 
+          // endDate : "2023-10-09T10:03:53.554+00:00"
         },
       }),
     });
@@ -322,6 +339,11 @@ export default function HotelBooking() {
           >
             Continue
           </button>
+          {/* {isContinueButtonDisabled() && (
+            <div className="error-popup">
+              <p>Please fill in all the required fields.</p>
+            </div>
+          )} */}
         </div>
       </div>
     </div>
