@@ -3,6 +3,7 @@ import FlightResultCart from "./FlightResultCart";
 import { useLocation } from "react-router-dom";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import "./flightResult.css";
+import { useAuth } from "../../../MyContext";
 
 
 export default function FlightResult(props) {
@@ -11,7 +12,7 @@ export default function FlightResult(props) {
   const searchDestination = location.state?.loc2;
   const formattedDay = location.state?.day;
   const selectedDay = location.state?.selectedDate;
-
+  const {numberOfAdults} = useAuth();
   // console.log(selectedDay);
 
   const [flightDataResult, setFlightDataResult] = useState(
@@ -442,9 +443,7 @@ export default function FlightResult(props) {
       <div className="row">
         <div className="column1">
           <aside className="aside-left">
-            {/* <div>
-              {filteredFlightsCount} of {totalFlights} flights
-            </div> */}
+          {/* <p>Number of Adults: {numberOfAdults}</p> */}
             <div
               className={`custom-dropdown ${isDropdownVisible ? "active" : ""}`}
             >
@@ -636,7 +635,7 @@ export default function FlightResult(props) {
             <p onClick={sortFlightByPrice}>Price</p>
             <p onClick={smartSort}>Smart sort</p>
           </div>
-          {flightDataResult.map((item) => (
+          {flightDataResult && flightDataResult.map((item) => (
             <div className="flight-result-page">
               <FlightResultCart
                 FlightId={item.flightID}

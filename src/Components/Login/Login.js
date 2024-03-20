@@ -34,9 +34,9 @@ export default function Login({ closeModal}) {
     return () => clearInterval(intervalId);
   }, []);
 
-  const handleLoginSuccess = (token) => {
+  const handleLoginSuccess = (token, name) => {
     closeModal();
-    setUser({token}); 
+    setUser({token, name}); 
   };
 
   async function Apicall() {
@@ -62,7 +62,7 @@ export default function Login({ closeModal}) {
         const data = await response.json();
         localStorage.setItem("token", data.token);
         localStorage.setItem("name", data.data.name);
-        handleLoginSuccess(data.token); // Call handleLoginSuccess upon successful login
+        handleLoginSuccess(data.token, data.data.name); 
       } else if (response.status === 401) {
         const errorData = await response.json();
         setError(errorData.message);

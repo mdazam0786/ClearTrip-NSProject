@@ -3,6 +3,7 @@ import "./hotelBooking.css";
 import { FaTripadvisor } from "react-icons/fa";
 import moment from "moment";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useAuth } from "../../../MyContext";
 
 export default function HotelBooking() {
   const location = useLocation();
@@ -18,6 +19,22 @@ export default function HotelBooking() {
   const [age, setAge] = useState("");
   const [gender, setGender] = useState("");
   const [showError, setShowError] = useState(false);
+  const {numberOfRoom, numberOfGuest} = useAuth();
+  const [travelers, setTravelers] = useState([]);
+
+  useEffect(() => {
+    const newTravelers = [];
+    for (let i = 0; i < numberOfGuest; i++) {
+      newTravelers.push({
+        firstName: "",
+        lastName: "",
+        age: "",
+        gender: "male",
+      });
+    }
+    setTravelers(newTravelers);
+  }, [numberOfGuest]);
+
 
   const navigate = useNavigate();
 
@@ -49,6 +66,9 @@ export default function HotelBooking() {
     }
   };
 
+
+          
+
   async function HotelBook() {
     const Url = `https://academics.newtonschool.co/api/v1/bookingportals/booking`;
     console.log(Url);
@@ -63,21 +83,22 @@ export default function HotelBooking() {
       body: JSON.stringify({
         bookingType: "hotel",
         bookingDetails: {
-          hotelId: detailsData?.id.toString(),
+          hotelId: detailsData?._id,
           startDate: moment(selectedDay).toISOString(),
           endDate: moment(selectedDay).add(1, 'days').toISOString(),
-          // startDate : "2023-10-09T10:03:53.554+00:00", 
-          // endDate : "2023-10-09T10:03:53.554+00:00"
+          
         },
       }),
     });
     const data = await response.json();
+    console.log(response);
+    console.log(data);
 
     const totalPrice = detailsData.rooms[0]?.costDetails?.baseCost + detailsData.rooms[0]?.costDetails?.taxesAndFees;
 
     navigate("/Pyment", {
       state: {
-        totalPrice: totalPrice,
+        totalPrice: totalPrice * numberOfRoom,
       },
     });
   }
@@ -215,6 +236,11 @@ export default function HotelBooking() {
                   {moment(selectedDay).add(1, "day").format("ddd hh:mm A")}
                 </div>
               </div>
+              <div>
+                <p>Room & Guests</p>
+                <h3>{numberOfRoom} Rooms, {numberOfGuest} Guests</h3>
+                <div>{numberOfGuest} Adults</div>
+              </div>
             </div>
           </div>
           <div className="BookingPageFlight_Child_data_left_data2">
@@ -240,19 +266,22 @@ export default function HotelBooking() {
           </div>
           <div className="BookingPageFlight_Child_data_left_data3">
             <h3>Add Traveller Details</h3>
-            <div className="BookingPageFlight_Child_data_left_data2_traveller_Detail">
+            {travelers.map((traveler, index) => (
+            <div key={index}
+                id={`NumberOfAdults-flight-${index}`} className="BookingPageFlight_Child_data_left_data2_traveller_Detail">
               <div
                 style={{
                   display: "flex",
                   justifyContent: "space-between",
                   gap: "70px",
+                  position: "relative",
                 }}
               >
                 <div style={{ display: "flex", flexDirection: "column" }}>
                   <label>First Name</label>
                   <input
                     type="text"
-                    value={firstName}
+                    value={traveler.firstName}
                     onChange={(e) => setFirstName(e.target.value)}
                   />
                 </div>
@@ -260,7 +289,7 @@ export default function HotelBooking() {
                   <label>Last Name</label>
                   <input
                     type="text"
-                    value={lastName}
+                    value={traveler.lastName}
                     onChange={(e) => setLastName(e.target.value)}
                   />
                 </div>
@@ -271,7 +300,7 @@ export default function HotelBooking() {
                   <input
                     style={{ width: "80px" }}
                     type="number"
-                    value={age}
+                    value={traveler.age}
                     onChange={(e) => setAge(e.target.value)}
                   />
                 </div>
@@ -280,7 +309,7 @@ export default function HotelBooking() {
                   <select
                     id="gender"
                     name="gender"
-                    value={gender}
+                    value={traveler.gender}
                     onChange={(e) => setGender(e.target.value)}
                   >
                     <option value="male">Male</option>
@@ -290,6 +319,7 @@ export default function HotelBooking() {
                 </div>
               </div>
             </div>
+            ))}
           </div>
         </div>
         <div className="BookingPageFlight_Child_data_right">
@@ -304,7 +334,7 @@ export default function HotelBooking() {
               }}
             >
               <h4>Base Fare</h4>
-              <p>Rs {detailsData.rooms[0]?.costDetails?.baseCost}</p>
+              <p>Rs {detailsData.rooms[0]?.costDetails?.baseCost * numberOfRoom}</p>
             </div>
             <div
               style={{
@@ -316,7 +346,7 @@ export default function HotelBooking() {
               }}
             >
               <h4>Taxes and Surcharges</h4>
-              <p>&#8377; {detailsData.rooms[0]?.costDetails?.taxesAndFees} </p>
+              <p>&#8377; {detailsData.rooms[0]?.costDetails?.taxesAndFees * numberOfRoom} </p>
             </div>
             <div
               style={{
@@ -328,7 +358,7 @@ export default function HotelBooking() {
               }}
             >
               <h2>Total Amount</h2>
-              <h3>Rs {detailsData.rooms[0]?.costDetails?.baseCost + detailsData.rooms[0]?.costDetails?.taxesAndFees}</h3>
+              <h3>Rs {detailsData.rooms[0]?.costDetails?.baseCost  * numberOfRoom + detailsData.rooms[0]?.costDetails?.taxesAndFees * numberOfRoom}</h3>
             </div>
           </div>
 
@@ -339,11 +369,7 @@ export default function HotelBooking() {
           >
             Continue
           </button>
-          {/* {isContinueButtonDisabled() && (
-            <div className="error-popup">
-              <p>Please fill in all the required fields.</p>
-            </div>
-          )} */}
+          
         </div>
       </div>
     </div>

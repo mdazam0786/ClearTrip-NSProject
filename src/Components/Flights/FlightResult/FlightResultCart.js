@@ -135,6 +135,7 @@ export default function FlightResultCart(props) {
         <Login closeModal={closeModal}  />
 
       </Modal>
+      
     </div>
   );
 }

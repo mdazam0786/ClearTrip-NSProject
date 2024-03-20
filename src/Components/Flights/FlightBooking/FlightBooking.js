@@ -2,35 +2,102 @@ import React, { useState, useEffect, useMemo } from "react";
 import "./flightBooking.css";
 import moment from "moment";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useAuth } from "../../../MyContext";
 
 export default function FlightBooking() {
   const location = useLocation();
   const flightDetails = location.state && location.state.flightDetails;
   const selectedDate = flightDetails && flightDetails.selectedDate.toString();
   const [showError, setShowError] = useState(false);
+  const { numberOfAdults } = useAuth();
+  const [travelers, setTravelers] = useState([]);
 
   const taxes = useMemo(() => Math.floor(Math.random() * 1000) + 1, []);
 
   const [mobileNo, setMobileNo] = useState("");
   const [email, setEmail] = useState("");
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [age, setAge] = useState("");
-  const [gender, setGender] = useState("");
-  const navigate= useNavigate();
+  const [showInputError, setShowInputError] = useState(false);
+  const navigate = useNavigate();
 
+  useEffect(() => {
+    const newTravelers = [];
+    for (let i = 0; i < numberOfAdults; i++) {
+      newTravelers.push({
+        firstName: "",
+        lastName: "",
+        age: "",
+        gender: "male",
+      });
+    }
+    setTravelers(newTravelers);
+  }, [numberOfAdults]);
 
   const handleContinue = async () => {
-    try {
-      // Call the FlightBook function
-      await FlightBook();
-    } catch (error) {
-      // Handle booking failure
-      console.error("Booking failed:", error);
-      setShowError(true);
+    const isEmptyMobileNo = mobileNo.trim() === "";
+    const isEmptyEmail = email.trim() === "";
+    const isEmptyTravelers = travelers.some(
+      (traveler) =>
+        traveler.firstName.trim() === "" ||
+        traveler.lastName.trim() === "" ||
+        traveler.age.trim() === ""
+    );
+
+    const isEmptyFirstName = travelers.some(
+      (traveler) => traveler.firstName.trim() === ""
+    );
+    const isEmptyLastName = travelers.some(
+      (traveler) => traveler.lastName.trim() === ""
+    );
+    const isEmptyAge = travelers.some((traveler) => traveler.age.trim() === "");
+
+    if (
+      isEmptyMobileNo ||
+      isEmptyEmail ||
+      isEmptyTravelers ||
+      isEmptyFirstName ||
+      isEmptyLastName ||
+      isEmptyAge
+    ) {
+      setShowInputError(true);
+    } else {
+      await FlightBook().catch((error) => {
+        console.error("Booking failed:", error);
+        setShowError(true);
+      });
     }
   };
 
+  const handleFirstNameChange = (index, newValue) => {
+    setTravelers((prevTravelers) => {
+      const updatedTravelers = [...prevTravelers];
+      updatedTravelers[index].firstName = newValue;
+      return updatedTravelers;
+    });
+  };
+
+  const handleLastNameChange = (index, newValue) => {
+    setTravelers((prevTravelers) => {
+      const updatedTravelers = [...prevTravelers];
+      updatedTravelers[index].lastName = newValue;
+      return updatedTravelers;
+    });
+  };
+
+  const handleAgeChange = (index, newValue) => {
+    setTravelers((prevTravelers) => {
+      const updatedTravelers = [...prevTravelers];
+      updatedTravelers[index].age = newValue;
+      return updatedTravelers;
+    });
+  };
+
+  const handleGenderChange = (index, newValue) => {
+    setTravelers((prevTravelers) => {
+      const updatedTravelers = [...prevTravelers];
+      updatedTravelers[index].gender = newValue;
+      return updatedTravelers;
+    });
+  };
 
   async function FlightBook() {
     console.log("FlightBook");
@@ -53,8 +120,9 @@ export default function FlightBooking() {
         bookingDetails: {
           flightId: flightDetails?.Id.toString(),
           startDate: moment(selectedDate).toISOString(),
-          endDate: moment(selectedDate).add(1, 'days').toISOString(),
+          endDate: moment(selectedDate).add(1, "days").toISOString(),
         },
+        numberOfAdults: numberOfAdults,
       }),
     });
     const data = await response.json();
@@ -63,25 +131,11 @@ export default function FlightBooking() {
 
     navigate("/Pyment", {
       state: {
-        totalPrice: flightDetails?.Price + taxes,
-        
-        // Add other necessary details here
+        totalPrice:
+          flightDetails?.Price * numberOfAdults + taxes * numberOfAdults,
       },
     });
-
-    
   }
-
-  const isContinueButtonDisabled = () => {
-    // Check if any of the required input fields are empty
-    return (
-      mobileNo === "" ||
-      email === "" ||
-      firstName === "" ||
-      lastName === "" ||
-      age === ""
-    );
-  };
 
   // console.log(flightDetails);
 
@@ -171,7 +225,13 @@ export default function FlightBooking() {
           <div className="BookingPageFlight_Child_data_left_data2">
             <h3>Add Contact Details</h3>
             <div className="BookingPageFlight_Child_data_left_data2_contactDetail">
-              <div style={{ display: "flex", flexDirection: "column" }}>
+              <div
+                style={{
+                  position: "relative",
+                  display: "flex",
+                  flexDirection: "column",
+                }}
+              >
                 <label>Mobile No</label>
                 <input
                   type="number"
@@ -179,7 +239,25 @@ export default function FlightBooking() {
                   onChange={(e) => setMobileNo(e.target.value)}
                 />
               </div>
-              <div style={{ display: "flex", flexDirection: "column" }}>
+              {showInputError && mobileNo.trim() === "" && (
+                <p
+                  style={{
+                    color: "red",
+                    position: "absolute",
+                    top: "86%",
+                    left: "4%",
+                  }}
+                >
+                  Mobile number is required.
+                </p>
+              )}
+              <div
+                style={{
+                  position: "relative",
+                  display: "flex",
+                  flexDirection: "column",
+                }}
+              >
                 <label>Email Address</label>
                 <input
                   type="text"
@@ -187,60 +265,149 @@ export default function FlightBooking() {
                   onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
+              {showInputError && email.trim() === "" && (
+                <p
+                  style={{
+                    color: "red",
+                    position: "absolute",
+                    top: "86%",
+                    left: "34%",
+                  }}
+                >
+                  Email Address is required.
+                </p>
+              )}
             </div>
           </div>
           <div className="BookingPageFlight_Child_data_left_data3">
             <h3>Add Traveller Details</h3>
-            <div className="BookingPageFlight_Child_data_left_data2_traveller_Detail">
+            {travelers.map((traveler, index) => (
               <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  gap: "70px",
-                }}
+                key={index}
+                id={`NumberOfAdults-flight-${index}`}
+                className="BookingPageFlight_Child_data_left_data2_traveller_Detail"
               >
-                <div style={{ display: "flex", flexDirection: "column" }}>
-                  <label>First Name</label>
-                  <input
-                    type="text"
-                    value={firstName}
-                    onChange={(e) => setFirstName(e.target.value)}
-                  />
-                </div>
-                <div style={{ display: "flex", flexDirection: "column" }}>
-                  <label>Last Name</label>
-                  <input
-                    type="text"
-                    value={lastName}
-                    onChange={(e) => setLastName(e.target.value)}
-                  />
-                </div>
-              </div>
-              <div style={{ display: "flex", gap: "30px", marginTop: "20px" }}>
-                <div style={{ display: "flex", flexDirection: "column" }}>
-                  <label style={{ marginTop: "10px" }}>Age</label>
-                  <input
-                    style={{ width: "80px" }}
-                    type="number"
-                    value={age}
-                    onChange={(e) => setAge(e.target.value)}
-                  />
-                </div>
-                <div style={{ display: "flex", flexDirection: "column" }}>
-                  <label style={{ marginTop: "10px" }}>Gender</label>
-                  <select
-                    id="gender"
-                    name="gender"
-                    value={gender}
-                    onChange={(e) => setGender(e.target.value)}
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    gap: "70px",
+                    position: "relative",
+                  }}
+                >
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                    }}
                   >
-                    <option value="male">Male</option>
-                    <option value="female">Female</option>
-                    <option value="other">Other</option>
-                  </select>
+                    <label>First Name</label>
+                    <input
+                      type="text"
+                      value={traveler.firstName}
+                      onChange={(e) =>
+                        handleFirstNameChange(index, e.target.value)
+                      }
+                    />
+                  </div>
+                  {showInputError && traveler.firstName.trim() === "" && (
+                    <p
+                      style={{
+                        color: "red",
+                        position: "absolute",
+                        top: "13%",
+                        left: "3%",
+                        transform: "translateY(10px)",
+                      }}
+                    >
+                      First Name is required.
+                    </p>
+                  )}
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                    }}
+                  >
+                    <label>Last Name</label>
+                    <input
+                      type="text"
+                      value={traveler.lastName}
+                      onChange={(e) =>
+                        handleLastNameChange(index, e.target.value)
+                      }
+                    />
+                  </div>
+                  {showInputError && traveler.lastName.trim() === "" && (
+                    <p
+                      style={{
+                        color: "red",
+                        position: "absolute",
+                        top: "13%",
+                        left: "60%",
+                        transform: "translateY(10px)",
+                      }}
+                    >
+                      Last Name is required.
+                    </p>
+                  )}
+                </div>
+                <div
+                  style={{
+                    display: "flex",
+                    gap: "30px",
+                    marginTop: "20px",
+                    position: "relative",
+                  }}
+                >
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                    }}
+                  >
+                    <label style={{ marginTop: "10px" }}>Age</label>
+                    <input
+                      style={{ width: "80px" }}
+                      type="number"
+                      value={traveler.age}
+                      onChange={(e) => handleAgeChange(index, e.target.value)}
+                    />
+                  </div>
+                  {showInputError && traveler.age.trim() === "" && (
+                    <p
+                      style={{
+                        color: "red",
+                        position: "absolute",
+                        top: "25%",
+                        left: "3%",
+                        transform: "translateY(10px)",
+                      }}
+                    >
+                      Age.
+                    </p>
+                  )}
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                    }}
+                  >
+                    <label style={{ marginTop: "10px" }}>Gender</label>
+                    <select
+                      id="gender"
+                      name="gender"
+                      value={traveler.gender}
+                      onChange={(e) => handleGenderChange(index, e.target.value)}
+                    >
+                      <option value="male">Male</option>
+                      <option value="female">Female</option>
+                      <option value="other">Other</option>
+                    </select>
+                  </div>
                 </div>
               </div>
-            </div>
+            ))}
           </div>
         </div>
         <div className="BookingPageFlight_Child_data_right">
@@ -255,7 +422,7 @@ export default function FlightBooking() {
               }}
             >
               <h4>Base Fare</h4>
-              <p>Rs {flightDetails?.Price}</p>
+              <p>Rs {flightDetails?.Price * numberOfAdults}</p>
             </div>
             <div
               style={{
@@ -267,7 +434,7 @@ export default function FlightBooking() {
               }}
             >
               <h4>Taxes and Surcharges</h4>
-              <p>Rs {taxes}</p>
+              <p>Rs {taxes * numberOfAdults}</p>
             </div>
             <div
               style={{
@@ -279,14 +446,13 @@ export default function FlightBooking() {
               }}
             >
               <h2>Total Amount</h2>
-              <h3>Rs {flightDetails?.Price + taxes}</h3>
+              <h3>
+                Rs{" "}
+                {flightDetails?.Price * numberOfAdults + taxes * numberOfAdults}
+              </h3>
             </div>
           </div>
-          <button
-            className="FlightBooingpageBtn"
-            onClick={handleContinue}
-            disabled={isContinueButtonDisabled()}
-          >
+          <button className="FlightBooingpageBtn" onClick={handleContinue}>
             Continue
           </button>
         </div>

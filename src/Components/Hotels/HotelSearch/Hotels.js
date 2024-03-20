@@ -8,12 +8,24 @@ import "react-datepicker/dist/react-datepicker.css";
 import moment from "moment";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../../Navbar/Navbar";
+import { useAuth } from "../../../MyContext";
 
 export default function Hotels(props) {
   const [hotelData, setHotelData] = useState(null);
   const [searchParameter, setSearchParameter] = useState(null);
   const [selectedDay, setSelectedDay] = useState("");
   const navigate = useNavigate();
+
+  const { numberOfRoom, setNumberOfRoom} = useAuth();
+  const {numberOfGuest, setNumberOfGuest } = useAuth();
+
+  const handleChangeRoom = (e) => {
+    setNumberOfRoom(parseInt(e.target.value));
+  }
+
+  const handleChangeGuest = (e) => {
+    setNumberOfGuest(parseInt(e.target.value));
+  }
 
   const [offerImage, setOfferImage] = useState([]);
   const [currentOfferIndex, setCurrentOfferIndex] = useState(0);
@@ -122,10 +134,21 @@ export default function Hotels(props) {
                 </div>
                 <div className="person">
                   <IoPersonOutline className="hotel-icon" />
-                  <select className="person-option">
-                    <option value="1">1 Room, 1 Adults</option>
-                    <option value="2">1 Room, 2 Adults</option>
-                    <option value="3">2 Rooms, 4 Adults</option>
+                  <select className="person-option" value={numberOfRoom} onChange={handleChangeRoom}>
+                    <option value={1}>1 Room</option>
+                    <option value={2}>2 Room</option>
+                    <option value={3}>3 Rooms</option>
+                    <option value={4}>4 Rooms</option>
+                    <option value={5}>5 Rooms</option>
+                    <option value={6}>6 Rooms</option>
+                  
+                  </select>
+                  <select className="person-option" value={numberOfGuest} onChange={handleChangeGuest}>
+                    <option value={1}>1 Adult</option>
+                    <option value={2}>2 Adults</option>
+                    <option value={3}>3 Adults</option>
+                    <option value={4}>4 Adults</option>
+                  
                   </select>
                 </div>
               </div>

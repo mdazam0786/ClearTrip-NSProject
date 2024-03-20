@@ -58,8 +58,9 @@ export default function SignupByEmail({ closeModal, setLoggedIn, onSignupSuccess
         console.log(data);
         setLoggedIn(true);
         closeSignupModal();
-        onSignupSuccess();
-      
+        if (onSignupSuccess) {
+          onSignupSuccess();
+        }
         window.location.href = "/login"; 
       } else if (response.status === 400) {
         const errorData = await response.json();

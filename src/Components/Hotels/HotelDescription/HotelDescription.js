@@ -9,7 +9,8 @@ import { MdLocalBar } from "react-icons/md";
 import { FaSpa, FaWifi } from "react-icons/fa";
 import Modal from "react-modal";
 import Login from "../../Login/Login";
-
+import SignupByEmail from "../../Signup/SignupByEmail";
+import { useAuth } from "../../../MyContext";
 
 
 export default function HotelDesription(props) {
@@ -19,11 +20,11 @@ export default function HotelDesription(props) {
   const selectedDate = location.state?.selectedDay;
   const descriptionRef = useRef(null);
   const navigate = useNavigate();
-  const storedToken = localStorage.getItem("token");
+  const {user} = useAuth();
   
-  
-  
-  
+  const [showLogin, setShowLogin] = useState(false);
+  const [showSignup, setShowSignup] = useState(false);
+
   console.log(selectedDate);
 
   const amenityIcons = {
@@ -63,23 +64,28 @@ export default function HotelDesription(props) {
   };
 
   const handleBookHotel = () => {
-    if(storedToken === undefined || storedToken === null)
+    if(!user)
     {  
-        navigate("/Login");
+        setShowLogin(true);
         return;
     }
+    
     navigate("/HotelBooking", {
       state: {
         detailsData: detailsData,
         starRating: starRating,
         selectedDate: selectedDate,
       },
-    });
-    
+    });    
+  }
+
+  const closeModal = () => {
+    setShowLogin(false);
   };
 
-  
-
+  const toggleSignupModal = () => {
+    setShowSignup(!showSignup);
+  };
   
   
 
@@ -282,7 +288,42 @@ export default function HotelDesription(props) {
           </div>
         ))}
       </div>
-    
+      <Modal
+        isOpen={showLogin}
+        onRequestClose={closeModal}
+        contentLabel="Login Modal"
+        style={{
+          overlay: { background: "rgba(0, 0, 0, 0.5)" },
+          content: {
+            width: "800px",
+            height: "430px",
+            margin: "auto",
+            overflow: "hidden",
+            borderRadius: "10px",
+          },
+        }}
+      >
+        
+        <Login closeModal={closeModal}  openSignupModal={toggleSignupModal}/>
+
+      </Modal>
+      <Modal
+        isOpen={showSignup}
+        onRequestClose={toggleSignupModal}
+        contentLabel="Signup Modal"
+        style={{
+          overlay: { background: "rgba(0, 0, 0, 0.5)" },
+          content: {
+            width: "800px",
+            height: "430px",
+            margin: "auto",
+            overflow: "hidden",
+            borderRadius: "10px",
+          },
+        }}
+      >
+        <SignupByEmail closeModal={toggleSignupModal} />
+      </Modal>
     </div>
   );
 }

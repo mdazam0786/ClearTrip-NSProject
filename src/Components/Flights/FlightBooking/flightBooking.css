@@ -68,6 +68,7 @@
   width: 300px;
   height: 30px;
   margin-top: 10px;
+  padding-left: 20px;
 }
 .BookingPageFlight_Child_data_left_data2_traveller_Detail {
   display: flex;
@@ -78,6 +79,7 @@
   width: 300px;
   height: 30px;
   margin-top: 10px;
+  padding-left: 20px;
 }
 .BookingPageFlight_Child_data_left_data2_traveller_Detail select {
   width: 100px;
@@ -88,9 +90,17 @@
   margin-top: 40px;
   box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.21);
   width: 100%;
-  height: 280px;
+  height: auto;
   padding: 10px;
 }
+#NumberOfAdults-flight {
+  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.21);
+  width: auto;
+  margin-bottom: 10px;
+  padding: 20px;
+}
+
+
 .FlightBooingpageBtn {
   background-image: linear-gradient(97deg, #53b2fe, #065af3 130%);
   width: 300px;

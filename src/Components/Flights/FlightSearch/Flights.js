@@ -10,8 +10,7 @@ import moment from "moment";
 import { MdOutlineCalendarMonth } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import Footer from "../../Footer/Footer";
-
-
+import { useAuth } from "../../../MyContext";
 
 export default function Flights() {
   const [flightData, setFlightData] = useState(null);
@@ -25,6 +24,13 @@ export default function Flights() {
 
   const [offerImage, setOfferImage] = useState([]);
   const [currentOfferIndex, setCurrentOfferIndex] = useState(0);
+  const {numberOfAdults, setNumberOfAdults} = useAuth();
+
+  const handleAdultsChange = (e) => {
+    setNumberOfAdults(parseInt(e.target.value));
+  };
+  
+ 
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -43,7 +49,6 @@ export default function Flights() {
     setShowDropdown2(true);
   };
 
- 
   const handleAirportSelection = (airport) => {
     setSearchSource(`${airport.iata_code}`);
     setShowDropdown(false);
@@ -106,7 +111,6 @@ export default function Flights() {
       setFlightData(data?.data?.flights);
       console.log(data?.data?.flights);
 
-
       // Redirect to flight result page with search parameters
       navigate("/flightResult", {
         state: {
@@ -115,6 +119,7 @@ export default function Flights() {
           loc2: searchDestination,
           day: formattedDay,
           selectedDate: selectedDay,
+          numberOfAdults: numberOfAdults,
         },
       });
     } catch (error) {
@@ -151,7 +156,7 @@ export default function Flights() {
   }, []);
 
   return (
-    <div >
+    <div>
       <Navbar />
 
       <div className="flight-section">
@@ -173,11 +178,11 @@ export default function Flights() {
                 </div>
                 <div className="icon-select-wrapper2">
                   <MdPersonOutline className="icon" />
-                  <select className="select-way-inner2">
-                    <option value="1">1 Adult, Economy</option>
-                    <option value="2">1 Adult, Business class</option>
-                    <option value="3">1 Adult, First class</option>
-                    <option value="4">1 Adult, Premium economy</option>
+                  <select className="select-way-inner2" value={numberOfAdults} onChange={handleAdultsChange}>
+                    <option value={1}>1 Adult, Economy</option>
+                    <option value={2}>2 Adults, Economy</option>
+                    <option value={3}>3 Adults, Economy</option>
+                    <option value={4}>4 Adults, Economy</option>
                   </select>
                 </div>
               </div>
@@ -238,7 +243,6 @@ export default function Flights() {
                     </datalist>
                   )}
                 </div>
-               
               </div>
 
               <div className="select-option1">
