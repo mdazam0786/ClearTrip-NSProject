@@ -10,6 +10,7 @@ import moment from "moment";
 import { MdOutlineCalendarMonth } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../../MyContext";
+import Footer from "../../Footer/Footer";
 
 export default function Flights() {
   const [flightData, setFlightData] = useState(null);
@@ -23,13 +24,11 @@ export default function Flights() {
 
   const [offerImage, setOfferImage] = useState([]);
   const [currentOfferIndex, setCurrentOfferIndex] = useState(0);
-  const {numberOfAdults, setNumberOfAdults} = useAuth();
+  const { numberOfAdults, setNumberOfAdults } = useAuth();
 
   const handleAdultsChange = (e) => {
     setNumberOfAdults(parseInt(e.target.value));
   };
-  
- 
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -177,7 +176,11 @@ export default function Flights() {
                 </div>
                 <div className="icon-select-wrapper2">
                   <MdPersonOutline className="icon" />
-                  <select className="select-way-inner2" value={numberOfAdults} onChange={handleAdultsChange}>
+                  <select
+                    className="select-way-inner2"
+                    value={numberOfAdults}
+                    onChange={handleAdultsChange}
+                  >
                     <option value={1}>1 Adult, Economy</option>
                     <option value={2}>2 Adults, Economy</option>
                     <option value={3}>3 Adults, Economy</option>
@@ -410,6 +413,7 @@ export default function Flights() {
           </p>
         </div>
       </div>
+      {/* <Footer /> */}
     </div>
   );
 }

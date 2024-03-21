@@ -14,13 +14,11 @@ export default function HotelBooking() {
 
   const [mobileNo, setMobileNo] = useState("");
   const [email, setEmail] = useState("");
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [age, setAge] = useState("");
-  const [gender, setGender] = useState("");
   const [showError, setShowError] = useState(false);
-  const {numberOfRoom, numberOfGuest} = useAuth();
+  const { numberOfRoom, numberOfGuest } = useAuth();
   const [travelers, setTravelers] = useState([]);
+  const [showInputError, setShowInputError] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const newTravelers = [];
@@ -35,9 +33,6 @@ export default function HotelBooking() {
     setTravelers(newTravelers);
   }, [numberOfGuest]);
 
-
-  const navigate = useNavigate();
-
   const getRandom = (min, max) => {
     min = Math.min(min);
     max = Math.max(max);
@@ -46,28 +41,71 @@ export default function HotelBooking() {
   const random = getRandom(3, 5);
 
   const handleContinue = async () => {
-    try {
-      
-      if (
-        mobileNo === "" ||
-        email === "" ||
-        firstName === "" ||
-        lastName === "" ||
-        age === ""
-      ) {
-        setShowError(true);
-        return;
-      }
+    const isEmptyMobileNo = mobileNo.trim() === "";
+    const isEmptyEmail = email.trim() === "";
+    const isEmptyTravelers = travelers.some(
+      (traveler) =>
+        traveler.firstName.trim() === "" ||
+        traveler.lastName.trim() === "" ||
+        traveler.age.trim() === ""
+    );
 
-      await HotelBook();
-    } catch (error) {
-      console.error("Booking failed:", error);
-      setShowError(true);
+    const isEmptyFirstName = travelers.some(
+      (traveler) => traveler.firstName.trim() === ""
+    );
+    const isEmptyLastName = travelers.some(
+      (traveler) => traveler.lastName.trim() === ""
+    );
+    const isEmptyAge = travelers.some((traveler) => traveler.age.trim() === "");
+
+    if (
+      isEmptyMobileNo ||
+      isEmptyEmail ||
+      isEmptyTravelers ||
+      isEmptyFirstName ||
+      isEmptyLastName ||
+      isEmptyAge
+    ) {
+      setShowInputError(true);
+    } else {
+      await HotelBook().catch((error) => {
+        console.error("Booking failed:", error);
+        setShowError(true);
+      });
     }
   };
 
+  const handleFirstNameChange = (index, newValue) => {
+    setTravelers((prevTravelers) => {
+      const updatedTravelers = [...prevTravelers];
+      updatedTravelers[index].firstName = newValue;
+      return updatedTravelers;
+    });
+  };
 
-          
+  const handleLastNameChange = (index, newValue) => {
+    setTravelers((prevTravelers) => {
+      const updatedTravelers = [...prevTravelers];
+      updatedTravelers[index].lastName = newValue;
+      return updatedTravelers;
+    });
+  };
+
+  const handleAgeChange = (index, newValue) => {
+    setTravelers((prevTravelers) => {
+      const updatedTravelers = [...prevTravelers];
+      updatedTravelers[index].age = newValue;
+      return updatedTravelers;
+    });
+  };
+
+  const handleGenderChange = (index, newValue) => {
+    setTravelers((prevTravelers) => {
+      const updatedTravelers = [...prevTravelers];
+      updatedTravelers[index].gender = newValue;
+      return updatedTravelers;
+    });
+  };
 
   async function HotelBook() {
     const Url = `https://academics.newtonschool.co/api/v1/bookingportals/booking`;
@@ -85,8 +123,7 @@ export default function HotelBooking() {
         bookingDetails: {
           hotelId: detailsData?._id,
           startDate: moment(selectedDay).toISOString(),
-          endDate: moment(selectedDay).add(1, 'days').toISOString(),
-          
+          endDate: moment(selectedDay).add(1, "days").toISOString(),
         },
       }),
     });
@@ -94,7 +131,9 @@ export default function HotelBooking() {
     console.log(response);
     console.log(data);
 
-    const totalPrice = detailsData.rooms[0]?.costDetails?.baseCost + detailsData.rooms[0]?.costDetails?.taxesAndFees;
+    const totalPrice =
+      detailsData.rooms[0]?.costDetails?.baseCost +
+      detailsData.rooms[0]?.costDetails?.taxesAndFees;
 
     navigate("/Payment", {
       state: {
@@ -103,15 +142,7 @@ export default function HotelBooking() {
     });
   }
 
-  const isContinueButtonDisabled = () => {
-    return (
-      mobileNo === "" ||
-      email === "" ||
-      firstName === "" ||
-      lastName === "" ||
-      age === ""
-    );
-  };
+  
 
   return (
     <div className="BookingPageFlight_parent">
@@ -238,7 +269,9 @@ export default function HotelBooking() {
               </div>
               <div>
                 <p>Room & Guests</p>
-                <h3>{numberOfRoom} Rooms, {numberOfGuest} Guests</h3>
+                <h3>
+                  {numberOfRoom} Rooms, {numberOfGuest} Guests
+                </h3>
                 <div>{numberOfGuest} Adults</div>
               </div>
             </div>
@@ -246,7 +279,13 @@ export default function HotelBooking() {
           <div className="BookingPageFlight_Child_data_left_data2">
             <h3>Add Contact Details</h3>
             <div className="BookingPageFlight_Child_data_left_data2_contactDetail">
-              <div style={{ display: "flex", flexDirection: "column" }}>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  position: "relative",
+                }}
+              >
                 <label>Mobile No</label>
                 <input
                   type="number"
@@ -254,7 +293,25 @@ export default function HotelBooking() {
                   onChange={(e) => setMobileNo(e.target.value)}
                 />
               </div>
-              <div style={{ display: "flex", flexDirection: "column" }}>
+              {showInputError && mobileNo.trim() === "" && (
+                <p
+                  style={{
+                    color: "red",
+                    position: "absolute",
+                    top: "83%",
+                    left: "4%",
+                  }}
+                >
+                  Mobile number is required.
+                </p>
+              )}
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  position: "relative",
+                }}
+              >
                 <label>Email Address</label>
                 <input
                   type="text"
@@ -262,68 +319,130 @@ export default function HotelBooking() {
                   onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
+              {showInputError && email.trim() === "" && (
+                <p
+                  style={{
+                    color: "red",
+                    position: "absolute",
+                    top: "83%",
+                    left: "34%",
+                  }}
+                >
+                  Email Address is required.
+                </p>
+              )}
             </div>
           </div>
           <div className="BookingPageFlight_Child_data_left_data3">
             <h3>Add Traveller Details</h3>
             {travelers.map((traveler, index) => (
-            <div key={index}
-                id={`NumberOfAdults-flight-${index}`} className="BookingPageFlight_Child_data_left_data2_traveller_Detail">
               <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  gap: "70px",
-                  position: "relative",
-                }}
+                key={index}
+                id={`NumberOfAdults-flight-${index}`}
+                className="BookingPageFlight_Child_data_left_data2_traveller_Detail"
               >
-                <div style={{ display: "flex", flexDirection: "column" }}>
-                  <label>First Name</label>
-                  <input
-                    type="text"
-                    value={traveler.firstName}
-                    onChange={(e) => setFirstName(e.target.value)}
-                  />
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    gap: "70px",
+                    position: "relative",
+                  }}
+                >
+                  <div style={{ display: "flex", flexDirection: "column" }}>
+                    <label>First Name</label>
+                    <input
+                      type="text"
+                      value={traveler.firstName}
+                      onChange={(e) =>
+                        handleFirstNameChange(index, e.target.value)
+                      }
+                    />
+                  </div>
+                  {showInputError && traveler.firstName.trim() === "" && (
+                    <p
+                      style={{
+                        color: "red",
+                        position: "absolute",
+                        top: "13%",
+                        left: "3%",
+                        transform: "translateY(10px)",
+                      }}
+                    >
+                      First Name is required.
+                    </p>
+                  )}
+                  <div style={{ display: "flex", flexDirection: "column" }}>
+                    <label>Last Name</label>
+                    <input
+                      type="text"
+                      value={traveler.lastName}
+                      onChange={(e) =>
+                        handleLastNameChange(index, e.target.value)
+                      }
+                    />
+                  </div>
+                  {showInputError && traveler.lastName.trim() === "" && (
+                    <p
+                      style={{
+                        color: "red",
+                        position: "absolute",
+                        top: "13%",
+                        left: "60%",
+                        transform: "translateY(10px)",
+                      }}
+                    >
+                      Last Name is required.
+                    </p>
+                  )}
                 </div>
-                <div style={{ display: "flex", flexDirection: "column" }}>
-                  <label>Last Name</label>
-                  <input
-                    type="text"
-                    value={traveler.lastName}
-                    onChange={(e) => setLastName(e.target.value)}
-                  />
+                <div
+                  style={{ display: "flex", gap: "30px", marginTop: "20px" ,position: "relative"}}
+                >
+                  <div style={{ display: "flex", flexDirection: "column" }}>
+                    <label style={{ marginTop: "10px" }}>Age</label>
+                    <input
+                      style={{ width: "80px" }}
+                      type="number"
+                      value={traveler.age}
+                      onChange={(e) => handleAgeChange(index, e.target.value)}
+                    />
+                  </div>
+                  {showInputError && traveler.age.trim() === "" && (
+                    <p
+                      style={{
+                        color: "red",
+                        position: "absolute",
+                        top: "25%",
+                        left: "3%",
+                        transform: "translateY(10px)",
+                      }}
+                    >
+                      Age.
+                    </p>
+                  )}
+                  <div style={{ display: "flex", flexDirection: "column" }}>
+                    <label style={{ marginTop: "10px" }}>Gender</label>
+                    <select
+                      id="gender"
+                      name="gender"
+                      value={traveler.gender}
+                      onChange={(e) =>
+                        handleGenderChange(index, e.target.value)
+                      }
+                    >
+                      <option value="male">Male</option>
+                      <option value="female">Female</option>
+                      <option value="other">Other</option>
+                    </select>
+                  </div>
                 </div>
               </div>
-              <div style={{ display: "flex", gap: "30px", marginTop: "20px" }}>
-                <div style={{ display: "flex", flexDirection: "column" }}>
-                  <label style={{ marginTop: "10px" }}>Age</label>
-                  <input
-                    style={{ width: "80px" }}
-                    type="number"
-                    value={traveler.age}
-                    onChange={(e) => setAge(e.target.value)}
-                  />
-                </div>
-                <div style={{ display: "flex", flexDirection: "column" }}>
-                  <label style={{ marginTop: "10px" }}>Gender</label>
-                  <select
-                    id="gender"
-                    name="gender"
-                    value={traveler.gender}
-                    onChange={(e) => setGender(e.target.value)}
-                  >
-                    <option value="male">Male</option>
-                    <option value="female">Female</option>
-                    <option value="other">Other</option>
-                  </select>
-                </div>
-              </div>
-            </div>
             ))}
           </div>
         </div>
         <div className="BookingPageFlight_Child_data_right">
-          <div >
+          <div>
             <h3>Fare Summary</h3>
             <div
               style={{
@@ -334,7 +453,9 @@ export default function HotelBooking() {
               }}
             >
               <h4>Base Fare</h4>
-              <p>Rs {detailsData.rooms[0]?.costDetails?.baseCost * numberOfRoom}</p>
+              <p>
+                Rs {detailsData.rooms[0]?.costDetails?.baseCost * numberOfRoom}
+              </p>
             </div>
             <div
               style={{
@@ -346,7 +467,10 @@ export default function HotelBooking() {
               }}
             >
               <h4>Taxes and Surcharges</h4>
-              <p>&#8377; {detailsData.rooms[0]?.costDetails?.taxesAndFees * numberOfRoom} </p>
+              <p>
+                &#8377;{" "}
+                {detailsData.rooms[0]?.costDetails?.taxesAndFees * numberOfRoom}{" "}
+              </p>
             </div>
             <div
               style={{
@@ -358,18 +482,18 @@ export default function HotelBooking() {
               }}
             >
               <h2>Total Amount</h2>
-              <h3>Rs {detailsData.rooms[0]?.costDetails?.baseCost  * numberOfRoom + detailsData.rooms[0]?.costDetails?.taxesAndFees * numberOfRoom}</h3>
+              <h3>
+                Rs{" "}
+                {detailsData.rooms[0]?.costDetails?.baseCost * numberOfRoom +
+                  detailsData.rooms[0]?.costDetails?.taxesAndFees *
+                    numberOfRoom}
+              </h3>
             </div>
           </div>
 
-          <button
-            className="FlightBooingpageBtn"
-            onClick={handleContinue}
-            disabled={isContinueButtonDisabled()}
-          >
+          <button className="FlightBooingpageBtn" onClick={handleContinue}>
             Continue
           </button>
-          
         </div>
       </div>
     </div>

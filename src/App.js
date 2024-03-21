@@ -15,29 +15,29 @@ import HotelBooking from "./Components/Hotels/HotelBooking/HotelBooking";
 import Payment from "./Components/Payment/Payment";
 import BookingHistory from "./Components/BookingHistory/BookingHistory";
 
-
 function App() {
   return (
     <AuthProvider>
       <Router>
         <Header />
-        <Routes>
-          <Route exact path="/" element={<Flights />} />
-          <Route exact path="/flights" element={<Flights />} />
-          <Route exact path="/comingSoon" element={<ComingSoon />} />
-          <Route exact path="/flightResult" element={<FlightResult />} />
-          <Route exact path="/hotels" element={<Hotels />} />
-          <Route exact path="/hotelResult" element={<HotelResult />} />
-          <Route path="/hotelDescription" element={<HotelDesription />} />
-          <Route exact path="/login" element={<Login />} />
-          <Route exact path="/signup" element={<SignupByEmail />} />
-          <Route exact path="/flightBooking" element={<FlightBooking />} />
-          <Route exact path="/payment" element={<Payment />} />
-          <Route exact path="/hotelBooking" element={<HotelBooking />} />
-          <Route exact path="/bookingHistory" element={<BookingHistory />} />
-
-        </Routes>
-        {/* <Footer /> */}
+        <div className="main-content">
+          <Routes>
+            <Route exact path="/" element={<Flights />} />
+            <Route exact path="/flights" element={<Flights />} />
+            <Route exact path="/comingSoon" element={<ComingSoon />} />
+            <Route exact path="/flightResult" element={<FlightResult />} />
+            <Route exact path="/hotels" element={<Hotels />} />
+            <Route exact path="/hotelResult" element={<HotelResult />} />
+            <Route path="/hotelDescription" element={<HotelDesription />} />
+            <Route exact path="/login" element={<Login />} />
+            <Route exact path="/signup" element={<SignupByEmail />} />
+            <Route exact path="/flightBooking" element={<FlightBooking />} />
+            <Route exact path="/payment" element={<Payment />} />
+            <Route exact path="/hotelBooking" element={<HotelBooking />} />
+            <Route exact path="/bookingHistory" element={<BookingHistory />} />
+          </Routes>
+        </div>
+        <Footer />
       </Router>
     </AuthProvider>
   );

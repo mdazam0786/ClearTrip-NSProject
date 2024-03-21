@@ -22,7 +22,7 @@ export default function BookingHistory() {
       if (response.ok) {
         const data = await response.json();
         setIsData(true);
-        setBookingData(data?.data);
+        setBookingData(data?.data.reverse());
         console.log(data?.data);
       }
     } catch (error) {
