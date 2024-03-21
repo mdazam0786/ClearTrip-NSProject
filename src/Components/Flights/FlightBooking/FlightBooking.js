@@ -129,7 +129,7 @@ export default function FlightBooking() {
     console.log(response);
     console.log(data);
 
-    navigate("/Pyment", {
+    navigate("/Payment", {
       state: {
         totalPrice:
           flightDetails?.Price * numberOfAdults + taxes * numberOfAdults,

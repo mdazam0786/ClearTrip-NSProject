@@ -1,10 +1,10 @@
 import React from "react";
-import Navbar from "../../Navbar/Navbar";
-import "./pyment.css";
+import "./payment.css";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import Navbar from "../Navbar/Navbar";
 
-export default function Pyment() {
+export default function Payment() {
   const location = useLocation();
   const totalPrice = location.state && location.state.totalPrice;
   const navigate = useNavigate();

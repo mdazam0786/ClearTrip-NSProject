@@ -9,7 +9,6 @@ import "react-datepicker/dist/react-datepicker.css";
 import moment from "moment";
 import { MdOutlineCalendarMonth } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
-import Footer from "../../Footer/Footer";
 import { useAuth } from "../../../MyContext";
 
 export default function Flights() {
@@ -411,7 +410,6 @@ export default function Flights() {
           </p>
         </div>
       </div>
-      {/* <Footer /> */}
     </div>
   );
 }

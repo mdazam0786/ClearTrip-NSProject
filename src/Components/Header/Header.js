@@ -78,7 +78,7 @@ export default function Header() {
           </div>
         ) : (
           <div className="logout">
-            <Link className="logout1">{user.name} |</Link>
+            <Link to="/BookingHistory" className="logout1">{user.name} |</Link>
             <button className="logout" onClick={handleLogout}>
               Logout
             </button>

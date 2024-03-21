@@ -11,8 +11,10 @@ import Flights from "./Components/Flights/FlightSearch/Flights";
 import ComingSoon from "./Components/ComingSoon/ComingSoon";
 import Footer from "./Components/Footer/Footer";
 import FlightBooking from "./Components/Flights/FlightBooking/FlightBooking";
-import Pyment from "./Components/Flights/FlightBooking/Pyment";
 import HotelBooking from "./Components/Hotels/HotelBooking/HotelBooking";
+import Payment from "./Components/Payment/Payment";
+import BookingHistory from "./Components/BookingHistory/BookingHistory";
+
 
 function App() {
   return (
@@ -30,11 +32,12 @@ function App() {
           <Route exact path="/login" element={<Login />} />
           <Route exact path="/signup" element={<SignupByEmail />} />
           <Route exact path="/flightBooking" element={<FlightBooking />} />
-          
-          <Route exact path="/pyment" element={<Pyment />} />
+          <Route exact path="/payment" element={<Payment />} />
           <Route exact path="/hotelBooking" element={<HotelBooking />} />
+          <Route exact path="/bookingHistory" element={<BookingHistory />} />
+
         </Routes>
-        
+        {/* <Footer /> */}
       </Router>
     </AuthProvider>
   );

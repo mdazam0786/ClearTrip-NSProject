@@ -96,7 +96,7 @@ export default function HotelBooking() {
 
     const totalPrice = detailsData.rooms[0]?.costDetails?.baseCost + detailsData.rooms[0]?.costDetails?.taxesAndFees;
 
-    navigate("/Pyment", {
+    navigate("/Payment", {
       state: {
         totalPrice: totalPrice * numberOfRoom,
       },
