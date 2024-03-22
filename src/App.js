@@ -37,7 +37,7 @@ function App() {
             <Route exact path="/bookingHistory" element={<BookingHistory />} />
           </Routes>
         </div>
-        <Footer />
+        {/* <Footer /> */}
       </Router>
     </AuthProvider>
   );
