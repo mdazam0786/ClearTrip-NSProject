@@ -298,8 +298,8 @@ export default function HotelBooking() {
                   style={{
                     color: "red",
                     position: "absolute",
-                    top: "83%",
-                    left: "4%",
+                    top: "93%",
+                    left: "7%",
                   }}
                 >
                   Mobile number is required.
@@ -324,8 +324,8 @@ export default function HotelBooking() {
                   style={{
                     color: "red",
                     position: "absolute",
-                    top: "83%",
-                    left: "34%",
+                    top: "93%",
+                    left: "54%",
                   }}
                 >
                   Email Address is required.
