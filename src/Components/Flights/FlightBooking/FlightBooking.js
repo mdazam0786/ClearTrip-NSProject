@@ -225,58 +225,64 @@ export default function FlightBooking() {
           <div className="BookingPageFlight_Child_data_left_data2">
             <h3>Add Contact Details</h3>
             <div className="BookingPageFlight_Child_data_left_data2_contactDetail">
-              <div
+            <div
                 style={{
-                  position: "relative",
                   display: "flex",
-                  flexDirection: "column",
+                  justifyContent: "space-between",
+                  position: "relative",
                 }}
               >
-                <label>Mobile No</label>
-                <input
-                  type="number"
-                  value={mobileNo}
-                  onChange={(e) => setMobileNo(e.target.value)}
-                />
+                <div style={{ display: "flex", flexDirection: "column" }}>
+                  <label>Mobile No</label>
+                  <input
+                    type="number"
+                    value={mobileNo}
+                    onChange={(e) => setMobileNo(e.target.value)}
+                  />
+                </div>
+                {showInputError && mobileNo.trim() === "" && (
+                  <p
+                    style={{
+                      color: "red",
+                      position: "absolute",
+                      top: "13%",
+                      left: "6%",
+                      transform: "translateY(10px)",
+                    }}
+                  >
+                    Mobile number is required.
+                  </p>
+                )}
               </div>
-              {showInputError && mobileNo.trim() === "" && (
-                <p
-                  style={{
-                    color: "red",
-                    position: "absolute",
-                    top: "86%",
-                    left: "4%",
-                  }}
-                >
-                  Mobile number is required.
-                </p>
-              )}
               <div
                 style={{
-                  position: "relative",
                   display: "flex",
-                  flexDirection: "column",
+                  justifyContent: "space-between",
+                  position: "relative",
                 }}
               >
-                <label>Email Address</label>
-                <input
-                  type="text"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
+                <div style={{ display: "flex", flexDirection: "column" }}>
+                  <label>Email Address</label>
+                  <input
+                    type="text"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                </div>
+                {showInputError && email.trim() === "" && (
+                  <p
+                    style={{
+                      color: "red",
+                      position: "absolute",
+                      top: "13%",
+                      left: "6%",
+                      transform: "translateY(10px)",
+                    }}
+                  >
+                    Email Address is required.
+                  </p>
+                )}
               </div>
-              {showInputError && email.trim() === "" && (
-                <p
-                  style={{
-                    color: "red",
-                    position: "absolute",
-                    top: "86%",
-                    left: "34%",
-                  }}
-                >
-                  Email Address is required.
-                </p>
-              )}
             </div>
           </div>
           <div className="BookingPageFlight_Child_data_left_data3">

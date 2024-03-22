@@ -142,8 +142,6 @@ export default function HotelBooking() {
     });
   }
 
-  
-
   return (
     <div className="BookingPageFlight_parent">
       <div className="BookingPageFlight_Childdata">
@@ -282,55 +280,61 @@ export default function HotelBooking() {
               <div
                 style={{
                   display: "flex",
-                  flexDirection: "column",
+                  justifyContent: "space-between",
                   position: "relative",
                 }}
               >
-                <label>Mobile No</label>
-                <input
-                  type="number"
-                  value={mobileNo}
-                  onChange={(e) => setMobileNo(e.target.value)}
-                />
+                <div style={{ display: "flex", flexDirection: "column" }}>
+                  <label>Mobile No</label>
+                  <input
+                    type="number"
+                    value={mobileNo}
+                    onChange={(e) => setMobileNo(e.target.value)}
+                  />
+                </div>
+                {showInputError && mobileNo.trim() === "" && (
+                  <p
+                    style={{
+                      color: "red",
+                      position: "absolute",
+                      top: "13%",
+                      left: "6%",
+                      transform: "translateY(10px)",
+                    }}
+                  >
+                    Mobile number is required.
+                  </p>
+                )}
               </div>
-              {showInputError && mobileNo.trim() === "" && (
-                <p
-                  style={{
-                    color: "red",
-                    position: "absolute",
-                    top: "93%",
-                    left: "7%",
-                  }}
-                >
-                  Mobile number is required.
-                </p>
-              )}
               <div
                 style={{
                   display: "flex",
-                  flexDirection: "column",
+                  justifyContent: "space-between",
                   position: "relative",
                 }}
               >
-                <label>Email Address</label>
-                <input
-                  type="text"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
+                <div style={{ display: "flex", flexDirection: "column" }}>
+                  <label>Email Address</label>
+                  <input
+                    type="text"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                </div>
+                {showInputError && email.trim() === "" && (
+                  <p
+                    style={{
+                      color: "red",
+                      position: "absolute",
+                      top: "13%",
+                      left: "6%",
+                      transform: "translateY(10px)",
+                    }}
+                  >
+                    Email Address is required.
+                  </p>
+                )}
               </div>
-              {showInputError && email.trim() === "" && (
-                <p
-                  style={{
-                    color: "red",
-                    position: "absolute",
-                    top: "93%",
-                    left: "54%",
-                  }}
-                >
-                  Email Address is required.
-                </p>
-              )}
             </div>
           </div>
           <div className="BookingPageFlight_Child_data_left_data3">
@@ -397,10 +401,15 @@ export default function HotelBooking() {
                   )}
                 </div>
                 <div
-                  style={{ display: "flex", gap: "30px", marginTop: "20px" ,position: "relative"}}
+                  style={{
+                    display: "flex",
+                    gap: "70px",
+                    marginTop: "20px",
+                    position: "relative",
+                  }}
                 >
                   <div style={{ display: "flex", flexDirection: "column" }}>
-                    <label style={{ marginTop: "10px" }}>Age</label>
+                    <label>Age</label>
                     <input
                       style={{ width: "80px" }}
                       type="number"
@@ -413,7 +422,7 @@ export default function HotelBooking() {
                       style={{
                         color: "red",
                         position: "absolute",
-                        top: "25%",
+                        top: "13%",
                         left: "3%",
                         transform: "translateY(10px)",
                       }}
@@ -422,7 +431,7 @@ export default function HotelBooking() {
                     </p>
                   )}
                   <div style={{ display: "flex", flexDirection: "column" }}>
-                    <label style={{ marginTop: "10px" }}>Gender</label>
+                    <label>Gender</label>
                     <select
                       id="gender"
                       name="gender"
