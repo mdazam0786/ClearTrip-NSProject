@@ -130,6 +130,7 @@ export default function Hotels(props) {
                     selected={selectedDay}
                     onChange={(date) => setSelectedDay(date)}
                     dateFormat="eee, MMM dd"
+                    minDate={new Date()}
                   />
                 </div>
                 <div className="person">
@@ -172,7 +173,7 @@ export default function Hotels(props) {
                   }}
                 >
                   <img src={item.heroUrl} alt={`Offer Image ${index + 1}`} />
-                  <div className="text-indide-image">{item.pTl}</div>
+                  <div className="text-inside-image">{item.pTl}</div>
                 </div>
               ))}
             </div>

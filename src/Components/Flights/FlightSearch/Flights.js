@@ -10,7 +10,6 @@ import moment from "moment";
 import { MdOutlineCalendarMonth } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../../MyContext";
-import Footer from "../../Footer/Footer";
 
 export default function Flights() {
   const [flightData, setFlightData] = useState(null);
@@ -255,6 +254,7 @@ export default function Flights() {
                     selected={selectedDay}
                     onChange={(date) => setSelectedDay(date)}
                     dateFormat="eee, MMM dd"
+                    minDate={new Date()}
                   />
                 </div>
                 <div className="flight-search-button">
@@ -279,7 +279,7 @@ export default function Flights() {
                   }}
                 >
                   <img src={item.heroUrl} alt={`Offer Image ${index + 1}`} />
-                  <div className="text-indide-image">{item.pTl}</div>
+                  <div className="text-inside-image">{item.pTl}</div>
                 </div>
               ))}
             </div>
