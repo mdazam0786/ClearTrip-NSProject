@@ -4,7 +4,7 @@ import { RxCross1 } from "react-icons/rx";
 import Modal from "react-modal";
 import { Link } from "react-router-dom";
 
-export default function SignupByEmail({ closeModal, setLoggedIn, onSignupSuccess }) {
+export default function SignupByEmail({ closeModal, onSignupSuccess, switchToLogin }) {
   const [slide, setSlide] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(true);
   const [name, setName] = useState("");
@@ -56,12 +56,10 @@ export default function SignupByEmail({ closeModal, setLoggedIn, onSignupSuccess
       if (response.ok) {
         const data = await response.json();
         console.log(data);
-        setLoggedIn(true);
         closeSignupModal();
         if (onSignupSuccess) {
           onSignupSuccess();
         }
-        window.location.href = "/login"; 
       } else if (response.status === 400) {
         const errorData = await response.json();
         setError(errorData.message);
@@ -127,7 +125,7 @@ export default function SignupByEmail({ closeModal, setLoggedIn, onSignupSuccess
                 </div>
                 <div className="signup-input-field">
                   <input
-                    type="text"
+                    type="password"
                     placeholder="Enter password"
                     value={password}
                     onChange={changePassword}
@@ -141,6 +139,9 @@ export default function SignupByEmail({ closeModal, setLoggedIn, onSignupSuccess
                 >
                   Signup
                 </button>
+                <Link className="btn-below-text" to="#" onClick={switchToLogin}>
+                  <div>Already have an account? <span className="highlight-login">Login</span> here</div>
+                </Link>
               </div>
               <div className="signup-agreement">
                 <div className="bor-color"></div>

@@ -8,7 +8,7 @@ import { useAuth } from "../../MyContext";
 
 export default function Header() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isSignupModalOpen, setIsSignupModalOpen] = useState(false);
+  const [modalType, setModalType] = useState(null); // 'login' or 'signup'
   const { user, setUser } = useAuth();
 
   useEffect(() => {
@@ -20,17 +20,14 @@ export default function Header() {
     }
   }, [setUser]);
 
-  const closeSignupModal = () => {
-    setIsSignupModalOpen(false);
-    openModal();
-  };
-
-  const openModal = () => {
+  const openModal = (type) => {
+    setModalType(type);
     setIsModalOpen(true);
   };
 
   const closeModal = () => {
     setIsModalOpen(false);
+    setModalType(null);
   };
 
   const handleLogout = () => {
@@ -40,8 +37,12 @@ export default function Header() {
   };
 
   const handleSignupSuccess = () => {
-    closeSignupModal();
-    openModal();
+    closeModal();
+    openModal('login');
+  };
+
+  const switchToLogin = () => {
+    openModal('login');
   };
 
   return (
@@ -57,11 +58,11 @@ export default function Header() {
         </div>
         {!user ? (
           <div className="login">
-            <button onClick={openModal}>Login / Sign up</button>
+            <button onClick={() => openModal('login')}>Login / Sign up</button>
             <Modal
               isOpen={isModalOpen}
               onRequestClose={closeModal}
-              contentLabel="Login Modal"
+              contentLabel="Authentication Modal"
               style={{
                 overlay: { background: "rgba(0, 0, 0, 0.5)" },
                 content: {
@@ -73,7 +74,11 @@ export default function Header() {
                 },
               }}
             >
-              <Login closeModal={closeModal} />
+              {modalType === 'login' ? (
+                <Login closeModal={closeModal} />
+              ) : (
+                <SignupByEmail closeModal={closeModal} onSignupSuccess={handleSignupSuccess} switchToLogin={switchToLogin} />
+              )}
             </Modal>
           </div>
         ) : (
@@ -85,12 +90,6 @@ export default function Header() {
           </div>
         )}
       </div>
-      {isSignupModalOpen && (
-        <SignupByEmail
-          closeModal={closeSignupModal}
-          onSignupSuccess={handleSignupSuccess}
-        />
-      )}
     </div>
   );
 }

@@ -4,7 +4,6 @@
     position: relative;
     bottom: 26em;
     width: 80%;
-    /* border: 1px solid blue; */
   
   }
   .hotel-main-section{
@@ -264,4 +263,67 @@
     padding: 30px 25px ;
     color: blue;
   }
+  .popular-destination {
+    margin: 20px;
+  }
+  
+  .popular-destination h2 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .popular-destination-row {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .destination {
+    position: relative;
+    flex: 1;
+    margin: 0 10px;
+    text-align: center;
+    height: 250px;
+  }
+  
+  .destination img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+  }
+  
+  .destination h2 {
+    position: absolute;
+    bottom: 10px;
+    left: 20%;
+    color: white;
+    font-size: 18px;
+    
+    
+  }
+  
+  .destination:first-child {
+    margin-left: 0;
+  }
+  
+  .destination:last-child {
+    margin-right: 0;
+  }
+  
+
+  .find-cheap-popular {
+    display: grid;
+    grid-template-columns: 1fr 1fr; 
+    gap: 20px; 
+    padding: 10px;
+  }
+  
+  .popular p, .popular ul, .popular ul li {
+    color: #644d4d  ; 
+  }
+  .cheap p, .cheap ul, .cheap ul li {
+    color: #644d4d  ; 
+  }
+  
+  
   

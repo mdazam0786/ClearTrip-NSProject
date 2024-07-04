@@ -9,6 +9,7 @@ import moment from "moment";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../../Navbar/Navbar";
 import { useAuth } from "../../../MyContext";
+import Footer from "../../Footer/Footer";
 
 export default function Hotels(props) {
   const [hotelData, setHotelData] = useState(null);
@@ -16,16 +17,16 @@ export default function Hotels(props) {
   const [selectedDay, setSelectedDay] = useState("");
   const navigate = useNavigate();
 
-  const { numberOfRoom, setNumberOfRoom} = useAuth();
-  const {numberOfGuest, setNumberOfGuest } = useAuth();
+  const { numberOfRoom, setNumberOfRoom } = useAuth();
+  const { numberOfGuest, setNumberOfGuest } = useAuth();
 
   const handleChangeRoom = (e) => {
     setNumberOfRoom(parseInt(e.target.value));
-  }
+  };
 
   const handleChangeGuest = (e) => {
     setNumberOfGuest(parseInt(e.target.value));
-  }
+  };
 
   const [offerImage, setOfferImage] = useState([]);
   const [currentOfferIndex, setCurrentOfferIndex] = useState(0);
@@ -69,7 +70,11 @@ export default function Hotels(props) {
     setHotelData(data?.data?.hotels);
 
     navigate("/hotelResult", {
-      state: { hotelData11: data?.data?.hotels, loc: searchParameter, selectedDate: selectedDay },
+      state: {
+        hotelData11: data?.data?.hotels,
+        loc: searchParameter,
+        selectedDate: selectedDay,
+      },
     });
   }
 
@@ -135,21 +140,27 @@ export default function Hotels(props) {
                 </div>
                 <div className="person">
                   <IoPersonOutline className="hotel-icon" />
-                  <select className="person-option" value={numberOfRoom} onChange={handleChangeRoom}>
+                  <select
+                    className="person-option"
+                    value={numberOfRoom}
+                    onChange={handleChangeRoom}
+                  >
                     <option value={1}>1 Room</option>
                     <option value={2}>2 Room</option>
                     <option value={3}>3 Rooms</option>
                     <option value={4}>4 Rooms</option>
                     <option value={5}>5 Rooms</option>
                     <option value={6}>6 Rooms</option>
-                  
                   </select>
-                  <select className="person-option" value={numberOfGuest} onChange={handleChangeGuest}>
+                  <select
+                    className="person-option"
+                    value={numberOfGuest}
+                    onChange={handleChangeGuest}
+                  >
                     <option value={1}>1 Adult</option>
                     <option value={2}>2 Adults</option>
                     <option value={3}>3 Adults</option>
                     <option value={4}>4 Adults</option>
-                  
                   </select>
                 </div>
               </div>
@@ -205,6 +216,47 @@ export default function Hotels(props) {
             <img src="https://fastui.cltpstatic.com/image/upload/f_auto,q_auto,w_235,h_122,dpr_2/offermgmt/images/banner/BSB_PNBCC_H_1711.jpg" />
           </div>
         </div>
+        <div className="popular-destination">
+          <h2>Popular destinations</h2>
+          <div className="popular-destination-row">
+            <div className="destination">
+              <img
+                src="https://fastui.cltpstatic.com/image/upload/w_176,h_178,f_auto,q_auto,c_fill,e_sharpen:80,g_auto,fl_progressive/offermgmt/hotelsCommonImages/tripSuggestor/manali.jpg"
+                alt="Destination 1"
+              />
+              <h2>Manali</h2>
+            </div>
+            <div className="destination">
+              <img
+                src="https://fastui.cltpstatic.com/image/upload/w_176,h_178,f_auto,q_auto,c_fill,e_sharpen:80,g_auto,fl_progressive/offermgmt/hotelsCommonImages/tripSuggestor/goa.jpg"
+                alt="Destination 2"
+              />
+              <h2>Goa</h2>
+            </div>
+            <div className="destination">
+              <img
+                src="https://fastui.cltpstatic.com/image/upload/w_176,h_178,f_auto,q_auto,c_fill,e_sharpen:80,g_auto,fl_progressive/offermgmt/hotelsCommonImages/tripSuggestor/bangalore.jpg"
+                alt="Destination 3"
+              />
+              <h2>Bangolare</h2>
+            </div>
+            <div className="destination">
+              <img
+                src="https://fastui.cltpstatic.com/image/upload/w_176,h_178,f_auto,q_auto,c_fill,e_sharpen:80,g_auto,fl_progressive/offermgmt/hotelsCommonImages/tripSuggestor/jaipur.png"
+                alt="Destination 4"
+              />
+              <h2>Jaipur</h2>
+            </div>
+            <div className="destination">
+              <img
+                src="https://fastui.cltpstatic.com/image/upload/w_176,h_178,f_auto,q_auto,c_fill,e_sharpen:80,g_auto,fl_progressive/offermgmt/hotelsCommonImages/tripSuggestor/Pattaya.png"
+                alt="Destination 5"
+              />
+              <h2>Pataya</h2>
+            </div>
+          </div>
+        </div>
+        
         <div className="why-cleartrip">
           <h3>Why book hotels online on Cleartrip?</h3>
           <p>
@@ -227,7 +279,42 @@ export default function Hotels(props) {
             process of booking a hotel effortless.
           </p>
         </div>
+
+        <div className="find-cheap-popular">
+          <div className="popular">
+            <h3>How to find and book hotels online on Cleartrip?</h3>
+            <p>With Cleartrip, booking a hotel online doesn't get simpler.</p>
+            <ul>
+              <li>Click on the 'hotels' tab on the homepage</li>
+              <li>
+                Type in the city/ locality/ landmark/ hotel name in the search
+                bar
+              </li>
+              <li>Fill in the check-in and check-out dates</li>
+              <li>Choose the number of travellers and hit enter</li>
+            </ul>
+            <p>
+              There you go! You can further narrow down your hotel booking
+              search list by using filters like price, star rating, traveller
+              rating, amenities and even preferences like hill-view or couple
+              friendly hotels. For every kind of stay, Cleartrip has a hotel.
+            </p>
+          </div>
+          <div className="cheap">
+            <h3>How to Search for cheap hotels on Cleartrip?</h3>
+            <p>Cleartrip offers never-seen-before discounts on hotels, making your luxurious stay pocket-friendly.</p>
+            <ul>
+              <li>Once you search for your preferred location or city, you can use an array of filters to refine your search.</li>
+              <li>Enter the price range for your hotel room booking and get options accordingly.</li>
+              <li>Compare, choose and complete your hotel booking by clicking on the 'Book Now' button.</li>
+
+            </ul>
+            <p>So go ahead and book that long-awaited staycation, friends' trip, family holiday, or just a much-needed weekend getaway! Cleartrip has got you covered.</p>
+          </div>
+        </div>
+
       </div>
+      <Footer />
     </div>
   );
 }

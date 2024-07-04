@@ -28,6 +28,7 @@
 .logo img {
   height: 100%;
   cursor: pointer;
+  margin-left: 20px;
 }
 
 .login button {
@@ -39,6 +40,7 @@
   width: 128px;
   height: 40px;
   font-weight: bold;
+  margin-right: 30px;
 }
 .logout {
   display: flex;

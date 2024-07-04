@@ -6,8 +6,8 @@ import { Link } from "react-router-dom";
 import SignupByEmail from "../Signup/SignupByEmail";
 import { useAuth } from "../../MyContext";
 
-export default function Login({ closeModal}) {
-  const {setUser } = useAuth();
+export default function Login({ closeModal }) {
+  const { setUser } = useAuth();
   const [slide1, setSlide1] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -36,7 +36,7 @@ export default function Login({ closeModal}) {
 
   const handleLoginSuccess = (token, name) => {
     closeModal();
-    setUser({token, name}); 
+    setUser({ token, name });
   };
 
   async function Apicall() {
@@ -62,7 +62,7 @@ export default function Login({ closeModal}) {
         const data = await response.json();
         localStorage.setItem("token", data.token);
         localStorage.setItem("name", data.data.name);
-        handleLoginSuccess(data.token, data.data.name); 
+        handleLoginSuccess(data.token, data.data.name);
       } else if (response.status === 401) {
         const errorData = await response.json();
         setError(errorData.message);
@@ -122,7 +122,7 @@ export default function Login({ closeModal}) {
                 {loading ? "Logging in..." : "Login"}
               </button>
               <Link className="btn-below-text" to="#" onClick={openSignupModal}>
-                <div>New User Please Signup Here</div>
+                New User Please Signup Here
               </Link>
             </div>
             <div className="signup-agreement">

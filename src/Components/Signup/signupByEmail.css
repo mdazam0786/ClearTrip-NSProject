@@ -100,13 +100,18 @@
     /* font-size: 12px; */
     text-align: center;
     cursor: pointer;
-    color: black;
+    background-color: black;
+    color: white;
 }
 
 .btn-below-text div {
     padding-top: 10px;
 }
 
+.highlight-login {
+    font-weight: bold;
+    color: #36c;
+}
 
 
 
@@ -151,4 +156,4 @@
     background: none;
     border: none;
     cursor: pointer;
-  }
+}

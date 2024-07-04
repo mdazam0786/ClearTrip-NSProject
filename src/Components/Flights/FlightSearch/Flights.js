@@ -8,8 +8,9 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import moment from "moment";
 import { MdOutlineCalendarMonth } from "react-icons/md";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../../../MyContext";
+import Footer from "../../Footer/Footer";
 
 export default function Flights() {
   const [flightData, setFlightData] = useState(null);
@@ -200,7 +201,7 @@ export default function Flights() {
                   <RiFlightTakeoffFill className="flight-icon" />
                   <input
                     type="text"
-                    placeholder="Where to?"
+                    placeholder="where from ?"
                     list="airportsList"
                     value={searchSource}
                     onChange={handleSearch}
@@ -224,7 +225,7 @@ export default function Flights() {
                   <RiFlightTakeoffFill className="flight-icon" />
                   <input
                     type="text"
-                    placeholder="Where to?"
+                    placeholder="where to ?"
                     list="airportsList"
                     value={searchDestination}
                     onChange={handleSearchDestination}
@@ -262,12 +263,12 @@ export default function Flights() {
                 </div>
               </div>
             </div>
-            <div className="cancel-information">
+            <Link to="/comingSoon" className="cancel-information">
               <img
                 src="https://www.cleartrip.com/offermgmt/hotelsCommonImages/cfnr/cfnr-home-banner.jpeg"
                 alt="Offer Banner"
               />
-            </div>
+            </Link>
           </div>
           <div className="flight-offer-carousel">
             <div className="offer-carousel">
@@ -300,22 +301,29 @@ export default function Flights() {
         </div>
         <div className="bank-offer">
           <div>
-            <img
-              src="https://fastui.cltpstatic.com/image/upload/f_auto,q_auto,w_235,h_122,dpr_2/offermgmt/images/banner/BSB_SBI_F_1811.jpg"
-              alt="Bank Offer 1"
-            />
+            <Link to="/comingSoon">
+              <img
+                src="https://fastui.cltpstatic.com/image/upload/f_auto,q_auto,w_235,h_122,dpr_2/offermgmt/images/banner/BSB_SBI_F_1811.jpg"
+                alt="Bank Offer 1"
+              />
+            </Link>
           </div>
           <div>
-            <img
-              src="https://fastui.cltpstatic.com/image/upload/f_auto,q_auto,w_235,h_122,dpr_2/offermgmt/images/banner/BSB_SBI2_F_1811.jpg"
-              alt="Bank Offer 2"
-            />
+            <Link to="/comingSoon">
+              {" "}
+              <img
+                src="https://fastui.cltpstatic.com/image/upload/f_auto,q_auto,w_235,h_122,dpr_2/offermgmt/images/banner/BSB_SBI2_F_1811.jpg"
+                alt="Bank Offer 2"
+              />
+            </Link>
           </div>
           <div>
-            <img
-              src="https://fastui.cltpstatic.com/image/upload/f_auto,q_auto,w_235,h_122,dpr_2/offermgmt/images/banner/BSB_ONECARD_F_1811.jpg"
-              alt="Bank Offer 3"
-            />
+            <Link to="/comingSoon">
+              <img
+                src="https://fastui.cltpstatic.com/image/upload/f_auto,q_auto,w_235,h_122,dpr_2/offermgmt/images/banner/BSB_ONECARD_F_1811.jpg"
+                alt="Bank Offer 3"
+              />
+            </Link>
           </div>
         </div>
         <div className="playstore-link">
@@ -413,7 +421,7 @@ export default function Flights() {
           </p>
         </div>
       </div>
-      {/* <Footer /> */}
+      <Footer />
     </div>
   );
 }

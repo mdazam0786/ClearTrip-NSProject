@@ -9,7 +9,6 @@ import HotelDesription from "./Components/Hotels/HotelDescription/HotelDescripti
 import FlightResult from "./Components/Flights/FlightResult/FlightResult";
 import Flights from "./Components/Flights/FlightSearch/Flights";
 import ComingSoon from "./Components/ComingSoon/ComingSoon";
-import Footer from "./Components/Footer/Footer";
 import FlightBooking from "./Components/Flights/FlightBooking/FlightBooking";
 import HotelBooking from "./Components/Hotels/HotelBooking/HotelBooking";
 import Payment from "./Components/Payment/Payment";
@@ -37,7 +36,6 @@ function App() {
             <Route exact path="/bookingHistory" element={<BookingHistory />} />
           </Routes>
         </div>
-        {/* <Footer /> */}
       </Router>
     </AuthProvider>
   );

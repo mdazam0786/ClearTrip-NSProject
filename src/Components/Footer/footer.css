@@ -2,9 +2,8 @@
     width: 100%;
     background-color: #e5e5e5 ;
     padding: 20px;
-    margin-top: 0;
     position: relative; 
-    /* bottom: 26em;  */
+    bottom: 26em; 
     border-top: 0.1px solid #c4bfbf ;
 }
 .logoand-more {
