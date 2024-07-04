@@ -1,3 +1,92 @@
+// // Header.js
+// import React, { useState } from "react";
+// import { Link } from "react-router-dom";
+// import Modal from "react-modal";
+// import "./header.css";
+// import Login from "../Login/Login";
+// import SignupByEmail from "../Signup/SignupByEmail";
+// import { useAuth } from "../../MyContext";
+
+// export default function Header() {
+//   const [isModalOpen, setIsModalOpen] = useState(false);
+//   const [modalType, setModalType] = useState(null); // 'login' or 'signup'
+//   const { user, setUser } = useAuth();
+
+//   const openModal = (type) => {
+//     setModalType(type);
+//     setIsModalOpen(true);
+//   };
+
+//   const closeModal = () => {
+//     setIsModalOpen(false);
+//     setModalType(null);
+//   };
+
+//   const handleLogout = () => {
+//     localStorage.removeItem("token");
+//     localStorage.removeItem("name");
+//     setUser(null);
+//   };
+
+//   const handleSignupSuccess = () => {
+//     closeModal();
+//     openModal('login');
+//   };
+
+//   const switchToLogin = () => {
+//     openModal('login');
+//   };
+
+//   return (
+//     <div className="header">
+//       <div className="container">
+//         <div className="logo">
+//           <Link to="/flights">
+//             <img
+//               src="https://etimg.etb2bimg.com/photo/94049186.cms"
+//               alt="pic"
+//             />
+//           </Link>
+//         </div>
+//         {!user ? (
+//           <div className="login">
+//             <button onClick={() => openModal('login')}>Login / Sign up</button>
+//             <Modal
+//               isOpen={isModalOpen}
+//               onRequestClose={closeModal}
+//               contentLabel="Authentication Modal"
+//               style={{
+//                 overlay: { background: "rgba(0, 0, 0, 0.5)" },
+//                 content: {
+//                   width: "800px",
+//                   height: "430px",
+//                   margin: "auto",
+//                   overflow: "hidden",
+//                   borderRadius: "10px",
+//                 },
+//               }}
+//             >
+//               {modalType === 'login' ? (
+//                 <Login closeModal={closeModal} />
+//               ) : (
+//                 <SignupByEmail closeModal={closeModal} onSignupSuccess={handleSignupSuccess} switchToLogin={switchToLogin} />
+//               )}
+//             </Modal>
+//           </div>
+//         ) : (
+//           <div className="logout">
+//             <Link to="/BookingHistory" className="logout1">{user.name} |</Link>
+//             <button className="logout" onClick={handleLogout}>
+//               Logout
+//             </button>
+//           </div>
+//         )}
+//       </div>
+//     </div>
+//   );
+// }
+
+
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Modal from "react-modal";
@@ -8,7 +97,7 @@ import { useAuth } from "../../MyContext";
 
 export default function Header() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalType, setModalType] = useState(null); // 'login' or 'signup'
+  const [isSignupModalOpen, setIsSignupModalOpen] = useState(false);
   const { user, setUser } = useAuth();
 
   useEffect(() => {
@@ -20,14 +109,17 @@ export default function Header() {
     }
   }, [setUser]);
 
-  const openModal = (type) => {
-    setModalType(type);
+  const closeSignupModal = () => {
+    setIsSignupModalOpen(false);
+    openModal();
+  };
+
+  const openModal = () => {
     setIsModalOpen(true);
   };
 
   const closeModal = () => {
     setIsModalOpen(false);
-    setModalType(null);
   };
 
   const handleLogout = () => {
@@ -37,12 +129,8 @@ export default function Header() {
   };
 
   const handleSignupSuccess = () => {
-    closeModal();
-    openModal('login');
-  };
-
-  const switchToLogin = () => {
-    openModal('login');
+    closeSignupModal();
+    openModal();
   };
 
   return (
@@ -58,11 +146,11 @@ export default function Header() {
         </div>
         {!user ? (
           <div className="login">
-            <button onClick={() => openModal('login')}>Login / Sign up</button>
+            <button onClick={openModal}>Login / Sign up</button>
             <Modal
               isOpen={isModalOpen}
               onRequestClose={closeModal}
-              contentLabel="Authentication Modal"
+              contentLabel="Login Modal"
               style={{
                 overlay: { background: "rgba(0, 0, 0, 0.5)" },
                 content: {
@@ -74,22 +162,24 @@ export default function Header() {
                 },
               }}
             >
-              {modalType === 'login' ? (
-                <Login closeModal={closeModal} />
-              ) : (
-                <SignupByEmail closeModal={closeModal} onSignupSuccess={handleSignupSuccess} switchToLogin={switchToLogin} />
-              )}
+              <Login closeModal={closeModal} />
             </Modal>
           </div>
         ) : (
           <div className="logout">
-            <Link to="/BookingHistory" className="logout1">{user.name} |</Link>
+            <Link to="/BookingHistory" className="logout1">{user?.name} |</Link>
             <button className="logout" onClick={handleLogout}>
               Logout
             </button>
           </div>
         )}
       </div>
+      {isSignupModalOpen && (
+        <SignupByEmail
+          closeModal={closeSignupModal}
+          onSignupSuccess={handleSignupSuccess}
+        />
+      )}
     </div>
   );
 }

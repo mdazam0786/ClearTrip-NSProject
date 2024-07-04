@@ -1,4 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import  { useEffect, useState } from "react";
 import "./flights.css";
 import { IoIosArrowRoundForward } from "react-icons/io";
 import { MdPersonOutline } from "react-icons/md";
@@ -79,36 +82,51 @@ export default function Flights() {
     }
     fetchAirports();
   }, []);
-
   async function Apicall() {
+    if (!searchSource || !searchDestination || !selectedDay) {
+      toast.error("Please fill in all fields");
+      return;
+    }
+  
+    if (searchSource === searchDestination) {
+      toast.error("Source and destination cannot be the same");
+      return;
+    }
+  
+    const today = new Date();
+    if (selectedDay < today) {
+      toast.error("Please select a valid date");
+      return;
+    }
+  
     try {
       console.log("Getting flights");
-
+  
       const formattedDay = selectedDay
         ? moment(selectedDay).format("dddd").substring(0, 3)
         : "";
       console.log(formattedDay);
-
+  
       const limit = 100;
-
+  
       const url = `https://academics.newtonschool.co/api/v1/bookingportals/flight/?search={"source":"${searchSource}","destination":"${searchDestination}"}&day=${formattedDay}&limit=${limit}`;
-
+  
       console.log(url);
-
+  
       const response = await fetch(url, {
         method: "GET",
         headers: { projectID: "f104bi07c490" },
       });
-
+  
       if (!response.ok) {
         throw new Error("Failed to fetch flights");
       }
-
+  
       const data = await response.json();
-
+  
       setFlightData(data?.data?.flights);
       console.log(data?.data?.flights);
-
+  
       // Redirect to flight result page with search parameters
       navigate("/flightResult", {
         state: {
@@ -124,6 +142,7 @@ export default function Flights() {
       console.error("Error fetching flights:", error);
     }
   }
+  
 
   async function OfferApi() {
     try {
@@ -156,7 +175,7 @@ export default function Flights() {
   return (
     <div>
       <Navbar />
-
+      <ToastContainer />
       <div className="flight-section">
         <div className="flight-main-section">
           <div className="flight-left">
