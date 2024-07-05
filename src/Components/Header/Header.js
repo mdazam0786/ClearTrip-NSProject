@@ -1,5 +1,7 @@
-// // Header.js
-// import React, { useState } from "react";
+
+
+
+// import React, { useState, useEffect } from "react";
 // import { Link } from "react-router-dom";
 // import Modal from "react-modal";
 // import "./header.css";
@@ -9,17 +11,29 @@
 
 // export default function Header() {
 //   const [isModalOpen, setIsModalOpen] = useState(false);
-//   const [modalType, setModalType] = useState(null); // 'login' or 'signup'
+//   const [isSignupModalOpen, setIsSignupModalOpen] = useState(false);
 //   const { user, setUser } = useAuth();
 
-//   const openModal = (type) => {
-//     setModalType(type);
+//   useEffect(() => {
+//     const token = localStorage.getItem("token");
+//     const name = localStorage.getItem("name");
+
+//     if (token && name) {
+//       setUser({ token, name });
+//     }
+//   }, [setUser]);
+
+//   const closeSignupModal = () => {
+//     setIsSignupModalOpen(false);
+//     openModal();
+//   };
+
+//   const openModal = () => {
 //     setIsModalOpen(true);
 //   };
 
 //   const closeModal = () => {
 //     setIsModalOpen(false);
-//     setModalType(null);
 //   };
 
 //   const handleLogout = () => {
@@ -29,12 +43,8 @@
 //   };
 
 //   const handleSignupSuccess = () => {
-//     closeModal();
-//     openModal('login');
-//   };
-
-//   const switchToLogin = () => {
-//     openModal('login');
+//     closeSignupModal();
+//     openModal();
 //   };
 
 //   return (
@@ -50,11 +60,11 @@
 //         </div>
 //         {!user ? (
 //           <div className="login">
-//             <button onClick={() => openModal('login')}>Login / Sign up</button>
+//             <button onClick={openModal}>Login / Sign up</button>
 //             <Modal
 //               isOpen={isModalOpen}
 //               onRequestClose={closeModal}
-//               contentLabel="Authentication Modal"
+//               contentLabel="Login Modal"
 //               style={{
 //                 overlay: { background: "rgba(0, 0, 0, 0.5)" },
 //                 content: {
@@ -66,27 +76,29 @@
 //                 },
 //               }}
 //             >
-//               {modalType === 'login' ? (
-//                 <Login closeModal={closeModal} />
-//               ) : (
-//                 <SignupByEmail closeModal={closeModal} onSignupSuccess={handleSignupSuccess} switchToLogin={switchToLogin} />
-//               )}
+//               <Login closeModal={closeModal} />
 //             </Modal>
 //           </div>
 //         ) : (
 //           <div className="logout">
-//             <Link to="/BookingHistory" className="logout1">{user.name} |</Link>
+//             <Link to="/BookingHistory" className="logout1">{user?.name} |</Link>
 //             <button className="logout" onClick={handleLogout}>
 //               Logout
 //             </button>
 //           </div>
 //         )}
 //       </div>
+//       {isSignupModalOpen && (
+//         <SignupByEmail
+//           closeModal={closeSignupModal}
+//           onSignupSuccess={handleSignupSuccess}
+//         />
+//       )}
 //     </div>
 //   );
 // }
 
-
+// Header.js
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Modal from "react-modal";
@@ -98,6 +110,9 @@ import { useAuth } from "../../MyContext";
 export default function Header() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSignupModalOpen, setIsSignupModalOpen] = useState(false);
+  const [location, setLocation] = useState("");
+  const [dates, setDates] = useState("");
+  const [passengers, setPassengers] = useState(1);
   const { user, setUser } = useAuth();
 
   useEffect(() => {
@@ -133,6 +148,11 @@ export default function Header() {
     openModal();
   };
 
+  const handleSearch = (e) => {
+    e.preventDefault();
+    // Implement the logic to update the search results based on the new criteria
+  };
+
   return (
     <div className="header">
       <div className="container">
@@ -144,6 +164,27 @@ export default function Header() {
             />
           </Link>
         </div>
+        {/* <form className="search-form" onSubmit={handleSearch}>
+          <input
+            type="text"
+            placeholder="Location"
+            value={location}
+            onChange={(e) => setLocation(e.target.value)}
+          />
+          <input
+            type="date"
+            value={dates}
+            onChange={(e) => setDates(e.target.value)}
+          />
+          <input
+            type="number"
+            min="1"
+            placeholder="Passengers"
+            value={passengers}
+            onChange={(e) => setPassengers(e.target.value)}
+          />
+          <button type="submit">Search</button>
+        </form> */}
         {!user ? (
           <div className="login">
             <button onClick={openModal}>Login / Sign up</button>

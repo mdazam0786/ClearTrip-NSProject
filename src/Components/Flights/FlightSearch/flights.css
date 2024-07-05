@@ -127,7 +127,7 @@
   
   .select-catogories div:hover {
     cursor: pointer;
-    background-color: rgb(230, 230, 230);
+    /* background-color: rgb(230, 230, 230); */
   }
   
   /* 3-> select-search-field  */
@@ -338,3 +338,12 @@
   .why-cleartrip p {
     line-height: 20px;
   }
+
+  /* flights.css */
+
+
+.fare-option.selected {
+  background-color: #007bff;
+  color: #fff;
+  border: 1px solid #007bff;
+}

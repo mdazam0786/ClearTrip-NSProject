@@ -1,7 +1,7 @@
 import React from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import  { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import "./flights.css";
 import { IoIosArrowRoundForward } from "react-icons/io";
 import { MdPersonOutline } from "react-icons/md";
@@ -23,6 +23,8 @@ export default function Flights() {
   const [selectedDay, setSelectedDay] = useState("");
   const [showDropdown, setShowDropdown] = useState(false);
   const [showDropdown2, setShowDropdown2] = useState(false);
+  const [selectedFare, setSelectedFare] = useState("Regular fare"); // State to manage selected fare type
+
   const navigate = useNavigate();
 
   const [offerImage, setOfferImage] = useState([]);
@@ -87,46 +89,46 @@ export default function Flights() {
       toast.error("Please fill in all fields");
       return;
     }
-  
+
     if (searchSource === searchDestination) {
       toast.error("Source and destination cannot be the same");
       return;
     }
-  
+
     const today = new Date();
     if (selectedDay < today) {
       toast.error("Please select a valid date");
       return;
     }
-  
+
     try {
       console.log("Getting flights");
-  
+
       const formattedDay = selectedDay
         ? moment(selectedDay).format("dddd").substring(0, 3)
         : "";
       console.log(formattedDay);
-  
+
       const limit = 100;
-  
+
       const url = `https://academics.newtonschool.co/api/v1/bookingportals/flight/?search={"source":"${searchSource}","destination":"${searchDestination}"}&day=${formattedDay}&limit=${limit}`;
-  
+
       console.log(url);
-  
+
       const response = await fetch(url, {
         method: "GET",
         headers: { projectID: "f104bi07c490" },
       });
-  
+
       if (!response.ok) {
         throw new Error("Failed to fetch flights");
       }
-  
+
       const data = await response.json();
-  
+
       setFlightData(data?.data?.flights);
       console.log(data?.data?.flights);
-  
+
       // Redirect to flight result page with search parameters
       navigate("/flightResult", {
         state: {
@@ -142,7 +144,6 @@ export default function Flights() {
       console.error("Error fetching flights:", error);
     }
   }
-  
 
   async function OfferApi() {
     try {
@@ -208,11 +209,45 @@ export default function Flights() {
                 </div>
               </div>
 
-              <div className="select-catogories">
+              {/* <div className="select-catogories">
                 <div>Regular fare</div>
                 <div>Student fare</div>
                 <div>Senior citizen fare</div>
                 <div>Armed forces fare</div>
+              </div> */}
+              <div className="select-catogories">
+                <div
+                  className={`fare-option ${
+                    selectedFare === "Regular fare" ? "selected" : ""
+                  }`}
+                  onClick={() => setSelectedFare("Regular fare")}
+                >
+                  Regular fare
+                </div>
+                <div
+                  className={`fare-option ${
+                    selectedFare === "Student fare" ? "selected" : ""
+                  }`}
+                  onClick={() => setSelectedFare("Student fare")}
+                >
+                  Student fare
+                </div>
+                <div
+                  className={`fare-option ${
+                    selectedFare === "Senior citizen fare" ? "selected" : ""
+                  }`}
+                  onClick={() => setSelectedFare("Senior citizen fare")}
+                >
+                  Senior citizen fare
+                </div>
+                <div
+                  className={`fare-option ${
+                    selectedFare === "Armed forces fare" ? "selected" : ""
+                  }`}
+                  onClick={() => setSelectedFare("Armed forces fare")}
+                >
+                  Armed forces fare
+                </div>
               </div>
 
               <div className="select-search-fiels">
