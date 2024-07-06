@@ -3,8 +3,8 @@
 
 .flight-section {
     margin-left: 250px !important;
-    position: relative;
-    bottom: 26em;
+    position: absolute;
+    top: 5em;
     width: 80%;
    
     
@@ -316,6 +316,9 @@
     margin-top: 30px;
     padding: 10px;
     color: #644d4d;
+    position: absolute;
+    top: 68em;
+    line-height: 24px;
 
   }
   .why-cleartrip h3 {
@@ -325,10 +328,7 @@
     font-weight: bold;
     color: black;
   }
-  .why-cleartrip p {
-    line-height: 20px;
-  }
-
+  
   /* flights.css */
 
 

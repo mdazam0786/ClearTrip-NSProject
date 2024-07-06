@@ -4,6 +4,7 @@ import { useLocation } from "react-router-dom";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import "./flightResult.css";
 import { useAuth } from "../../../MyContext";
+import Footer from "../../Footer/Footer";
 
 
 export default function FlightResult(props) {
@@ -655,6 +656,7 @@ export default function FlightResult(props) {
           ))}
         </div>
       </div>
+      <Footer />
     </main>
   );
 }

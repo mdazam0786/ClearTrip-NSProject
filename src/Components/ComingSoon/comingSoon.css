@@ -1,7 +1,8 @@
+
 .coming-soon {
     margin-left: 250px !important;
-    position: relative;
-    bottom: 26em;
+    position: absolute;
+    top: 6em;
     width: 80%;
     margin: auto;
     margin-top: 50px;
@@ -27,4 +28,59 @@
   100% {
     transform: scale(1);
   }
+}
+
+.footer-container2 {
+  width: 100%;
+  background-color: #e5e5e5 ;
+  padding: 20px;
+  position: absolute;
+  top: 30em;
+  border-top: 0.1px solid #c4bfbf ;
+}
+.logoand-more {
+  display: flex;
+  width: 100vw;
+  gap: 3vw;
+  
+  
+}
+.logo-left-side {
+  width: 15%;
+  margin-left: 60px;
+  margin-top: 30px;
+
+}
+.logo-left-side img {
+  width: 100%;
+}
+.logo-right-side {
+  display: flex;
+  flex-direction: column;
+  width: calc(100% - 20%);
+  margin-top: 20px;
+}
+.logo-right-side ul {
+  display: flex;
+  list-style: none;
+  
+}
+.logo-right-side ul li {
+  margin-right: 30px;
+}
+.logo-right-side ul li:hover{
+  background: none;
+  color: black;
+  text-decoration: underline;
+}
+.footer-container2 h4{
+  margin-left: 70px;
+  font-weight: 500;
+}
+.footer-container2 p {
+  margin-left: 70px;
+  color: gray;
+  font-weight: 500;
+  cursor: pointer;
+  
 }

@@ -13,6 +13,7 @@ import FlightBooking from "./Components/Flights/FlightBooking/FlightBooking";
 import HotelBooking from "./Components/Hotels/HotelBooking/HotelBooking";
 import Payment from "./Components/Payment/Payment";
 import BookingHistory from "./Components/BookingHistory/BookingHistory";
+import Footer from "./Components/Footer/Footer";
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
             <Route exact path="/bookingHistory" element={<BookingHistory />} />
           </Routes>
         </div>
+        {/* <Footer /> */}
       </Router>
     </AuthProvider>
   );

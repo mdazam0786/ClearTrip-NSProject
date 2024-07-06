@@ -1,8 +1,8 @@
 /* Hotel section  */
 .hotel-section {
     margin-left: 250px !important;
-    position: relative;
-    bottom: 26em;
+    position: absolute;
+    top: 5em;
     width: 80%;
   
   }
@@ -316,6 +316,9 @@
     grid-template-columns: 1fr 1fr; 
     gap: 20px; 
     padding: 10px;
+    position: absolute;
+    top: 85em;
+    line-height: 26px;
   }
   
   .popular p, .popular ul, .popular ul li {
