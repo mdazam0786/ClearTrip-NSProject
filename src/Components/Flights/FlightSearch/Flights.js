@@ -23,7 +23,7 @@ export default function Flights() {
   const [selectedDay, setSelectedDay] = useState("");
   const [showDropdown, setShowDropdown] = useState(false);
   const [showDropdown2, setShowDropdown2] = useState(false);
-  const [selectedFare, setSelectedFare] = useState("Regular fare"); // State to manage selected fare type
+  const [selectedFare, setSelectedFare] = useState("Regular fare"); 
 
   const navigate = useNavigate();
 
@@ -209,12 +209,6 @@ export default function Flights() {
                 </div>
               </div>
 
-              {/* <div className="select-catogories">
-                <div>Regular fare</div>
-                <div>Student fare</div>
-                <div>Senior citizen fare</div>
-                <div>Armed forces fare</div>
-              </div> */}
               <div className="select-catogories">
                 <div
                   className={`fare-option ${

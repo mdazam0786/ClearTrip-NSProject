@@ -162,17 +162,7 @@
   .select-where-to input:focus{
     outline: none;
   }
-  .select-control {
-    display: flex;
-    align-items: center;
-    width: 2em;
-    height: 2em;
-    padding: 5px;
-    padding-left: 10px;
-    cursor: pointer;
-    border: 1px solid #36c;
-    border-radius: 50%;
-  }
+  
   .flight-icon {
     font-size: 25px;
     color: #868686;
