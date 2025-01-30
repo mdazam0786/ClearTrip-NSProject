@@ -351,7 +351,7 @@ export default function Flights() {
           <div>
             <Link to="/comingSoon">
               <img
-                src="https://fastui.cltpstatic.com/image/upload/f_auto,q_auto,w_235,h_122,dpr_2/offermgmt/images/banner/BSB_SBI_F_1811.jpg"
+                src="https://rukmini-ct.flixcart.com/f_auto,q_auto,w_235,h_122,dpr_2/offermgmt-prod/offermgmt/images/banner/BSB_%20HDFCEMI.jpg"
                 alt="Bank Offer 1"
               />
             </Link>
@@ -360,7 +360,7 @@ export default function Flights() {
             <Link to="/comingSoon">
               {" "}
               <img
-                src="https://fastui.cltpstatic.com/image/upload/f_auto,q_auto,w_235,h_122,dpr_2/offermgmt/images/banner/BSB_SBI2_F_1811.jpg"
+                src="https://rukmini-ct.flixcart.com/f_auto,q_auto,w_235,h_122,dpr_2/offermgmt-prod/offermgmt/images/banner/BOBEMI%20%20BSB-min_11zon.jpg"
                 alt="Bank Offer 2"
               />
             </Link>
@@ -368,13 +368,13 @@ export default function Flights() {
           <div>
             <Link to="/comingSoon">
               <img
-                src="https://fastui.cltpstatic.com/image/upload/f_auto,q_auto,w_235,h_122,dpr_2/offermgmt/images/banner/BSB_ONECARD_F_1811.jpg"
+                src="https://rukmini-ct.flixcart.com/f_auto,q_auto,w_235,h_122,dpr_2/offermgmt-prod/offermgmt/images/banner/BSB%20AU%20Bank-min.jpg"
                 alt="Bank Offer 3"
               />
             </Link>
           </div>
         </div>
-        <div className="playstore-link">
+        {/* <div className="playstore-link">
           <img
             src="https://fastui.cltpstatic.com/image/upload/f_auto,q_auto,w_983,h_247,dpr_2/offermgmt/images/qrCode_7.png"
             alt="playStore"
@@ -382,12 +382,12 @@ export default function Flights() {
             style={{ width: "100%" }}
           />
           <map name="playStoreMap">
-            {/* <area
+            <area
               shape="rect"
               coords="45,195,230,255"
               href="https://play.google.com/store/apps/details?id=com.cleartrip.android&hl=en_IN&gl=US&_branch_match_id=1260972785907223363&utm_source=Web%20QR&utm_campaign=Web%20QR&utm_medium=inapp&_branch_referrer=H4sIAAAAAAAAA8soKSkottLXT85JTSwqKcos0EssKNDLyczL1jeJSvNzy8pMtyxLAgAL8QsvJgAAAA%3D%3D"
               alt="Area 1"
-            /> */}
+            />
             <area
               shape="rect"
               coords="245,195,435,255"
@@ -395,7 +395,7 @@ export default function Flights() {
               alt="Right Bottom"
             />
           </map>
-        </div>
+        </div> */}
 
         <div className="why-cleartrip">
           <h3>Why Cleartrip?</h3>
